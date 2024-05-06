@@ -1,0 +1,15 @@
+E:\Dev\CSharp\Test\CosmicExplorer\CosmicExplorer\bin\Release\net8.0\Cosmic Explorer.exe
+E:\Dev\CSharp\Test\CosmicExplorer\CosmicExplorer\bin\Release\net8.0\Cosmic Explorer.deps.json
+E:\Dev\CSharp\Test\CosmicExplorer\CosmicExplorer\bin\Release\net8.0\Cosmic Explorer.runtimeconfig.json
+E:\Dev\CSharp\Test\CosmicExplorer\CosmicExplorer\bin\Release\net8.0\Cosmic Explorer.dll
+E:\Dev\CSharp\Test\CosmicExplorer\CosmicExplorer\bin\Release\net8.0\Cosmic Explorer.pdb
+E:\Dev\CSharp\Test\CosmicExplorer\CosmicExplorer\obj\Release\net8.0\Cosmic Explorer.GeneratedMSBuildEditorConfig.editorconfig
+E:\Dev\CSharp\Test\CosmicExplorer\CosmicExplorer\obj\Release\net8.0\Cosmic Explorer.AssemblyInfoInputs.cache
+E:\Dev\CSharp\Test\CosmicExplorer\CosmicExplorer\obj\Release\net8.0\Cosmic Explorer.AssemblyInfo.cs
+E:\Dev\CSharp\Test\CosmicExplorer\CosmicExplorer\obj\Release\net8.0\Cosmic Explorer.csproj.CoreCompileInputs.cache
+E:\Dev\CSharp\Test\CosmicExplorer\CosmicExplorer\obj\Release\net8.0\Cosmic Explorer.sourcelink.json
+E:\Dev\CSharp\Test\CosmicExplorer\CosmicExplorer\obj\Release\net8.0\Cosmic Explorer.dll
+E:\Dev\CSharp\Test\CosmicExplorer\CosmicExplorer\obj\Release\net8.0\refint\Cosmic Explorer.dll
+E:\Dev\CSharp\Test\CosmicExplorer\CosmicExplorer\obj\Release\net8.0\Cosmic Explorer.pdb
+E:\Dev\CSharp\Test\CosmicExplorer\CosmicExplorer\obj\Release\net8.0\Cosmic Explorer.genruntimeconfig.cache
+E:\Dev\CSharp\Test\CosmicExplorer\CosmicExplorer\obj\Release\net8.0\ref\Cosmic Explorer.dll
