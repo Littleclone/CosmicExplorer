@@ -38,7 +38,7 @@ namespace Cosmic_Explorer
             Console.WriteLine("Cosmic Explorer");
             Console.WriteLine("Guten Tag, das ist Cosmic Explorer, ein Text Basiertes Weltraum Spiel\nDieses Text Game befindet sich in der Testphase und wird noch Entwickelt von mir um mehr C# zu lernen.");
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("Game Version: 0.1.1 Dev Phase German");
+            Console.WriteLine("Game Version: 0.1.3 Dev Phase Deutsch / German");
             Console.ResetColor();
             Console.WriteLine("Willst du starten? [start = Starte das spiel, exit = Verlasse das Spiel, new game = löscht deine Save File]");
             Console.Write("Eingabe:");
@@ -147,21 +147,6 @@ namespace Cosmic_Explorer
             CurrentDay = day;
             if (time >= 23.0)
             {
-                //automatische Speicherung wenn der Nächste Tag Startet (erst wenn das Spiel Tag 2 Startet)
-                if (_save[0, 2] == BREAKER)
-                {
-                    Saver.DeleteSaveFile();
-                    SaveFileInit();
-                    if(debug)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Spielstand Gespeichert! [NUR WÄHREND DES DEBUGS VISIBLE]");
-                        Console.ResetColor();
-                    }
-                    Console.ForegroundColor= ConsoleColor.Green;
-                    Console.WriteLine("Spiel hat gespeichert.");
-                    Console.ResetColor();
-                }
                 //Erstmalige generierung der Welt und zuweisung von Objekten
                 if (init_Objects == false)
                 {
@@ -170,7 +155,7 @@ namespace Cosmic_Explorer
                     world.Worlds(shuttle, space, activities, this, system, inventory, questSystem);
                     activities.Actions(shuttle, space, this, world, system, inventory);
                     system.Passiv(shuttle, space, activities, this, world, inventory, math, questSystem);
-                    space.Space_(shuttle, activities, this, world, system, inventory);
+                    space.Space_(shuttle, activities, this, world, system, inventory, math);
                     inventory.InvInit(shuttle, space, activities, this, world, system);
                     questSystem.QuestSystemInit(quest,space, activities, this, world, system, inventory, math);
                     quest.QuestInit(questSystem, this);
@@ -178,7 +163,6 @@ namespace Cosmic_Explorer
                     if (BREAKER != isWorld)
                     {
                         world.WorldGenerator();
-                        _save[0, 2] = BREAKER;
                         isWorld = BREAKER;
                     }
                 }
@@ -187,6 +171,25 @@ namespace Cosmic_Explorer
                 Console.WriteLine("Es ist Spät und du gingst ins Bett");
                 Console.WriteLine("Tag " + CurrentDay + " Startet");
                 Console.ResetColor();
+                //automatische Speicherung wenn der Nächste Tag Startet (erst wenn das Spiel Tag 2 Startet)
+                if (_save[0, 2] == BREAKER)
+                {
+                    Saver.DeleteSaveFile();
+                    SaveFileInit();
+                    if (debug)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Spielstand Gespeichert! [NUR WÄHREND DES DEBUGS VISIBLE]");
+                        Console.ResetColor();
+                    }
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Spiel hat gespeichert.");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    _save[0, 2] = BREAKER;
+                }
                 shuttle.Bedroom(6, CurrentDay);
                 return;
             }

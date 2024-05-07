@@ -21,10 +21,10 @@ namespace Cosmic_Explorer
         private QuestSystem questSystem;
         string message;
         int currentRoom = 0;
-        int day;
+        public int day;
         public int currentTime;
         //shuttle
-        public int Health = 100;
+        public int Health = 95;
         public int Energy = 100;
         //Passiv System bool flags
         bool antiCrashSystem = true;
@@ -73,13 +73,13 @@ namespace Cosmic_Explorer
             //Auswahlverfahren von was der User ausgewählt hat
             switch(message){
                 case "1":
-                    currentTime = currentTime1;
                     currentTime++;
                     Commandcenter();
                 break;
                 case "2":
-                    Console.WriteLine("Noch nicht Implementiert!");
-                    goto WrongInput;
+                    currentTime++;
+                    Airlock();
+                    break;
                 case "3":
                     Console.WriteLine("Noch nicht Implementiert!");
                     goto WrongInput;
@@ -115,9 +115,9 @@ namespace Cosmic_Explorer
             Console.WriteLine("Du bist in der Kommando Zentrale, was willst du machen? [Uhrzeit: " + currentTime + ":00]");
             Console.WriteLine("Die Konsole öffnen[1]");
             Console.WriteLine("Ins Schlafzimmer gehen[2]");
-            Console.WriteLine("Zur Luftschleuse gehen.[2]");
-            Console.WriteLine("In die Küche gehen.[3]");
-            Console.WriteLine("Zum Generator gehen.[4]");
+            Console.WriteLine("Zur Luftschleuse gehen.[3]");
+            Console.WriteLine("In die Küche gehen.[4]");
+            Console.WriteLine("Zum Generator gehen.[5]");
         WrongInput:
             Console.Write("Eingabe:");
             message = Console.ReadLine();
@@ -141,9 +141,62 @@ namespace Cosmic_Explorer
                     Bedroom(currentTime, day);
                     break;
                 case "3":
+                    currentTime++;
+                    Airlock();
+                    break;
+                case "4":
                     Console.WriteLine("Noch nicht Implementiert!");
                     goto WrongInput;
+                default:
+                    Console.WriteLine("Wähle einer der Nummern aus!");
+                    goto WrongInput;
+            }
+        }
+        public void Airlock()
+        {
+            currentRoom = 3;
+            //Überprüft ob es bereits 23 Uhr ist
+            if (currentTime == 23)
+            {
+                game.NewDayStart(currentTime, day);
+            }
+            Console.WriteLine("Du bist in der Luftschleuse, was willst du machen? [Uhrzeit: " + currentTime + ":00]");
+            Console.WriteLine("In den Weltraum gehen[1]");
+            Console.WriteLine("Ins Schlafzimmer gehen[2]");
+            Console.WriteLine("In die Kommando Zentrale gehen.[3]");
+            Console.WriteLine("In die Küche gehen.[4]");
+            Console.WriteLine("Zum Generator gehen.[5]");
+            WrongInput:
+            Console.Write("Eingabe:");
+            message = Console.ReadLine();
+            switch (message)
+            {
+                case "1":
+                    math.EnergyController(20, Energy);
+                    Energy = math.x;
+                    if (!math.result)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Du hast zu Wenig Energie um diese Aktion durchzuführen!");
+                        Console.ResetColor();
+                        goto WrongInput;
+                    }
+                    currentTime++;
+                    Space.currentTime = currentTime;
+                    Space.InSpace();
+                    goto WrongInput;
+                case "2":
+                    currentTime++;
+                    Bedroom(currentTime, day);
+                    break;
+                case "3":
+                    currentTime++;
+                    Commandcenter();
+                    break;
                 case "4":
+                    Console.WriteLine("Noch nicht Implementiert!");
+                    goto WrongInput;
+                case "5":
                     Console.WriteLine("Noch nicht Implementiert!");
                     goto WrongInput;
                 default:
@@ -210,7 +263,9 @@ namespace Cosmic_Explorer
                         Energy = math.x;
                         if (!math.result)
                         {
-                            Console.WriteLine("Nicht genügend Energie!");
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Du hast zu Wenig Energie um diese Aktion durchzuführen!");
+                            Console.ResetColor();
                             goto WrongInput;
                         }
                         int x;
@@ -248,7 +303,7 @@ namespace Cosmic_Explorer
                         Energy = math.x;
                         if (!math.result)
                         {
-                            Console.ForegroundColor = ConsoleColor.DarkCyan;
+                            Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("Du hast zu Wenig Energie um diese Aktion durchzuführen!");
                             Console.ResetColor();
                             goto WrongInput;

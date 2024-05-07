@@ -3,28 +3,20 @@
   "WorkspaceRootPath": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|e:\\dev\\cosmicexplorer\\cosmicexplorer\\cosmicexplorer\\world.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|solutionrelative:world.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|e:\\dev\\cosmicexplorer\\cosmicexplorer\\cosmicexplorer\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|e:\\dev\\cosmicexplorer\\cosmicexplorer\\cosmicexplorer\\spaceshuttle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|solutionrelative:spaceshuttle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|e:\\dev\\cosmicexplorer\\cosmicexplorer\\cosmicexplorer\\questsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|solutionrelative:questsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|e:\\dev\\cosmicexplorer\\cosmicexplorer\\cosmicexplorer\\space.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|solutionrelative:space.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|e:\\dev\\cosmicexplorer\\cosmicexplorer\\cosmicexplorer\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|e:\\dev\\cosmicexplorer\\cosmicexplorer\\cosmicexplorer\\quest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|solutionrelative:quest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|e:\\dev\\cosmicexplorer\\cosmicexplorer\\cosmicexplorer\\questsaver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|solutionrelative:questsaver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|e:\\dev\\cosmicexplorer\\cosmicexplorer\\cosmicexplorer\\world.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|solutionrelative:world.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,40 +38,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "QuestSaver.cs",
-              "DocumentMoniker": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\QuestSaver.cs",
-              "RelativeDocumentMoniker": "QuestSaver.cs",
-              "ToolTip": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\QuestSaver.cs",
-              "RelativeToolTip": "QuestSaver.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-05T08:10:32.396Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "QuestSystem.cs",
-              "DocumentMoniker": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\QuestSystem.cs",
-              "RelativeDocumentMoniker": "QuestSystem.cs",
-              "ToolTip": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\QuestSystem.cs",
-              "RelativeToolTip": "QuestSystem.cs",
-              "ViewState": "AQIAAA0AAAAAAAAAAAAAAB8AAAAoAAAA",
+              "Title": "Space.cs",
+              "DocumentMoniker": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\Space.cs",
+              "RelativeDocumentMoniker": "Space.cs",
+              "ToolTip": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\Space.cs",
+              "RelativeToolTip": "Space.cs",
+              "ViewState": "AQIAACgAAAAAAAAAAAAAAKsAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-05T08:10:07.694Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Quest.cs",
-              "DocumentMoniker": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\Quest.cs",
-              "RelativeDocumentMoniker": "Quest.cs",
-              "ToolTip": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\Quest.cs",
-              "RelativeToolTip": "Quest.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABgAAAANAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-05T08:08:49.206Z"
+              "WhenOpened": "2024-05-06T22:46:34.806Z"
             },
             {
               "$type": "Document",
@@ -89,35 +56,34 @@
               "RelativeDocumentMoniker": "SpaceShuttle.cs",
               "ToolTip": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\SpaceShuttle.cs",
               "RelativeToolTip": "SpaceShuttle.cs",
-              "ViewState": "AQIAAIQAAAAAAAAAAAAAAGcBAAAjAAAA",
+              "ViewState": "AQIAAAcAAAAAAAAAAAAAABoAAAAeAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-04T19:07:29.909Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-04T19:07:29.909Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "World.cs",
               "DocumentMoniker": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\World.cs",
               "RelativeDocumentMoniker": "World.cs",
               "ToolTip": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\World.cs",
               "RelativeToolTip": "World.cs",
-              "ViewState": "AQIAAAQAAAAAAAAAAAAAABgAAABYAAAA",
+              "ViewState": "AQIAABwAAAAAAAAAAAAAABgAAABYAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-05T19:46:42.832Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-05T19:46:42.832Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAABIAAAAAAAAAAAAAACgAAABDAAAA",
+              "ViewState": "AQIAAA0AAAAAAAAAAAAAACkAAAAhAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-04T13:05:21.625Z"
+              "WhenOpened": "2024-04-04T13:05:21.625Z",
+              "EditorCaption": ""
             }
           ]
         }
