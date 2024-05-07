@@ -33,12 +33,6 @@ namespace Cosmic_Explorer
                 {
                     QSystem.x = 5;
                     QSystem.y = 475;
-                    if(game.debug)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine("Quest Goal set. [NUR WÄHREND DES DEBUGS VISIBLE]");
-                        Console.ResetColor();
-                    }
                 }
             }
         }

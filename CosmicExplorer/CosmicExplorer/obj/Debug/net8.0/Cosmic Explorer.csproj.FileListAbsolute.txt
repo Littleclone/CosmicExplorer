@@ -43,3 +43,6 @@ E:\Dev\CosmicExplorer\CosmicExplorer\CosmicExplorer\obj\Debug\net8.0\refint\Cosm
 E:\Dev\CosmicExplorer\CosmicExplorer\CosmicExplorer\obj\Debug\net8.0\Cosmic Explorer.pdb
 E:\Dev\CosmicExplorer\CosmicExplorer\CosmicExplorer\obj\Debug\net8.0\Cosmic Explorer.genruntimeconfig.cache
 E:\Dev\CosmicExplorer\CosmicExplorer\CosmicExplorer\obj\Debug\net8.0\ref\Cosmic Explorer.dll
+E:\Dev\CosmicExplorer\CosmicExplorer\CosmicExplorer\bin\Debug\net8.0\Newtonsoft.Json.dll
+E:\Dev\CosmicExplorer\CosmicExplorer\CosmicExplorer\obj\Debug\net8.0\Cosmic Explorer.csproj.AssemblyReference.cache
+E:\Dev\CosmicExplorer\CosmicExplorer\CosmicExplorer\obj\Debug\net8.0\Cosmic E.D5B1CCF7.Up2Date

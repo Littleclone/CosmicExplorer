@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CosmicExplorer;
+using System;
 
 namespace Cosmic_Explorer
 {
@@ -7,10 +8,10 @@ namespace Cosmic_Explorer
         static void Main(string[] args)
         {
             Game game = new Game();
+            game.initObjekts();
             game.Start();
             game.LoadSaveFile();
             game.introduction();
-            game.NewDayStart(23, 0);
             Console.WriteLine("Debug-Error[Main Function]"); //Wird ausgelöst wenn aus irgeindein grund das program wieder zur Main Function kommt (Sollte im normalfall nicht passieren)
         }
     }
@@ -25,77 +26,158 @@ namespace Cosmic_Explorer
         Math math = new Math();
         Quest quest = new Quest();
         QuestSystem questSystem = new QuestSystem();
-        int CurrentDay = 0; //Start Tag
-        public int[,] _save = new int[30,30]; //Space um werte zu speichern (Für abfragen)
+        ulong CurrentDay = 0; //Start Tag
+        public int[] _save = new int[60]; //Space um werte zu speichern (Für abfragen)
         public bool debug = false;
         bool init_Objects = false;
-        int isWorld = 0;
+        bool isWorld = false;
+        const int BREAKER = 1;
         public void Start()
         {
-        Start:
-            string message = string.Empty;
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Cosmic Explorer");
-            Console.WriteLine("Guten Tag, das ist Cosmic Explorer, ein Text Basiertes Weltraum Spiel\nDieses Text Game befindet sich in der Testphase und wird noch Entwickelt von mir um mehr C# zu lernen.");
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("Game Version: 0.1.3 Dev Phase Deutsch / German");
-            Console.ResetColor();
-            Console.WriteLine("Willst du starten? [start = Starte das spiel, exit = Verlasse das Spiel, new game = löscht deine Save File]");
-            Console.Write("Eingabe:");
-            message = Console.ReadLine();
-            switch (message)
+            while (true)
             {
-                case "start":
-                    Console.WriteLine("Starte das Game");
-                    break;
-                case "exit":
-                    Console.WriteLine("Verlasse das Game");
-                    Environment.Exit(0);
-                    break;
-                case "new game":
+                string message = string.Empty;
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Cosmic Explorer");
+                Console.WriteLine("Guten Tag, das ist Cosmic Explorer, ein Text Basiertes Weltraum Spiel\nDieses Text Game befindet sich in der Testphase und wird noch Entwickelt von mir um mehr C# zu lernen.");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("Game Version: 0.1.4 Dev Phase Deutsch / German");
+                Console.ResetColor();
+                Console.WriteLine("Willst du starten? [start = Starte das spiel, exit = Verlasse das Spiel, new game = löscht deine Save File]");
+                Console.Write("Eingabe:");
+                message = Console.ReadLine();
+                switch (message)
+                {
+                    case "start":
+                        Console.WriteLine("Starte das Game");
+                        return;
+                    case "exit":
+                        Console.WriteLine("Verlasse das Game");
+                        Environment.Exit(0);
+                        break;
+                    case "new game":
                     deleteFile:
-                    Console.WriteLine("Bist du dir sicher das du sie löschen willst?(yes/no)");
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Sie lässt sich NICHT mehr wiederherstellen und ist dann für IMMER weg");
-                    Console.ResetColor();
-                    message = Console.ReadLine();
-                    switch (message)
-                    {
-                        case "no":
-                            goto Start;
-                        case "yes":
-                            Saver.DeleteSaveFile();
-                            goto Start;
-                        default:
-                            Console.WriteLine("Bitte wähle eines der beiden optionen!");
-                            goto deleteFile;
-                    }
-                case "start skip":
-                    Console.WriteLine("Starte das game und skippe Introduction");
-                    _save[0, 0] = 1;
-                    NewDayStart(23, 0);
-                    break;
-                case "start debug":
-                    debug = true;
-                    goto Start;
-                case "exit debug":
-                    debug = false;
-                    goto Start;
-                default:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Entscheide dich für eines der zwei möglichkeiten!(Groß und klein schreibung wird beachtet)\n");
-                    goto Start;
+                        Console.WriteLine("Bist du dir sicher das du sie löschen willst?(yes/no)");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Sie lässt sich NICHT mehr wiederherstellen und ist dann für IMMER weg");
+                        Console.ResetColor();
+                        message = Console.ReadLine();
+                        switch (message)
+                        {
+                            case "no":
+                                continue;
+                            case "yes":
+                                DataManager.DeleteSaveFiles();
+                                continue;
+                            default:
+                                Console.WriteLine("Bitte wähle eines der beiden optionen!");
+                                goto deleteFile;
+                        }
+                    case "start skip":
+                        Console.WriteLine("Starte das game und skippe Introduction");
+                        _save[0] = 1;
+                        LoadSaveFile();
+                        NewDayStart(23);
+                        break;
+                    case "start debug":
+                        debug = true;
+                        continue;
+                    case "exit debug":
+                        debug = false;
+                        continue;
+                    default:
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Entscheide dich für eines der zwei möglichkeiten!(Groß und klein schreibung wird beachtet)\n");
+                        continue;
+                }
             }
         }
         public void LoadSaveFile()
         {
-            //Für Später wenn man den Spielstand lädt
+            try
+            {
+                //game
+                CurrentDay = DataManager.LoadData<ulong>("saveFile", "day");
+                CurrentDay -= 1;
+                isWorld = DataManager.LoadData<bool>("saveFile", "isWorld");
+                //shuttle
+                shuttle.Energy = DataManager.LoadData<int>("shuttle", "energy");
+                shuttle.Health = DataManager.LoadData<int>("shuttle", "health");
+                shuttle.sonarActive = DataManager.LoadData<bool>("shuttle", "sonar");
+                //space
+                space.spaceSuitEnergy = DataManager.LoadData<int>("space", "energy");
+                space.spaceSuitHealth = DataManager.LoadData<int>("space", "health");
+                space.SolarPanelHealth = DataManager.LoadData<int>("space", "solarHealth");
+                space.AntennenHealth = DataManager.LoadData<int>("space", "antennasHealth");
+                //arrays
+                int[] loadedSave = DataManager.LoadData<int[]>("saveFile", "save");
+                _save = loadedSave;
+                world.LoadWorld();
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Spielstand geladen!");
+                Console.ResetColor();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("Spielstand konnte nicht geladen werden!");
+                Console.ResetColor();
+            }
+        }
+        public void SaveFileInit()
+        {
+            try
+            {
+                //game
+                DataManager.SaveData("saveFile", "day", CurrentDay);
+                DataManager.SaveData("saveFile", "isWorld", isWorld);
+                //shuttle
+                DataManager.SaveData("shuttle", "energy", shuttle.Energy);
+                DataManager.SaveData("shuttle", "health", shuttle.Health);
+                DataManager.SaveData("shuttle", "sonar", shuttle.sonarActive);
+                //space
+                DataManager.SaveData("space", "energy", space.spaceSuitEnergy);
+                DataManager.SaveData("space", "health", space.spaceSuitHealth);
+                DataManager.SaveData("space", "solarHealth", space.SolarPanelHealth);
+                DataManager.SaveData("space", "antennasHealth", space.AntennenHealth);
+                //arrays
+                DataManager.SaveData("saveFile","save", _save);
+                world.SaveWorld();
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Spiel hat gespeichert.");
+                Console.ResetColor();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("Spielstand konnte nicht gespeichert werden!");
+                Console.ResetColor();
+            }
+        }
+        public void initObjekts()
+        {
+            //Erstmalige generierung der Welt und zuweisung von Objekten
+            if (init_Objects == false)
+            {
+                Console.WriteLine("Test");
+                init_Objects = true;
+                shuttle.SpaceShip(space, activities, this, world, system, inventory, math, quest, questSystem);
+                world.Worlds(shuttle, space, activities, this, system, inventory, questSystem);
+                activities.Actions(shuttle, space, this, world, system, inventory);
+                system.Passiv(shuttle, space, activities, this, world, inventory, math, questSystem);
+                space.Space_(shuttle, activities, this, world, system, inventory, math);
+                inventory.InvInit(shuttle, space, activities, this, world, system);
+                questSystem.QuestSystemInit(quest, space, activities, this, world, system, inventory, math);
+                quest.QuestInit(questSystem, this);
+            }
         }
         public void introduction()
         {
-            if (_save[0, 0] == 0)
+            if (_save[0] == 0)
             {
-                _save[0,0] = 1;
+                _save[0] = 1;
                 string message = string.Empty;
                 introduction:
                 Console.WriteLine("\nBevor es Losgeht, in diesem Spiel bist du eine Forscherin namens Charlotte, du befindest dich auf einem Raumschiff und \nlebst da allein. Dieses Spiel ist rein auf Text basiert und der Kreativität von dir. Es wird für die nächste Aktion \nimmer auf Input gewartet (von der Tastatur), auch damit Texte weiter gehen.");
@@ -126,6 +208,7 @@ namespace Cosmic_Explorer
                 {
                     case "ja":
                         Console.WriteLine("Super, dann beginnen wir nun dein Ersten Tag, viel Erfolg :D\n");
+                        NewDayStart(23);
                         break;
                     case "nein":
                         Console.WriteLine("Na dann wiederhole ich es nochmal");
@@ -135,46 +218,20 @@ namespace Cosmic_Explorer
                 }
             }
         }
-        public void SaveFileInit()
+        public void NewDayStart(int time) //Funktion um den neuen Tag zu starten
         {
-            world.SaveWorld();
-            Saver.SaveArray<int>("Save", _save);
-            Saver.Save("SaveFile", "Day", CurrentDay);
-        }
-        public void NewDayStart(int time, int day) //Funktion um den neuen Tag zu starten
-        {
-            const int BREAKER = 1;
-            CurrentDay = day;
+            const bool WorldBREAKER = true;
             if (time >= 23.0)
             {
-                //Erstmalige generierung der Welt und zuweisung von Objekten
-                if (init_Objects == false)
-                {
-                    init_Objects = true;
-                    shuttle.SpaceShip(space, activities, this, world, system, inventory, math, quest, questSystem);
-                    world.Worlds(shuttle, space, activities, this, system, inventory, questSystem);
-                    activities.Actions(shuttle, space, this, world, system, inventory);
-                    system.Passiv(shuttle, space, activities, this, world, inventory, math, questSystem);
-                    space.Space_(shuttle, activities, this, world, system, inventory, math);
-                    inventory.InvInit(shuttle, space, activities, this, world, system);
-                    questSystem.QuestSystemInit(quest,space, activities, this, world, system, inventory, math);
-                    quest.QuestInit(questSystem, this);
-                    //Sollte bereits ein spielstand existieren muss die Welt nicht nochmal generiert werden.
-                    if (BREAKER != isWorld)
-                    {
-                        world.WorldGenerator();
-                        isWorld = BREAKER;
-                    }
-                }
                 CurrentDay++;
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("Es ist Spät und du gingst ins Bett");
                 Console.WriteLine("Tag " + CurrentDay + " Startet");
                 Console.ResetColor();
                 //automatische Speicherung wenn der Nächste Tag Startet (erst wenn das Spiel Tag 2 Startet)
-                if (_save[0, 2] == BREAKER)
+                if (_save[1] == BREAKER)
                 {
-                    Saver.DeleteSaveFile();
+                    DataManager.DeleteSaveFiles();
                     SaveFileInit();
                     if (debug)
                     {
@@ -182,15 +239,18 @@ namespace Cosmic_Explorer
                         Console.WriteLine("Spielstand Gespeichert! [NUR WÄHREND DES DEBUGS VISIBLE]");
                         Console.ResetColor();
                     }
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Spiel hat gespeichert.");
-                    Console.ResetColor();
                 }
-                else
+                //Sollte bereits ein spielstand existieren muss die Welt nicht nochmal generiert werden.
+                if (isWorld != WorldBREAKER)
                 {
-                    _save[0, 2] = BREAKER;
+                    world.WorldGenerator();
+                    isWorld = WorldBREAKER;
+                    _save[1] = BREAKER;
                 }
-                shuttle.Bedroom(6, CurrentDay);
+                shuttle.Bedroom(6);
+            }
+            else
+            {
                 return;
             }
         }

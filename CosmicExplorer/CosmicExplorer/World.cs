@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CosmicExplorer;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace Cosmic_Explorer
         private QuestSystem questSystem;
         public int _playerX = 0;
         public int _playerY = 0;
+        //players Old Position
         int d = 1;
         int c = 1;
         CellType[,] world = new CellType[1619, 1619]; //Eine 1619x1619 Welt oder 2.621.440 Zellen
@@ -25,7 +27,7 @@ namespace Cosmic_Explorer
         CourseType[,] arr1 = new CourseType[1620, 1620]; //Eine 1620x1620 oder 2.624.400 mögliche Zellen
         public enum CellType
         {
-            Empty,
+            Space,
             Player,
             Asteroid,
             Planet,
@@ -55,6 +57,7 @@ namespace Cosmic_Explorer
         }
         public void WorldGenerator()
         {
+            //Counter for the World Generation Rules
             int sunCount = 0;
             int sunCount1 = 0;
             int planetCount = 0;
@@ -64,22 +67,22 @@ namespace Cosmic_Explorer
             int spaceShipCount = 0;
             int spaceCount = 0;
             int spaceCount1 = 0;
+            //Other things
             const int BREAKER = 25;
             int counter = 0;
             Random random = new Random();
-            //Eventuell ändern das auch nur X und dann Y eingetragen wird.
             for (int x = 0; x < world.GetLength(0); x++)
             {
                 for (int y = 0; y < world.GetLength(1); y++)
                 {
-                    int randomNumber = random.Next(0, 100); // Beispiel: Zufallszahl zwischen 0 und 99
+                    int randomNumber = random.Next(1, 101); // Beispiel: Zufallszahl zwischen 1 und 100
                     if (x >= BREAKER && y >= BREAKER) //Lässt erst zu das die Regeln angewendet werden wenn genügend einträge vorhanden sind
                     {
                         //Quest Debug Thing
-                        if (world[1,400] != CellType.Empty || world[5, 475] != CellType.Empty)
+                        if (world[1,400] != CellType.Space || world[5, 475] != CellType.Space)
                         {
-                            world[1, 400] = CellType.Empty;
-                            world[5, 475] = CellType.Empty;
+                            world[1, 400] = CellType.Space;
+                            world[5, 475] = CellType.Space;
                         }
                         //Welten Generation Regeln
                         if (world[x - 1, y - 1] == CellType.Asteroid || world[x, y - 1] == CellType.Asteroid || world[x - 1, y] == CellType.Asteroid)
@@ -127,11 +130,11 @@ namespace Cosmic_Explorer
                                 continue;
                             }
                         }
-                        else if (world[x - 1, y - 1] == CellType.Empty || world[x, y - 1] == CellType.Empty || world[x - 1, y] == CellType.Empty)
+                        else if (world[x - 1, y - 1] == CellType.Space || world[x, y - 1] == CellType.Space || world[x - 1, y] == CellType.Space)
                         {
                             if (randomNumber <= 60) //Wenn es leer ist, ist es wahrscheinlicher das dies Weltraum ist
                             {
-                                world[x, y] = CellType.Empty;
+                                world[x, y] = CellType.Space;
                                 spaceCount++;
                                 continue;
                             }
@@ -154,7 +157,7 @@ namespace Cosmic_Explorer
                     }
                     else // Restliche Wahrscheinlichkeit für leere Zellen
                     {
-                        world[x, y] = CellType.Empty;
+                        world[x, y] = CellType.Space;
                         spaceCount1++;
                     }
                 }
@@ -168,7 +171,8 @@ namespace Cosmic_Explorer
                 }
             }
             world[1, 1] = CellType.Player;
-            if(game.debug)
+            FindCellsByType(CellType.Player, true);
+            if (game.debug)
             {
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.WriteLine("Welt generation: [NUR WÄHREND DES DEBUGS VISIBLE]");
@@ -187,7 +191,42 @@ namespace Cosmic_Explorer
         }
         public void SaveWorld()
         {
-            Saver.SaveArray("World", world);
+            WorldDataManager.SaveWorldData(world);
+        }
+        public void LoadWorld()
+        {
+            try
+            {
+                CellType[,] loadedWorld = WorldDataManager.LoadWorldData<CellType>();
+                world = loadedWorld;
+                if (game.debug)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("World is Loaded! [NUR WÄHREND DES DEBUGS VISIBLE]");
+                    Console.ResetColor();
+                }
+            }
+            catch (InvalidDataException ex)
+            {
+                // Behandlung der InvalidDataException
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine($"Fehler beim Laden der Welt-Daten: {ex.Message}");
+                Console.ResetColor();
+            }
+            catch (FileNotFoundException ex)
+            {
+                // Behandlung der FileNotFoundException
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine($"Fehler beim Laden der Welt-Daten: {ex.Message}");
+                Console.ResetColor();
+            }
+            catch (Exception ex)
+            {
+                // Allgemeine Exception-Behandlung für alle anderen Fälle
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine($"Ein Fehler ist aufgetreten: {ex.Message}");
+                Console.ResetColor();
+            }
         }
         //Ab hier sind die Aktivitäten die irgendwas mit der Welt zu tun haben:
         public void Course(int X, int Y, bool antiCrash)
@@ -197,9 +236,10 @@ namespace Cosmic_Explorer
             int counter = 0;
             int xCord = -1;
             int yCord = -1;
+            //Ist unnötig da nach der Weltengenierung der Player einmal gefunden wird, jedoch bleibt dies erstmal falls fehler entstehen sollten
             if (_playerX == 0 && _playerY == 0)
             {
-                Console.WriteLine("Bitte schaue erst wo dein Standort ist");
+                Console.WriteLine("Bitte schaue erst wo dein Standort ist[Error by Finding Player Position]");
                 return;
             }
             //Übersetzt die Koordinaten (X und Y) in array einträge (Spalte und Zeile)
@@ -261,7 +301,7 @@ namespace Cosmic_Explorer
                         {
                             for (int l = _playerY; l >= yCord; l--)
                             {
-                                if (world[k, l] == CellType.Empty)
+                                if (world[k, l] == CellType.Space)
                                 {
                                     int z = k;
                                     int w = l;
@@ -276,7 +316,7 @@ namespace Cosmic_Explorer
                                         l = w;
                                     }
                                 }
-                                if (world[k, l] != CellType.Empty)
+                                if (world[k, l] != CellType.Space)
                                 {
                                     counter++;
                                 }
@@ -286,7 +326,7 @@ namespace Cosmic_Explorer
                         {
                             for (int l = _playerY; l <= yCord; l++)
                             {
-                                if (world[k, l] == CellType.Empty)
+                                if (world[k, l] == CellType.Space)
                                 {
                                     int z = k;
                                     int w = l;
@@ -301,7 +341,7 @@ namespace Cosmic_Explorer
                                         l = w;
                                     }
                                 }
-                                if (world[k, l] != CellType.Empty)
+                                if (world[k, l] != CellType.Space)
                                 {
                                     counter++;
                                 }
@@ -317,7 +357,7 @@ namespace Cosmic_Explorer
                         {
                             for (int l = _playerY; l >= yCord; l--)
                             {
-                                if (world[k, l] == CellType.Empty)
+                                if (world[k, l] == CellType.Space)
                                 {
                                     int z = k;
                                     int w = l;
@@ -332,7 +372,7 @@ namespace Cosmic_Explorer
                                         l = w;
                                     }
                                 }
-                                if (world[k, l] != CellType.Empty)
+                                if (world[k, l] != CellType.Space)
                                 {
                                     counter++;
                                 }
@@ -342,7 +382,7 @@ namespace Cosmic_Explorer
                         {
                             for (int l = _playerY; l <= yCord; l++)
                             {
-                                if (world[k, l] == CellType.Empty)
+                                if (world[k, l] == CellType.Space)
                                 {
                                     int z = k;
                                     int w = l;
@@ -357,7 +397,7 @@ namespace Cosmic_Explorer
                                         l = w;
                                     }
                                 }
-                                if (world[k, l] != CellType.Empty)
+                                if (world[k, l] != CellType.Space)
                                 {
                                     counter++;
                                 }
@@ -374,7 +414,7 @@ namespace Cosmic_Explorer
                     {
                         world[p, l] = CellType.Player;
                         arr1[p, l] = CourseType.notWritten;
-                        world[c, d] = CellType.Empty;
+                        world[c, d] = CellType.Space;
                         //Console.WriteLine("c " + c + " d " + d + "[Debug]");
                         c = p;
                         d = l;

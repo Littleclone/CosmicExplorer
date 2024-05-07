@@ -32,7 +32,6 @@ namespace Cosmic_Explorer
             }
         }
         public int currentTime;
-        int day;
         string message;
         //Space Suit
         public int spaceSuitHealth = 100;
@@ -40,81 +39,79 @@ namespace Cosmic_Explorer
         public float spaceSuitOxygen = 100f;
         //Shuttle Module
         public int SolarPanelHealth = 100;
-        public int SolarPanelEfficiency = 20;//Percantage
+        public int SolarPanelEfficiency = 20;//Percantage. Maybe moved later to a different thing
         public int AntennenHealth = 100;
         public void InSpace()
         {
-            day = shuttle.day;
             //Überprüft ob es bereits 23 Uhr ist
             if (currentTime == 23)
             {
-                game.NewDayStart(currentTime, day);
+                game.NewDayStart(currentTime);
             }
             Console.WriteLine("Du bist im Weltraum, was willst du machen? [Uhrzeit: " + currentTime + ":00] | [Restliche Energie: " + spaceSuitEnergy + "]");
             Console.WriteLine("Repariere das Shuttle[1]");
             Console.WriteLine("Geh zu den Solar Panellen[2]");
             Console.WriteLine("Geh zu den Antennen[3]");
             Console.WriteLine("Geh zurück ins Shuttle[4]");
-        WrongInput:
-            Console.Write("Eingabe:");
-            message = Console.ReadLine();
-            switch (message)
+            while (true)
             {
-                case "1":
-                    math.EnergyController(10, spaceSuitEnergy);
-                    spaceSuitEnergy = math.x;
-                    if (!math.result)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Du hast zu Wenig Energie um diese Aktion durchzuführen!");
-                        Console.ResetColor();
-                        goto WrongInput;
-                    }
-                    if (shuttle.Health < 100)
-                    {
+                Console.Write("Eingabe:");
+                message = Console.ReadLine();
+                switch (message)
+                {
+                    case "1":
+                        if (spaceSuitEnergy !< 10)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Du hast zu Wenig Energie um diese Aktion durchzuführen!");
+                            Console.ResetColor();
+                            continue;
+                        }
+                        if (shuttle.Health < 100)
+                        {
+                            currentTime++;
+                            shuttle.Health += 5;
+                            spaceSuitEnergy -= 10;
+                            Console.WriteLine("Shuttle um 5 Lebenspunkte Repariert");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Das Shuttle muss nicht Repariert werden");
+                        }
+                        continue;
+                    case "2":
+                        if (spaceSuitEnergy !< 5)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Du hast zu Wenig Energie um diese Aktion durchzuführen!");
+                            Console.ResetColor();
+                            continue;
+                        }
+                        spaceSuitEnergy -= 5;
                         currentTime++;
-                        shuttle.Health += 5;
-                        Console.WriteLine("Shuttle um 5 Lebenspunkte Repariert");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Das Shuttle muss nicht Repariert werden");
-                    }
-                    goto WrongInput;
-                case "2":
-                    math.EnergyController(5, spaceSuitEnergy);
-                    spaceSuitEnergy = math.x;
-                    if (!math.result)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Du hast zu Wenig Energie um diese Aktion durchzuführen!");
-                        Console.ResetColor();
-                        goto WrongInput;
-                    }
-                    currentTime++;
-                    Solar();
-                    break;
-                case "3":
-                    math.EnergyController(5, spaceSuitEnergy);
-                    spaceSuitEnergy = math.x;
-                    if (!math.result)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Du hast zu Wenig Energie um diese Aktion durchzuführen!");
-                        Console.ResetColor();
-                        goto WrongInput;
-                    }
-                    currentTime++;
-                    Antennas();
-                    break;
-                case "4":
-                    currentTime++;
-                    shuttle.currentTime = currentTime;
-                    shuttle.Airlock();
-                    break;
-                default:
-                    Console.WriteLine("Wähle einer der Nummern aus!");
-                    goto WrongInput;
+                        Solar();
+                        break;
+                    case "3":
+                        if (spaceSuitEnergy !< 5)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Du hast zu Wenig Energie um diese Aktion durchzuführen!");
+                            Console.ResetColor();
+                            continue;
+                        }
+                        spaceSuitEnergy -= 5;
+                        currentTime++;
+                        Antennas();
+                        break;
+                    case "4":
+                        currentTime++;
+                        shuttle.currentTime = currentTime;
+                        shuttle.Airlock();
+                        break;
+                    default:
+                        Console.WriteLine("Wähle einer der Nummern aus!");
+                        continue;
+                }
             }
         }
         public void Solar()
@@ -123,40 +120,40 @@ namespace Cosmic_Explorer
             Console.WriteLine("Zurück zur Tür[1]");
             Console.WriteLine("Zu den Antennen[2]");
             Console.WriteLine("Mehr ist noch nicht vorhanden");
-        WrongInput:
-            Console.Write("Eingabe:");
-            message = Console.ReadLine();
-            switch (message)
+            while (true)
             {
-                case "1":
-                    math.EnergyController(5, spaceSuitEnergy);
-                    spaceSuitEnergy = math.x;
-                    if (!math.result)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Du hast zu Wenig Energie um diese Aktion durchzuführen!");
-                        Console.ResetColor();
-                        goto WrongInput;
-                    }
-                    currentTime++;
-                    InSpace();
-                    goto WrongInput;
-                case "2":
-                    math.EnergyController(5, spaceSuitEnergy);
-                    spaceSuitEnergy = math.x;
-                    if (!math.result)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Du hast zu Wenig Energie um diese Aktion durchzuführen!");
-                        Console.ResetColor();
-                        goto WrongInput;
-                    }
-                    currentTime++;
-                    Antennas();
-                    break;
-                default:
-                    Console.WriteLine("Wähle einer der Nummern aus!");
-                    goto WrongInput;
+                Console.Write("Eingabe:");
+                message = Console.ReadLine();
+                switch (message)
+                {
+                    case "1":
+                        if (spaceSuitEnergy !< 5)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Du hast zu Wenig Energie um diese Aktion durchzuführen!");
+                            Console.ResetColor();
+                            continue;
+                        }
+                        spaceSuitEnergy -= 5;
+                        currentTime++;
+                        InSpace();
+                        continue;
+                    case "2":
+                        if (spaceSuitEnergy !< 5)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Du hast zu Wenig Energie um diese Aktion durchzuführen!");
+                            Console.ResetColor();
+                            continue;
+                        }
+                        spaceSuitEnergy -= 5;
+                        currentTime++;
+                        Antennas();
+                        break;
+                    default:
+                        Console.WriteLine("Wähle einer der Nummern aus!");
+                        continue;
+                }
             }
         }
         public void Antennas()
@@ -165,40 +162,41 @@ namespace Cosmic_Explorer
             Console.WriteLine("Zurück zur Tür[1]");
             Console.WriteLine("Zu den Solar Panellen[2]");
             Console.WriteLine("Mehr ist noch nicht vorhanden");
-        WrongInput:
-            Console.Write("Eingabe:");
-            message = Console.ReadLine();
-            switch (message)
+            while (true)
             {
-                case "1":
-                    math.EnergyController(5, spaceSuitEnergy);
-                    spaceSuitEnergy = math.x;
-                    if (!math.result)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Du hast zu Wenig Energie um diese Aktion durchzuführen!");
-                        Console.ResetColor();
-                        goto WrongInput;
-                    }
-                    currentTime++;
-                    InSpace();
-                    goto WrongInput;
-                case "2":
-                    math.EnergyController(5, spaceSuitEnergy);
-                    spaceSuitEnergy = math.x;
-                    if (!math.result)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Du hast zu Wenig Energie um diese Aktion durchzuführen!");
-                        Console.ResetColor();
-                        goto WrongInput;
-                    }
-                    currentTime++;
-                    Solar();
-                    break;
-                default:
-                    Console.WriteLine("Wähle einer der Nummern aus!");
-                    goto WrongInput;
+                Console.Write("Eingabe:");
+                message = Console.ReadLine();
+                switch (message)
+                {
+                    case "1":
+
+                        if (spaceSuitEnergy !< 5)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Du hast zu Wenig Energie um diese Aktion durchzuführen!");
+                            Console.ResetColor();
+                            continue;
+                        }
+                        spaceSuitEnergy -= 5;
+                        currentTime++;
+                        InSpace();
+                        continue;
+                    case "2":
+                        if (spaceSuitEnergy !< 5)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Du hast zu Wenig Energie um diese Aktion durchzuführen!");
+                            Console.ResetColor();
+                            continue;
+                        }
+                        spaceSuitEnergy -= 5;
+                        currentTime++;
+                        Solar();
+                        break;
+                    default:
+                        Console.WriteLine("Wähle einer der Nummern aus!");
+                        continue;
+                }
             }
         }
     }

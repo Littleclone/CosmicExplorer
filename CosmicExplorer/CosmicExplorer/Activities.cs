@@ -68,10 +68,10 @@ namespace Cosmic_Explorer
                 Console.WriteLine("Action Triggered [NUR WÄHREND DES DEBUGS VISIBLE]");
                 Console.ResetColor();
             }
+            //Triggered the Methode to update the Quests
             qSystem.QuestSystemUpdate();
             //Mindest Energy die ein Passiv System ausführen kann
-            math.EnergyController(5, shuttle.Energy);
-            if (!math.result)
+            if (shuttle.Energy !< 5)
             {
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.WriteLine("Es gibt zu wenig energie um die Passiven Systeme auszuführen!");
@@ -84,8 +84,7 @@ namespace Cosmic_Explorer
         {
             if(shuttle.sonarActive)
             {
-                math.EnergyController(5, shuttle.Energy);
-                if(!math.result)
+                if(shuttle.Energy !< 5)
                 {
                     Console.WriteLine("Test");
                     return;
