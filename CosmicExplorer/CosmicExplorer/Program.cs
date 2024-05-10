@@ -8,8 +8,8 @@ namespace Cosmic_Explorer
         static void Main(string[] args)
         {
             Game game = new Game();
-            game.initObjekts();
             game.Start();
+            game.initObjekts();
             game.LoadSaveFile();
             game.introduction();
             Console.WriteLine("Debug-Error[Main Function]"); //Wird ausgelöst wenn aus irgeindein grund das program wieder zur Main Function kommt (Sollte im normalfall nicht passieren)
@@ -26,11 +26,15 @@ namespace Cosmic_Explorer
         Math math = new Math();
         Quest quest = new Quest();
         QuestSystem questSystem = new QuestSystem();
+        Player player = new Player();
         ulong CurrentDay = 0; //Start Tag
         public int[] _save = new int[60]; //Space um werte zu speichern (Für abfragen)
         public bool debug = false;
+        public bool hardCore = false;
+        //Kontroll Variablen
         bool init_Objects = false;
         bool isWorld = false;
+        bool needSave = false;
         const int BREAKER = 1;
         public void Start()
         {
@@ -41,7 +45,7 @@ namespace Cosmic_Explorer
                 Console.WriteLine("Cosmic Explorer");
                 Console.WriteLine("Guten Tag, das ist Cosmic Explorer, ein Text Basiertes Weltraum Spiel\nDieses Text Game befindet sich in der Testphase und wird noch Entwickelt von mir um mehr C# zu lernen.");
                 Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("Game Version: 0.1.4 Dev Phase Deutsch / German");
+                Console.WriteLine("Game Version: 0.1.5 Dev Phase Deutsch / German");
                 Console.ResetColor();
                 Console.WriteLine("Willst du starten? [start = Starte das spiel, exit = Verlasse das Spiel, new game = löscht deine Save File]");
                 Console.Write("Eingabe:");
@@ -76,6 +80,7 @@ namespace Cosmic_Explorer
                     case "start skip":
                         Console.WriteLine("Starte das game und skippe Introduction");
                         _save[0] = 1;
+                        initObjekts();
                         LoadSaveFile();
                         NewDayStart(23);
                         break;
@@ -101,7 +106,7 @@ namespace Cosmic_Explorer
                 CurrentDay -= 1;
                 isWorld = DataManager.LoadData<bool>("saveFile", "isWorld");
                 //shuttle
-                shuttle.Energy = DataManager.LoadData<int>("shuttle", "energy");
+                //shuttle.Energy = DataManager.LoadData<int>("shuttle", "energy");
                 shuttle.Health = DataManager.LoadData<int>("shuttle", "health");
                 shuttle.sonarActive = DataManager.LoadData<bool>("shuttle", "sonar");
                 //space
@@ -133,7 +138,7 @@ namespace Cosmic_Explorer
                 DataManager.SaveData("saveFile", "day", CurrentDay);
                 DataManager.SaveData("saveFile", "isWorld", isWorld);
                 //shuttle
-                DataManager.SaveData("shuttle", "energy", shuttle.Energy);
+                //DataManager.SaveData("shuttle", "energy", shuttle.Energy);
                 DataManager.SaveData("shuttle", "health", shuttle.Health);
                 DataManager.SaveData("shuttle", "sonar", shuttle.sonarActive);
                 //space
@@ -161,9 +166,8 @@ namespace Cosmic_Explorer
             //Erstmalige generierung der Welt und zuweisung von Objekten
             if (init_Objects == false)
             {
-                Console.WriteLine("Test");
                 init_Objects = true;
-                shuttle.SpaceShip(space, activities, this, world, system, inventory, math, quest, questSystem);
+                shuttle.SpaceShip(space, activities, this, world, system, inventory, math, quest, questSystem, player);
                 world.Worlds(shuttle, space, activities, this, system, inventory, questSystem);
                 activities.Actions(shuttle, space, this, world, system, inventory);
                 system.Passiv(shuttle, space, activities, this, world, inventory, math, questSystem);
@@ -171,6 +175,7 @@ namespace Cosmic_Explorer
                 inventory.InvInit(shuttle, space, activities, this, world, system);
                 questSystem.QuestSystemInit(quest, space, activities, this, world, system, inventory, math);
                 quest.QuestInit(questSystem, this);
+                player.ObjInit(this);
             }
         }
         public void introduction()
@@ -208,7 +213,6 @@ namespace Cosmic_Explorer
                 {
                     case "ja":
                         Console.WriteLine("Super, dann beginnen wir nun dein Ersten Tag, viel Erfolg :D\n");
-                        NewDayStart(23);
                         break;
                     case "nein":
                         Console.WriteLine("Na dann wiederhole ich es nochmal");
@@ -217,6 +221,7 @@ namespace Cosmic_Explorer
                         goto verstanden;
                 }
             }
+            NewDayStart(23);
         }
         public void NewDayStart(int time) //Funktion um den neuen Tag zu starten
         {
@@ -229,16 +234,10 @@ namespace Cosmic_Explorer
                 Console.WriteLine("Tag " + CurrentDay + " Startet");
                 Console.ResetColor();
                 //automatische Speicherung wenn der Nächste Tag Startet (erst wenn das Spiel Tag 2 Startet)
-                if (_save[1] == BREAKER)
+                if (_save[1] == BREAKER && needSave)
                 {
                     DataManager.DeleteSaveFiles();
                     SaveFileInit();
-                    if (debug)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Spielstand Gespeichert! [NUR WÄHREND DES DEBUGS VISIBLE]");
-                        Console.ResetColor();
-                    }
                 }
                 //Sollte bereits ein spielstand existieren muss die Welt nicht nochmal generiert werden.
                 if (isWorld != WorldBREAKER)
@@ -247,6 +246,8 @@ namespace Cosmic_Explorer
                     isWorld = WorldBREAKER;
                     _save[1] = BREAKER;
                 }
+                needSave = true;
+                shuttle.Energy = 100;
                 shuttle.Bedroom(6);
             }
             else

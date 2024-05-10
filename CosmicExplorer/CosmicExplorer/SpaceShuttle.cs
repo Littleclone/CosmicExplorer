@@ -19,6 +19,7 @@ namespace Cosmic_Explorer
         private Math math;
         private Quest quest;
         private QuestSystem questSystem;
+        private Player player;
         string message;
         int currentRoom = 0;
         public int currentTime;
@@ -28,7 +29,7 @@ namespace Cosmic_Explorer
         //Passiv System bool flags
         bool antiCrashSystem = true;
         public bool sonarActive = false;
-        public void SpaceShip(Space space, Activities action, Game games, World world, PassivSystem systems, Inventory inv, Math math, Quest quest, QuestSystem questS)
+        public void SpaceShip(Space space, Activities action, Game games, World world, PassivSystem systems, Inventory inv, Math math, Quest quest, QuestSystem questS, Player player)
         {
             this.game = games;
             this.Space = space;
@@ -39,6 +40,7 @@ namespace Cosmic_Explorer
             this.math = math;
             this.quest = quest;
             this.questSystem = questS;
+            this.player = player;
             if(game.debug)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -94,6 +96,11 @@ namespace Cosmic_Explorer
                         break;
                     case "7":
                         game.Start();
+                        break;
+                        //Debug Action
+                    case "8":
+                        player.health = 0;
+                        player.OxygenCalculations();
                         break;
                     default:
                         Console.WriteLine("Wähle einer der Nummern aus!");

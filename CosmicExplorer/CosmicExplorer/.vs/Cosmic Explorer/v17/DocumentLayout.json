@@ -7,12 +7,8 @@
       "RelativeMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|e:\\dev\\cosmicexplorer\\cosmicexplorer\\cosmicexplorer\\datamanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|solutionrelative:datamanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|e:\\dev\\cosmicexplorer\\cosmicexplorer\\cosmicexplorer\\space.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|solutionrelative:space.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|e:\\dev\\cosmicexplorer\\cosmicexplorer\\cosmicexplorer\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|solutionrelative:player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|e:\\dev\\cosmicexplorer\\cosmicexplorer\\cosmicexplorer\\world.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -21,6 +17,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|e:\\dev\\cosmicexplorer\\cosmicexplorer\\cosmicexplorer\\spaceshuttle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|solutionrelative:spaceshuttle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|e:\\dev\\cosmicexplorer\\cosmicexplorer\\cosmicexplorer\\space.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|solutionrelative:space.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -43,30 +43,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "DataManager.cs",
-              "DocumentMoniker": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\DataManager.cs",
-              "RelativeDocumentMoniker": "DataManager.cs",
-              "ToolTip": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\DataManager.cs",
-              "RelativeToolTip": "DataManager.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABgAAAARAAAA",
+              "Title": "Player.cs",
+              "DocumentMoniker": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\Player.cs",
+              "RelativeDocumentMoniker": "Player.cs",
+              "ToolTip": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\Player.cs",
+              "RelativeToolTip": "Player.cs",
+              "ViewState": "AQIAABUAAAAAAAAAAAAAAEsAAAAxAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-07T19:58:36.366Z"
+              "WhenOpened": "2024-05-09T11:41:50.598Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "World.cs",
               "DocumentMoniker": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\World.cs",
               "RelativeDocumentMoniker": "World.cs",
               "ToolTip": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\World.cs",
               "RelativeToolTip": "World.cs",
-              "ViewState": "AQIAACQAAAAAAAAAAAAAAOMAAAAlAAAA",
+              "ViewState": "AQIAALEAAAAAAAAAAAAAAM0AAAApAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-07T13:34:22.649Z"
+              "WhenOpened": "2024-05-07T13:34:22.649Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "Space.cs",
               "DocumentMoniker": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\Space.cs",
               "RelativeDocumentMoniker": "Space.cs",
@@ -78,15 +80,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "SpaceShuttle.cs",
               "DocumentMoniker": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\SpaceShuttle.cs",
               "RelativeDocumentMoniker": "SpaceShuttle.cs",
               "ToolTip": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\SpaceShuttle.cs",
               "RelativeToolTip": "SpaceShuttle.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAIgAAAArAAAA",
+              "ViewState": "AQIAACQAAAAAAAAAAAAAAEEAAABkAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-07T13:34:18.972Z"
+              "WhenOpened": "2024-05-07T13:34:18.972Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -96,7 +99,7 @@
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAABgAAAAAAAAAAAAAANIAAAAoAAAA",
+              "ViewState": "AQIAABsAAAAAAAAAAAAhwDUAAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-07T13:31:56.798Z",
               "EditorCaption": ""
