@@ -3,24 +3,12 @@
   "WorkspaceRootPath": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|e:\\dev\\cosmicexplorer\\cosmicexplorer\\cosmicexplorer\\spaceshuttle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|solutionrelative:spaceshuttle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|e:\\dev\\cosmicexplorer\\cosmicexplorer\\cosmicexplorer\\world.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|solutionrelative:world.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|e:\\dev\\cosmicexplorer\\cosmicexplorer\\cosmicexplorer\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|e:\\dev\\cosmicexplorer\\cosmicexplorer\\cosmicexplorer\\itemindex.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|solutionrelative:itemindex.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|e:\\dev\\cosmicexplorer\\cosmicexplorer\\cosmicexplorer\\inventory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|solutionrelative:inventory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|e:\\dev\\cosmicexplorer\\cosmicexplorer\\cosmicexplorer\\spaceshuttle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{043FB8E3-07D1-4C7B-98DF-20E3CCCFEDF1}|Cosmic Explorer.csproj|solutionrelative:spaceshuttle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -43,64 +31,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "World.cs",
-              "DocumentMoniker": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\World.cs",
-              "RelativeDocumentMoniker": "World.cs",
-              "ToolTip": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\World.cs",
-              "RelativeToolTip": "World.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB8AAAATAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-11T11:47:30.695Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ItemIndex.cs",
-              "DocumentMoniker": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\ItemIndex.cs",
-              "RelativeDocumentMoniker": "ItemIndex.cs",
-              "ToolTip": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\ItemIndex.cs",
-              "RelativeToolTip": "ItemIndex.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAAZAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-11T10:43:50.068Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Inventory.cs",
-              "DocumentMoniker": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\Inventory.cs",
-              "RelativeDocumentMoniker": "Inventory.cs",
-              "ToolTip": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\Inventory.cs",
-              "RelativeToolTip": "Inventory.cs",
-              "ViewState": "AQIAAEEAAAAAAAAAAAAAAFoAAABPAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-10T20:30:25.549Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
               "Title": "SpaceShuttle.cs",
               "DocumentMoniker": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\SpaceShuttle.cs",
               "RelativeDocumentMoniker": "SpaceShuttle.cs",
               "ToolTip": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\SpaceShuttle.cs",
               "RelativeToolTip": "SpaceShuttle.cs",
-              "ViewState": "AQIAAGkAAAAAAAAAAAAAANwAAAAeAAAA",
+              "ViewState": "AQIAAEMAAAAAAAAAAAAAAGEAAAAeAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-07T13:34:18.972Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-07T13:34:18.972Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAAOEAAAAAAAAAAAAAAPcAAAAvAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACwAAAA9AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-07T13:31:56.798Z"
+              "WhenOpened": "2024-05-07T13:31:56.798Z",
+              "EditorCaption": ""
             }
           ]
         }

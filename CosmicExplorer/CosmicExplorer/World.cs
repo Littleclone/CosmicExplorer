@@ -18,6 +18,7 @@ namespace Cosmic_Explorer
         private PassivSystem passiv;
         private Inventory inventory;
         private QuestSystem questSystem;
+        private Science sciene;
         public int _playerX = 0;
         public int _playerY = 0;
         //players Old Position
@@ -40,7 +41,7 @@ namespace Cosmic_Explorer
             notWritten,
             Written,
         }
-        public void Worlds(SpaceShuttle shuttle, Space space, Activities action, Game games, PassivSystem systems, Inventory inv, QuestSystem questS)
+        public void Worlds(SpaceShuttle shuttle, Space space, Activities action, Game games, PassivSystem systems, Inventory inv, QuestSystem questS, Science scient)
         {
             this.game = games;
             this.shuttle = shuttle;
@@ -49,6 +50,7 @@ namespace Cosmic_Explorer
             this.passiv = systems;
             this.inventory = inv;
             this.questSystem = questS;
+            this.sciene = scient;
             if(game.debug)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -434,9 +436,6 @@ namespace Cosmic_Explorer
                     }
                 }
             }
-            float petrolUse = 0.05f;
-            petrolCounter *= petrolUse;
-            inventory.RemoveItem(1, Convert.ToInt32(petrolCounter));
             FindCellsByType(CellType.Player, true);
             Console.WriteLine("Kurs wurde berechnet");
             if(game.debug)
@@ -449,6 +448,18 @@ namespace Cosmic_Explorer
                 {
                     questSystem.QState[1] = 1;
                 }
+            }
+            if (sciene.progress[1] != 3)
+            {
+                float petrolUse = 0.10f;
+                petrolCounter *= petrolUse;
+                inventory.RemoveItem(1, Convert.ToInt32(petrolCounter));
+            }
+            else
+            {
+                float petrolUse = 0.05f;
+                petrolCounter *= petrolUse;
+                inventory.RemoveItem(1, Convert.ToInt32(petrolCounter));
             }
             passiv.ActionMaked();
         }

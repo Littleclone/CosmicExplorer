@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Cosmic Explorer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e312e8508597b8f04019aa4d57947b756442f7f6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+070aaa3555472ef81b631f0012b2bfab8b780bac")]
 [assembly: System.Reflection.AssemblyProductAttribute("Cosmic Explorer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Cosmic Explorer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

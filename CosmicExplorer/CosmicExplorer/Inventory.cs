@@ -86,20 +86,24 @@ namespace Cosmic_Explorer
         public int[] itemIndex = new int[5]; //array to save the Items
         public void PlayerInventory()
         {
-            for (int i = 1; i <= 1; i++)
+            for (int i = 1; i <= 4; i++)
             {
-                Console.WriteLine(ItemIndex.ItemName(i) + ": " + itemIndex[i]);
+                if(ItemIndex.IsValid(i))
+                {
+                    if (itemIndex[i] != 0)
+                    {
+                        Console.WriteLine(ItemIndex.ItemName(i) + ": " + itemIndex[i] + " ID:" + i);
+                    }
+                }
             }
         }
         public void AddItem(int ItemID, int amount)
         {
             if(ItemIndex.IsValid(ItemID))
             {
-                Console.WriteLine("Test");
                 if (ItemID == 1)
                 {
                     itemIndex[1] += amount;
-                    Console.WriteLine(amount);
                 }
             }
         }

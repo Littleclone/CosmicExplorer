@@ -8,7 +8,7 @@ namespace Cosmic_Explorer
 {
     public static class ItemIndex
     {
-        private static string itemName = "Item";
+        private static string? itemName;
         public static bool IsValid(int ID)
         {
             if(ID > 0)

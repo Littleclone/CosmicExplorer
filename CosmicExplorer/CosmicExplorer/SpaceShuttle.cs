@@ -20,6 +20,7 @@ namespace Cosmic_Explorer
         private Quest quest;
         private QuestSystem questSystem;
         private Player player;
+        private Science science;
         string message;
         public int currentRoom = 0;
         public int currentTime;
@@ -29,7 +30,7 @@ namespace Cosmic_Explorer
         //Passiv System bool flags
         bool antiCrashSystem = true;
         public bool sonarActive = false;
-        public void SpaceShip(Space space, Activities action, Game games, World world, PassivSystem systems, Inventory inv, Math math, Quest quest, QuestSystem questS, Player player)
+        public void SpaceShip(Space space, Activities action, Game games, World world, PassivSystem systems, Inventory inv, Math math, Quest quest, QuestSystem questS, Player player, Science scient)
         {
             this.game = games;
             this.Space = space;
@@ -41,6 +42,7 @@ namespace Cosmic_Explorer
             this.quest = quest;
             this.questSystem = questS;
             this.player = player;
+            this.science = scient;
             if(game.debug)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -92,8 +94,8 @@ namespace Cosmic_Explorer
                         Console.WriteLine("Noch nicht Implementiert!");
                         continue;
                     case "6":
-                        Console.WriteLine("Noch nicht Implementiert!");
-                        continue;
+                        science.Laboratory();
+                        break;
                     case "7":
                         Console.WriteLine("Noch nicht Implementiert!");
                         continue;
@@ -123,8 +125,8 @@ namespace Cosmic_Explorer
             //Überprüft ob es bereits 23 Uhr ist
             game.NewDayStart(currentTime);
             Console.WriteLine("Du bist in der Kommando Zentrale, was willst du machen? [Uhrzeit: " + currentTime + ":00]");
-            Console.WriteLine("Die Konsole öffnen[1]");
-            Console.WriteLine("Ins Schlafzimmer gehen[2]");
+            Console.WriteLine("Die Konsole öffnen.[1]");
+            Console.WriteLine("Ins Schlafzimmer gehen.[2]");
             Console.WriteLine("Zur Luftschleuse gehen.[3]");
             Console.WriteLine("In die Küche gehen.[4]");
             Console.WriteLine("Zum Lagerraum gehen.[5]");

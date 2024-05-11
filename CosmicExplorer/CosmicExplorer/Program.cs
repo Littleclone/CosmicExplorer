@@ -27,6 +27,7 @@ namespace Cosmic_Explorer
         Quest quest = new Quest();
         QuestSystem questSystem = new QuestSystem();
         Player player = new Player();
+        Science science = new Science();
         ulong CurrentDay = 0; //Start Tag
         public int[] _save = new int[60]; //Space um werte zu speichern (Für abfragen)
         public bool debug = false;
@@ -45,7 +46,7 @@ namespace Cosmic_Explorer
                 Console.WriteLine("Cosmic Explorer");
                 Console.WriteLine("Guten Tag, das ist Cosmic Explorer, ein Text Basiertes Weltraum Spiel\nDieses Text Game befindet sich in der Testphase und wird noch Entwickelt von mir um mehr C# zu lernen.");
                 Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("Game Version: 0.1.5 Dev Phase Deutsch / German");
+                Console.WriteLine("Game Version: 0.1.7 Dev Phase Deutsch / German");
                 Console.ResetColor();
                 Console.WriteLine("Willst du starten? [start = Starte das spiel, exit = Verlasse das Spiel, new game = löscht deine Save File]");
                 Console.Write("Eingabe:");
@@ -114,6 +115,10 @@ namespace Cosmic_Explorer
                 space.spaceSuitHealth = DataManager.LoadData<int>("space", "health");
                 space.SolarPanelHealth = DataManager.LoadData<int>("space", "solarHealth");
                 space.AntennenHealth = DataManager.LoadData<int>("space", "antennasHealth");
+                //science
+                science.progress = DataManager.LoadData<sbyte[]>("science", "progress");
+                //quests
+                questSystem.QState = DataManager.LoadData<sbyte[]>("quests", "questSave");
                 //arrays
                 int[] loadedSave = DataManager.LoadData<int[]>("saveFile", "save");
                 _save = loadedSave;
@@ -146,6 +151,10 @@ namespace Cosmic_Explorer
                 DataManager.SaveData("space", "health", space.spaceSuitHealth);
                 DataManager.SaveData("space", "solarHealth", space.SolarPanelHealth);
                 DataManager.SaveData("space", "antennasHealth", space.AntennenHealth);
+                //science
+                DataManager.SaveData("science", "progress", science.progress);
+                //quests
+                DataManager.SaveData("quests", "questSave", questSystem.QState);
                 //arrays
                 DataManager.SaveData("saveFile","save", _save);
                 world.SaveWorld();
@@ -167,7 +176,7 @@ namespace Cosmic_Explorer
             if (init_Objects == false)
             {
                 init_Objects = true;
-                shuttle.SpaceShip(space, activities, this, world, system, inventory, math, quest, questSystem, player);
+                shuttle.SpaceShip(space, activities, this, world, system, inventory, math, quest, questSystem, player, science);
                 world.Worlds(shuttle, space, activities, this, system, inventory, questSystem);
                 activities.Actions(shuttle, space, this, world, system, inventory);
                 system.Passiv(shuttle, space, activities, this, world, inventory, math, questSystem);
@@ -176,6 +185,7 @@ namespace Cosmic_Explorer
                 questSystem.QuestSystemInit(quest, space, activities, this, world, system, inventory, math);
                 quest.QuestInit(questSystem, this);
                 player.ObjInit(this);
+                science.Init(inventory, this, shuttle);
             }
         }
         public void introduction()

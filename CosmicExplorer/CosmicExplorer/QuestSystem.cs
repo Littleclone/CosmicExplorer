@@ -34,7 +34,7 @@ namespace Cosmic_Explorer
                 Console.ResetColor();
             }
         }
-        public byte[] QState = new byte[100]; //Saved the Progress / State from the Quest
+        public sbyte[] QState = new sbyte[100]; //Saved the Progress / State from the Quest
         public string message = "error";
         public uint x;
         public uint y;

@@ -31,7 +31,7 @@ namespace Cosmic_Explorer
             }
             return message = "QuestID not found";
         }
-        public void QuestGoal(int QuestID, byte counter)
+        public void QuestGoal(int QuestID, sbyte counter)
         {
             if(QuestID == 1)
             {
