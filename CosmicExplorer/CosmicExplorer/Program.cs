@@ -245,6 +245,7 @@ namespace Cosmic_Explorer
                     world.WorldGenerator();
                     isWorld = WorldBREAKER;
                     _save[1] = BREAKER;
+                    inventory.AddItem(1, 1000);
                 }
                 needSave = true;
                 shuttle.Energy = 100;

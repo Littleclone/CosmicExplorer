@@ -14,9 +14,12 @@ namespace Cosmic_Explorer
         {
             this.QSystem = quest;
             this.game = game;
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Objekte Initalisiert[Quest]. [NUR WÄHREND DES DEBUGS VISIBLE]");
-            Console.ResetColor();
+            if(game.debug)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Objekte Initalisiert[Quest]. [NUR WÄHREND DES DEBUGS VISIBLE]");
+                Console.ResetColor();
+            }
         }
         string message = "error";
         public string QuestInfos(int QuestID)

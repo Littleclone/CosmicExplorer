@@ -21,7 +21,7 @@ namespace Cosmic_Explorer
         private QuestSystem questSystem;
         private Player player;
         string message;
-        int currentRoom = 0;
+        public int currentRoom = 0;
         public int currentTime;
         //shuttle
         public int Health = 100;
@@ -60,10 +60,12 @@ namespace Cosmic_Explorer
             Console.WriteLine("In die Kommando Zentrale gehen.[1]");
             Console.WriteLine("Zur Luftschleuse gehen.[2]");
             Console.WriteLine("In die Küche gehen.[3]");
-            Console.WriteLine("Zum Generator gehen.[4]");
-            Console.WriteLine("Dich ausruhen (Regeniert bissen leben).[5]");
-            Console.WriteLine("Schlafen (Tag beenden).[6]");
-            Console.WriteLine("Hauptmenü öffnen (ES SPEICHERT NUR WENN EIN NEUER TAG STARTET) [7]");
+            Console.WriteLine("Zum Lagerraum gehen.[4]");
+            Console.WriteLine("Zum Generator gehen.[5]");
+            Console.WriteLine("Ins Labor gehen.[6]");
+            Console.WriteLine("Dich ausruhen (Regeniert bissen leben).[7]");
+            Console.WriteLine("Schlafen (Tag beenden).[8]");
+            Console.WriteLine("Hauptmenü öffnen (ES SPEICHERT NUR WENN EIN NEUER TAG STARTET) [9]");
             while (true)
             {
                 Console.Write("Eingabe:");
@@ -83,25 +85,31 @@ namespace Cosmic_Explorer
                         Console.WriteLine("Noch nicht Implementiert!");
                         continue;
                     case "4":
-                        Console.WriteLine("Noch nicht Implementiert!");
+                        currentTime++;
+                        inventory.StorageRoom();
                         continue;
                     case "5":
                         Console.WriteLine("Noch nicht Implementiert!");
                         continue;
                     case "6":
+                        Console.WriteLine("Noch nicht Implementiert!");
+                        continue;
+                    case "7":
+                        Console.WriteLine("Noch nicht Implementiert!");
+                        continue;
+                    case "8":
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("Es verging viel Zeit.");
                         Console.ResetColor();
                         game.NewDayStart(23);
                         break;
-                    case "7":
+                    case "9":
                         game.Start();
                         break;
                         //Debug Action
-                    case "8":
-                        player.health = 0;
-                        player.OxygenCalculations();
-                        break;
+                    case "99":
+                        inventory.AddItem(1, 2);
+                        continue;
                     default:
                         Console.WriteLine("Wähle einer der Nummern aus!");
                         continue;
@@ -119,7 +127,8 @@ namespace Cosmic_Explorer
             Console.WriteLine("Ins Schlafzimmer gehen[2]");
             Console.WriteLine("Zur Luftschleuse gehen.[3]");
             Console.WriteLine("In die Küche gehen.[4]");
-            Console.WriteLine("Zum Generator gehen.[5]");
+            Console.WriteLine("Zum Lagerraum gehen.[5]");
+            Console.WriteLine("Zum Generator gehen.[6]");
             while (true)
             {
                 Console.Write("Eingabe:");
@@ -150,6 +159,13 @@ namespace Cosmic_Explorer
                     case "4":
                         Console.WriteLine("Noch nicht Implementiert!");
                         continue;
+                    case "5":
+                        currentTime++;
+                        inventory.StorageRoom();
+                        break;
+                    case "6":
+                        Console.WriteLine("Noch nicht Implementiert!");
+                        continue;
                     default:
                         Console.WriteLine("Wähle einer der Nummern aus!");
                         continue;
@@ -166,7 +182,8 @@ namespace Cosmic_Explorer
             Console.WriteLine("Ins Schlafzimmer gehen[2]");
             Console.WriteLine("In die Kommando Zentrale gehen.[3]");
             Console.WriteLine("In die Küche gehen.[4]");
-            Console.WriteLine("Zum Generator gehen.[5]");
+            Console.WriteLine("Zum Lagerraum gehen.[5]");
+            Console.WriteLine("Zum Generator gehen.[6]");
             while (true)
             {
                 Console.Write("Eingabe:");
@@ -199,6 +216,10 @@ namespace Cosmic_Explorer
                         Console.WriteLine("Noch nicht Implementiert!");
                         continue;
                     case "5":
+                        currentTime++;
+                        inventory.StorageRoom();
+                        break;
+                    case "6":
                         Console.WriteLine("Noch nicht Implementiert!");
                         continue;
                     default:

@@ -19,9 +19,12 @@ namespace Cosmic_Explorer
         public void ObjInit(Game game)
         {
             this.game = game;
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Objekte Initalisiert[Player]. [NUR WÄHREND DES DEBUGS VISIBLE]");
-            Console.ResetColor();
+            if(game.debug)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Objekte Initalisiert[Player]. [NUR WÄHREND DES DEBUGS VISIBLE]");
+                Console.ResetColor();
+            }
         }
         public void EasyActions()
         {

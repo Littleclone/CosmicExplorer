@@ -27,9 +27,12 @@ namespace Cosmic_Explorer
             this.inventory = inv;
             this.math = math;
             this.quest = quest;
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Objekte Initalisiert[QuestSystem]. [NUR WÄHREND DES DEBUGS VISIBLE]");
-            Console.ResetColor();
+            if(game.debug)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Objekte Initalisiert[QuestSystem]. [NUR WÄHREND DES DEBUGS VISIBLE]");
+                Console.ResetColor();
+            }
         }
         public byte[] QState = new byte[100]; //Saved the Progress / State from the Quest
         public string message = "error";

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -69,7 +70,6 @@ namespace Cosmic_Explorer
             int spaceCount1 = 0;
             //Other things
             const int BREAKER = 25;
-            int counter = 0;
             Random random = new Random();
             for (int x = 0; x < world.GetLength(0); x++)
             {
@@ -78,12 +78,6 @@ namespace Cosmic_Explorer
                     int randomNumber = random.Next(1, 101); // Beispiel: Zufallszahl zwischen 1 und 100
                     if (x >= BREAKER && y >= BREAKER) //Lässt erst zu das die Regeln angewendet werden wenn genügend einträge vorhanden sind
                     {
-                        //Quest Debug Thing
-                        if (world[1,400] != CellType.Space || world[5, 475] != CellType.Space)
-                        {
-                            world[1, 400] = CellType.Space;
-                            world[5, 475] = CellType.Space;
-                        }
                         //Welten Generation Regeln
                         if (world[x - 1, y - 1] == CellType.Asteroid || world[x, y - 1] == CellType.Asteroid || world[x - 1, y] == CellType.Asteroid)
                         {
@@ -162,6 +156,7 @@ namespace Cosmic_Explorer
                     }
                 }
             }
+            int counter = 0;
             for (int e = 1; e < sepWorld.GetLength(0); e++)
             {
                 for (int r = 0; r < sepWorld.GetLength(1); r++)
@@ -199,6 +194,18 @@ namespace Cosmic_Explorer
             {
                 CellType[,] loadedWorld = WorldDataManager.LoadWorldData<CellType>();
                 world = loadedWorld;
+                int counter = 0;
+                for (int e = 1; e < sepWorld.GetLength(0); e++)
+                {
+                    for (int r = 0; r < sepWorld.GetLength(1); r++)
+                    {
+                        counter++;
+                        sepWorld[e, r] = counter;
+                    }
+                }
+                FindCellsByType(CellType.Player, true);
+                c = _playerX;
+                d = _playerY;
                 if (game.debug)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -234,6 +241,7 @@ namespace Cosmic_Explorer
             const int BREAKER = 1;
             //Kontroll Variablen
             int counter = 0;
+            float petrolCounter = 0;
             int xCord = -1;
             int yCord = -1;
             //Ist unnötig da nach der Weltengenierung der Player einmal gefunden wird, jedoch bleibt dies erstmal falls fehler entstehen sollten
@@ -314,6 +322,7 @@ namespace Cosmic_Explorer
                                         arr1[z, w] = CourseType.Written;
                                         k = z;
                                         l = w;
+                                        petrolCounter++;
                                     }
                                 }
                                 if (world[k, l] != CellType.Space)
@@ -339,6 +348,7 @@ namespace Cosmic_Explorer
                                         arr1[z, w] = CourseType.Written;
                                         k = z;
                                         l = w;
+                                        petrolCounter++;
                                     }
                                 }
                                 if (world[k, l] != CellType.Space)
@@ -370,6 +380,7 @@ namespace Cosmic_Explorer
                                         arr1[z, w] = CourseType.Written;
                                         k = z;
                                         l = w;
+                                        petrolCounter++;
                                     }
                                 }
                                 if (world[k, l] != CellType.Space)
@@ -395,6 +406,7 @@ namespace Cosmic_Explorer
                                         arr1[z, w] = CourseType.Written;
                                         k = z;
                                         l = w;
+                                        petrolCounter++;
                                     }
                                 }
                                 if (world[k, l] != CellType.Space)
@@ -406,6 +418,7 @@ namespace Cosmic_Explorer
                     }
                 }
             }
+            //Set Player Position
             for (int p = 1; p <= xCord; p++)
             {
                 for (int l = 1; l <= yCord; l++)
@@ -421,6 +434,9 @@ namespace Cosmic_Explorer
                     }
                 }
             }
+            float petrolUse = 0.05f;
+            petrolCounter *= petrolUse;
+            inventory.RemoveItem(1, Convert.ToInt32(petrolCounter));
             FindCellsByType(CellType.Player, true);
             Console.WriteLine("Kurs wurde berechnet");
             if(game.debug)
