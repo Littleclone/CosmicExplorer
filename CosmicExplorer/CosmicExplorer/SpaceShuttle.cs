@@ -110,7 +110,7 @@ namespace Cosmic_Explorer
                         break;
                         //Debug Action
                     case "99":
-                        inventory.AddItem(1, 2);
+                        inventory.AddItem(1, 2, false);
                         continue;
                     default:
                         Console.WriteLine("Wähle einer der Nummern aus!");
@@ -265,6 +265,7 @@ namespace Cosmic_Explorer
                             Console.WriteLine("scanner = Lässt dich entweder Objekte in deiner Nähe Scannen oder ein Objekt in der Ferne [10 Energie Aktiv]");
                             Console.WriteLine("pSystems = Zeigt dir die Passiven systeme an und ob sie aktiv sind und wie viel energie sie brauchen [Kostet keine Energie]");
                             Console.WriteLine("quests = Zeigt dir deine Aktuellen Quests an [Kostet keine Energie]");
+                            Console.WriteLine("mine = Baut die 3 Asterioden vor dem Player ab [Kostet 20 Energie Pro Asteroid Aktiv]");
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("Mehr ist noch nicht Implementiert!");
                             Console.ResetColor();
@@ -283,7 +284,7 @@ namespace Cosmic_Explorer
                                     continue;
                             }
                         case "kurs":
-                            if (Energy !< 10)
+                            if (Energy < 10)
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("Du hast zu Wenig Energie um diese Aktion durchzuführen!");
@@ -322,7 +323,7 @@ namespace Cosmic_Explorer
                             world.Course(x, y, antiCrashSystem);
                             goto Start;
                         case "standort":
-                            if (Energy !< 5)
+                            if (Energy < 5)
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("Du hast zu Wenig Energie um diese Aktion durchzuführen!");
@@ -363,7 +364,7 @@ namespace Cosmic_Explorer
                                     goto sonarTemp;
                             }
                         case "scanner":
-                            if (Energy !< 10)
+                            if (Energy < 10)
                             {
                                 Console.ForegroundColor = ConsoleColor.DarkCyan;
                                 Console.WriteLine("Du hast zu Wenig Energie um eine Aktion durchzuführen!");
@@ -437,6 +438,16 @@ namespace Cosmic_Explorer
                             goto Start;
                         case "quests":
                             questSystem.Quest();
+                            goto Start;
+                        case "mine":
+                            if(Energy < 20)
+                            {
+                                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                                Console.WriteLine("Du hast zu Wenig Energie um eine Aktion durchzuführen!");
+                                Console.ResetColor();
+                                continue;
+                            }
+                            world.Mining();
                             goto Start;
                         default:
                             Console.WriteLine("Wähle einer der (implementierten) Befehle aus!");

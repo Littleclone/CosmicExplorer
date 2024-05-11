@@ -18,6 +18,21 @@ namespace Cosmic_Explorer
                     itemName = "petrol";
                     return true;
                 }
+                if(ID == 2)
+                {
+                    itemName = "asteroid pieces";
+                    return true;
+                }
+                if(ID == 3)
+                {
+                    itemName = "iron";
+                    return true;
+                }
+                if(ID == 4)
+                {
+                    itemName = "copper";
+                    return true;
+                }
             }
             return false;
         }
@@ -27,7 +42,19 @@ namespace Cosmic_Explorer
             {
                 if(ID == 1)
                 {
-                    return itemName = "petrol";
+                    return itemName = "Benzin";
+                }
+                if(ID == 2)
+                {
+                    return itemName = "Asteroiden stücke";
+                }
+                if(ID == 3)
+                {
+                    return itemName = "Eisen";
+                }
+                if(ID == 4)
+                {
+                    return itemName = "Kupfer";
                 }
                 return "ItemID not found";
             }

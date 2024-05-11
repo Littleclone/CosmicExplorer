@@ -83,10 +83,14 @@ namespace Cosmic_Explorer
                 }
             }
         }
-        public int[] itemIndex = new int[5]; //array to save the Items
+        public int[] itemIndex = new int[10]; //array to save the Items
+        public int petrol = 0;
+        public int asteroid_pieces = 0;
+        public int iron = 0;
+        public int copper = 0;
         public void PlayerInventory()
         {
-            for (int i = 1; i <= 4; i++)
+            for (int i = 1; i <= 10; i++)
             {
                 if(ItemIndex.IsValid(i))
                 {
@@ -97,23 +101,69 @@ namespace Cosmic_Explorer
                 }
             }
         }
-        public void AddItem(int ItemID, int amount)
+        public void AddItem(int ItemID, int amount, bool count)
         {
             if(ItemIndex.IsValid(ItemID))
             {
+                if(!count)
+                {
+                    petrol = 0;
+                    asteroid_pieces = 0;
+                    iron = 0;
+                    copper = 0;
+                }
                 if (ItemID == 1)
                 {
                     itemIndex[1] += amount;
+                    petrol += amount;
+                }
+                if(ItemID == 2)
+                {
+                    itemIndex[2] += amount;
+                    asteroid_pieces += amount;
+                }
+                if(ItemID == 3)
+                {
+                    itemIndex[3] += amount;
+                    iron += amount;
+                }
+                if(ItemID == 4)
+                {
+                    itemIndex[4] += amount;
+                    copper += amount;
                 }
             }
         }
-        public void RemoveItem(int ItemID, int amount)
+        public void RemoveItem(int ItemID, int amount, bool count)
         {
             if (ItemIndex.IsValid(ItemID))
             {
+                if(!count)
+                {
+                    petrol = 0;
+                    asteroid_pieces = 0;
+                    iron = 0;
+                    copper = 0;
+                }
                 if (ItemID == 1)
                 {
                     itemIndex[1] -= amount;
+                    petrol -= amount;
+                }
+                if (ItemID == 2)
+                {
+                    itemIndex[2] -= amount;
+                    asteroid_pieces -= amount;
+                }
+                if(ItemID == 3)
+                {
+                    itemIndex[3] -= amount;
+                    iron -= amount;
+                }
+                if(ItemID == 4)
+                {
+                    itemIndex[4] -= amount;
+                    copper -= amount;
                 }
             }
         }

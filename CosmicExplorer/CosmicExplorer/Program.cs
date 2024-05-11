@@ -177,7 +177,7 @@ namespace Cosmic_Explorer
             {
                 init_Objects = true;
                 shuttle.SpaceShip(space, activities, this, world, system, inventory, math, quest, questSystem, player, science);
-                world.Worlds(shuttle, space, activities, this, system, inventory, questSystem);
+                world.Worlds(shuttle, space, activities, this, system, inventory, questSystem, science);
                 activities.Actions(shuttle, space, this, world, system, inventory);
                 system.Passiv(shuttle, space, activities, this, world, inventory, math, questSystem);
                 space.Space_(shuttle, activities, this, world, system, inventory, math);
@@ -255,10 +255,10 @@ namespace Cosmic_Explorer
                     world.WorldGenerator();
                     isWorld = WorldBREAKER;
                     _save[1] = BREAKER;
-                    inventory.AddItem(1, 1000);
+                    inventory.AddItem(1, 1000, false);
                 }
                 needSave = true;
-                shuttle.Energy = 100;
+                shuttle.Energy = 1000;
                 shuttle.Bedroom(6);
             }
             else

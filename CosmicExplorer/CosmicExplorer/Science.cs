@@ -100,7 +100,7 @@ namespace Cosmic_Explorer
                                         if (inventory.itemIndex[1] >= 1)
                                         {
                                             Console.WriteLine(ScienceProgress.ScienceProg(1, progress[1]));
-                                            inventory.RemoveItem(1, 1);
+                                            inventory.RemoveItem(1, 1, false);
                                             progress[1]++;
                                             shuttle.currentTime += 3;
                                             Console.ResetColor();

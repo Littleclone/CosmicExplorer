@@ -32,6 +32,8 @@ namespace Cosmic_Explorer
             Space,
             Player,
             Asteroid,
+            CopperAsteroid,
+            IronAsteroid,
             Planet,
             Sun,
             Spaceship,
@@ -67,6 +69,8 @@ namespace Cosmic_Explorer
             int planetCount1 = 0;
             int asteroidCount = 0;
             int asteroidCount1 = 0;
+            int ironAsteroidCount = 0;
+            int cuperAsteroidCount = 0;
             int spaceShipCount = 0;
             int spaceCount = 0;
             int spaceCount1 = 0;
@@ -81,6 +85,24 @@ namespace Cosmic_Explorer
                     if (x >= BREAKER && y >= BREAKER) //Lässt erst zu das die Regeln angewendet werden wenn genügend einträge vorhanden sind
                     {
                         //Welten Generation Regeln
+                        if (world[x - 1, y - 1] == CellType.Asteroid || world[x, y - 1] == CellType.Asteroid || world[x - 1, y] == CellType.Asteroid)
+                        {
+                            if (randomNumber <= 20) //Wenn neben dem Asteroid ein Asteroid ist, ist die Chance höher das ein weitere Spawnt mit dem Element Eisen.
+                            {
+                                world[x, y] = CellType.IronAsteroid;
+                                ironAsteroidCount++;
+                                continue;
+                            }
+                        }
+                        if (world[x - 1, y - 1] == CellType.Asteroid || world[x, y - 1] == CellType.Asteroid || world[x - 1, y] == CellType.Asteroid)
+                        {
+                            if (randomNumber <= 40) //Wenn neben dem Asteroid ein Asteroid ist, ist die Chance höher das ein weitere Spawnt mit dem Element Kupfer.
+                            {
+                                world[x, y] = CellType.CopperAsteroid;
+                                cuperAsteroidCount++;
+                                continue;
+                            }
+                        }
                         if (world[x - 1, y - 1] == CellType.Asteroid || world[x, y - 1] == CellType.Asteroid || world[x - 1, y] == CellType.Asteroid)
                         {
                             if (randomNumber <= 50) //Wenn neben dem Asteroid ein Asteroid ist, ist die Chance höher das ein weitere Spawnt.
@@ -178,8 +200,10 @@ namespace Cosmic_Explorer
                 Console.WriteLine("Es gibt " + planetCount + " Planeten[Regeln]");
                 Console.WriteLine("Es gibt " + planetCount1 + " Planeten");
                 Console.WriteLine("Es gibt " + spaceShipCount + " Spaceships[Regeln]");
-                Console.WriteLine("Es gibt " + asteroidCount + " Asteroid[Regeln]");
-                Console.WriteLine("Es gibt " + asteroidCount1 + " Asteroid");
+                Console.WriteLine("Es gibt " + asteroidCount + " Asteroiden[Regeln]");
+                Console.WriteLine("Es gibt " + asteroidCount1 + " Asteroiden");
+                Console.WriteLine("Es gibt " + cuperAsteroidCount + " Kupfer Asteroiden[Regeln]");
+                Console.WriteLine("Es gibt " + ironAsteroidCount + " Eisen Asteroiden[Regeln]");
                 Console.WriteLine("Es gibt " + spaceCount + " Space[Regeln]");
                 Console.WriteLine("Es gibt " + spaceCount1 + " Space");
                 Console.WriteLine("Welt generation abgeschlossen [NUR WÄHREND DES DEBUGS VISIBLE]");
@@ -444,23 +468,62 @@ namespace Cosmic_Explorer
             }
             if (questSystem.QState[1] == 0)
             {
-                if (world[1,400] == CellType.Player)
+                if (world[1, 400] == CellType.Player)
                 {
                     questSystem.QState[1] = 1;
                 }
             }
+            //science
             if (sciene.progress[1] != 3)
             {
                 float petrolUse = 0.10f;
                 petrolCounter *= petrolUse;
-                inventory.RemoveItem(1, Convert.ToInt32(petrolCounter));
+                inventory.RemoveItem(1, Convert.ToInt32(petrolCounter), false);
             }
             else
             {
                 float petrolUse = 0.05f;
                 petrolCounter *= petrolUse;
-                inventory.RemoveItem(1, Convert.ToInt32(petrolCounter));
+                inventory.RemoveItem(1, Convert.ToInt32(petrolCounter),false);
             }
+            passiv.ActionMaked();
+        }
+        public void Mining()
+        {
+            int counter = 0;
+            Random random = new Random();
+            for (int i = -1; i < 2; i++)
+            {
+                if (shuttle.Energy > 20)
+                {
+                    if (world[_playerX + 1, _playerY + i] == CellType.Asteroid)
+                    {
+                        inventory.AddItem(2, random.Next(2, 7), true);
+                        inventory.AddItem(3, random.Next(0, 3), true);
+                        inventory.AddItem(4, random.Next(0, 5), true);
+                        counter++;
+                        shuttle.Energy -= 20;
+                    }
+                    if (world[_playerX + 1, _playerY + i] == CellType.CopperAsteroid)
+                    {
+                        inventory.AddItem(2, random.Next(2, 7), true);
+                        inventory.AddItem(4, random.Next(20, 27), true);
+                        counter++;
+                        shuttle.Energy -= 20;
+                    }
+                    if (world[_playerX + 1, _playerY + i] == CellType.IronAsteroid)
+                    {
+                        inventory.AddItem(2, random.Next(2, 7), true);
+                        inventory.AddItem(3, random.Next(10, 19), true);
+                        counter++;
+                        shuttle.Energy -= 20;
+                    }
+                }
+            }
+            Console.WriteLine("Du hast " + counter + " Asteroiden Abgebaut und insgesammt folgendes erhalten:");
+            Console.WriteLine("Asteroiden Stücke: "+inventory.asteroid_pieces);
+            Console.WriteLine("Eisen: "+inventory.iron);
+            Console.WriteLine("Kupfer: " + inventory.copper);
             passiv.ActionMaked();
         }
         public void ShowPosition()
