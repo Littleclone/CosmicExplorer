@@ -23,15 +23,20 @@ namespace Cosmic_Explorer
         Activities activities = new Activities();
         PassivSystem system = new PassivSystem();
         Inventory inventory = new Inventory();
-        Math math = new Math();
+        OwnMath math = new OwnMath();
         Quest quest = new Quest();
         QuestSystem questSystem = new QuestSystem();
         Player player = new Player();
         Science science = new Science();
+        Trade trade = new Trade();
+        NPC hanna = new NPC("hanna", 1, 2, 0, 0);
+        NPC lea = new NPC("Lea", 2, 2, 01020304, 01020304);
         ulong CurrentDay = 0; //Start Tag
         public int[] _save = new int[60]; //Space um werte zu speichern (Für abfragen)
-        public bool debug = false;
-        public bool hardCore = false;
+        //Flags
+        public bool debug = false; //Flag for Debug Mode, this show some information and processes happened in the background (for public)
+        public bool dev = false; //Flag for Dev Mode (not for Public)
+        public bool hardCore = false; //Flag if the mode is harcore
         //Kontroll Variablen
         bool init_Objects = false;
         bool isWorld = false;
@@ -46,7 +51,7 @@ namespace Cosmic_Explorer
                 Console.WriteLine("Cosmic Explorer");
                 Console.WriteLine("Guten Tag, das ist Cosmic Explorer, ein Text Basiertes Weltraum Spiel\nDieses Text Game befindet sich in der Testphase und wird noch Entwickelt von mir um mehr C# zu lernen.");
                 Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("Game Version: 0.1.7 Dev Phase Deutsch / German");
+                Console.WriteLine("Game Version: 0.1.9 Dev Phase Deutsch / German");
                 Console.ResetColor();
                 Console.WriteLine("Willst du starten? [start = Starte das spiel, exit = Verlasse das Spiel, new game = löscht deine Save File]");
                 Console.Write("Eingabe:");
@@ -80,6 +85,7 @@ namespace Cosmic_Explorer
                         }
                     case "start skip":
                         Console.WriteLine("Starte das game und skippe Introduction");
+                        debug = true;
                         _save[0] = 1;
                         initObjekts();
                         LoadSaveFile();
@@ -104,8 +110,8 @@ namespace Cosmic_Explorer
             {
                 //game
                 CurrentDay = DataManager.LoadData<ulong>("saveFile", "day");
-                CurrentDay -= 1;
                 isWorld = DataManager.LoadData<bool>("saveFile", "isWorld");
+                hardCore = DataManager.LoadData<bool>("saveFile", "hardcoreFlag");
                 //shuttle
                 //shuttle.Energy = DataManager.LoadData<int>("shuttle", "energy");
                 shuttle.Health = DataManager.LoadData<int>("shuttle", "health");
@@ -119,6 +125,13 @@ namespace Cosmic_Explorer
                 science.progress = DataManager.LoadData<sbyte[]>("science", "progress");
                 //quests
                 questSystem.QState = DataManager.LoadData<sbyte[]>("quests", "questSave");
+                //inventory
+                inventory.itemIndex = DataManager.LoadData<int[]>("inventory", "inv");
+                //player
+                player.gold = DataManager.LoadData<int>("player", "gold");
+                //NPC
+                hanna.state = DataManager.LoadData<sbyte>("npc", "hanna");
+                lea.state = DataManager.LoadData<sbyte>("npc", "lea");
                 //arrays
                 int[] loadedSave = DataManager.LoadData<int[]>("saveFile", "save");
                 _save = loadedSave;
@@ -140,8 +153,9 @@ namespace Cosmic_Explorer
             try
             {
                 //game
-                DataManager.SaveData("saveFile", "day", CurrentDay);
+                DataManager.SaveData("saveFile", "day", CurrentDay -1);
                 DataManager.SaveData("saveFile", "isWorld", isWorld);
+                DataManager.SaveData("saveFile", "hardcoreFlag", hardCore);
                 //shuttle
                 //DataManager.SaveData("shuttle", "energy", shuttle.Energy);
                 DataManager.SaveData("shuttle", "health", shuttle.Health);
@@ -155,6 +169,13 @@ namespace Cosmic_Explorer
                 DataManager.SaveData("science", "progress", science.progress);
                 //quests
                 DataManager.SaveData("quests", "questSave", questSystem.QState);
+                //inventory
+                DataManager.SaveData("inventory", "inv", inventory.itemIndex);
+                //player
+                DataManager.SaveData("player", "gold", player.gold);
+                //NPC
+                DataManager.SaveData("npc", "hanna", hanna.state);
+                DataManager.SaveData("npc", "lea", lea.state);
                 //arrays
                 DataManager.SaveData("saveFile","save", _save);
                 world.SaveWorld();
@@ -181,11 +202,16 @@ namespace Cosmic_Explorer
                 activities.Actions(shuttle, space, this, world, system, inventory);
                 system.Passiv(shuttle, space, activities, this, world, inventory, math, questSystem);
                 space.Space_(shuttle, activities, this, world, system, inventory, math);
-                inventory.InvInit(shuttle, space, activities, this, world, system);
+                inventory.InvInit(shuttle, space, activities, this, world, system, science);
                 questSystem.QuestSystemInit(quest, space, activities, this, world, system, inventory, math);
                 quest.QuestInit(questSystem, this);
                 player.ObjInit(this);
-                science.Init(inventory, this, shuttle);
+                science.Init(inventory, this, shuttle, system);
+                //NPC init
+                world.InitNPCData(hanna, lea);
+                //NPC
+                hanna.initObj(questSystem, this, trade, science, quest, inventory, player);
+                lea.initObj(questSystem, this, trade, science, quest, inventory, player);
             }
         }
         public void introduction()

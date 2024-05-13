@@ -11,11 +11,13 @@ namespace Cosmic_Explorer
         private Game game;
         private Inventory inventory;
         private SpaceShuttle shuttle;
-        public void Init(Inventory inv, Game game, SpaceShuttle shuttle)
+        private PassivSystem passiv;
+        public void Init(Inventory inv, Game game, SpaceShuttle shuttle, PassivSystem passiv)
         {
             this.inventory = inv;
             this.game = game;
             this.shuttle = shuttle;
+            this.passiv = passiv;
             if (game.debug)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -27,51 +29,55 @@ namespace Cosmic_Explorer
         public SByte[] progress = new SByte[10];
         public void Laboratory()
         {
-            game.NewDayStart(shuttle.currentTime);
-            shuttle.currentRoom = 5;
-            Console.WriteLine("Du bist im Labor, was willst du machen? [Uhrzeit: " + shuttle.currentTime + ":00]");
-            Console.WriteLine("Geh zu dein Equipment.[1]");
-            Console.WriteLine("Ins Schlafzimmer gehen.[2]");
-            Console.WriteLine("In die Kommando Zentrale gehen.[3]");
-            Console.WriteLine("Zur Luftschleuse gehen.[4]");
-            Console.WriteLine("In die Küche gehen.[5]");
-            Console.WriteLine("Zum Lagerraum gehen.[6]");
-            Console.WriteLine("Zum Generator gehen.[7]");
             while (true)
             {
-                Console.Write("Eingabe:");
-                message = Console.ReadLine();
-                switch (message)
+                game.NewDayStart(shuttle.currentTime);
+                shuttle.currentRoom = 5;
+                Console.WriteLine("Du bist im Labor, was willst du machen? [Uhrzeit: " + shuttle.currentTime + ":00]");
+                Console.WriteLine("Geh zu dein Equipment.[1]");
+                Console.WriteLine("Ins Schlafzimmer gehen.[2]");
+                Console.WriteLine("In die Kommando Zentrale gehen.[3]");
+                Console.WriteLine("Zur Luftschleuse gehen.[4]");
+                Console.WriteLine("In die Küche gehen.[5]");
+                Console.WriteLine("Zum Lagerraum gehen.[6]");
+                Console.WriteLine("Zum Generator gehen.[7]");
+                while (true)
                 {
-                    case "1":
-                        shuttle.currentTime++;
-                        LaborEquipment();
-                        break;
-                    case "2":
-                        shuttle.currentTime++;
-                        shuttle.Bedroom(shuttle.currentTime);
-                        break;
-                    case "3":
-                        shuttle.currentTime++;
-                        shuttle.Commandcenter();
-                        break;
-                    case "4":
-                        shuttle.currentTime++;
-                        shuttle.Airlock();
-                        break;
-                    case "5":
-                        Console.WriteLine("Noch nicht Implementiert!");
-                        continue;
-                    case "6":
-                        shuttle.currentTime++;
-                        inventory.StorageRoom();
-                        break;
-                    case "7":
-                        Console.WriteLine("Noch nicht Implementiert!");
-                        continue;
-                    default:
-                        Console.WriteLine("Wähle einer der Nummern aus!");
-                        continue;
+                    Console.Write("Eingabe:");
+                    message = Console.ReadLine();
+                    switch (message)
+                    {
+                        case "1":
+                            shuttle.currentTime++;
+                            LaborEquipment();
+                            break;
+                        case "2":
+                            shuttle.currentTime++;
+                            shuttle.Bedroom(shuttle.currentTime);
+                            break;
+                        case "3":
+                            shuttle.currentTime++;
+                            shuttle.Commandcenter();
+                            break;
+                        case "4":
+                            shuttle.currentTime++;
+                            shuttle.Airlock();
+                            break;
+                        case "5":
+                            Console.WriteLine("Noch nicht Implementiert!");
+                            continue;
+                        case "6":
+                            shuttle.currentTime++;
+                            inventory.StorageRoom();
+                            break;
+                        case "7":
+                            Console.WriteLine("Noch nicht Implementiert!");
+                            continue;
+                        default:
+                            Console.WriteLine("Wähle einer der Nummern aus!");
+                            continue;
+                    }
+                    break;
                 }
             }
         }
@@ -82,6 +88,7 @@ namespace Cosmic_Explorer
                 game.NewDayStart(shuttle.currentTime);
                 Console.WriteLine("Du bist bei deinem Equipment, was willst du nutzen? [Uhrzeit: " + shuttle.currentTime + ":00]");
                 Console.WriteLine("Nutz dein Mikroskop.[1]");
+                Console.WriteLine("Geh zurück[4]");
                 Console.Write("Eingabe:");
                 message = Console.ReadLine();
                 switch (message)
@@ -90,11 +97,11 @@ namespace Cosmic_Explorer
                         Console.WriteLine("Welches Item willst du erforschen? (Du bruachst die ID die im Storage angezeigt wird)");
                         while (true)
                         {
-                            Console.Write("Eingabe");
+                            Console.Write("Eingabe:");
                             message = Console.ReadLine();
                             switch(message)
                             {
-                                case "1":
+                                case "01":
                                     if (progress[1] != 4)
                                     {
                                         if (inventory.itemIndex[1] >= 1)
@@ -104,6 +111,11 @@ namespace Cosmic_Explorer
                                             progress[1]++;
                                             shuttle.currentTime += 3;
                                             Console.ResetColor();
+                                            if (progress[1] == 3)
+                                            {
+                                                game._save[10] = 1;
+                                            }
+                                            passiv.ActionMaked();
                                             break;
                                         }
                                         else
@@ -116,12 +128,14 @@ namespace Cosmic_Explorer
                                     }
                                     else
                                     {
-                                        Console.WriteLine("Du hast es bereits fertig erforscht");
+                                        Console.WriteLine("Du hast es bereits fertig erforscht. Wähle eine andere ID (oder 'exit')");
                                         continue;
                                     }
-                                default:
-                                    Console.WriteLine("Wähle eine gültige ID");
+                                case "exit":
                                     break;
+                                default:
+                                    Console.WriteLine("Wähle eine gültige ID oder 'exit'");
+                                    continue;
                             }
                             break;
                         }
@@ -129,6 +143,8 @@ namespace Cosmic_Explorer
                     case "2":
                         Console.WriteLine("Noch nicht Implementiert!");
                         continue;
+                    case "4":
+                        return;
                     default:
                         Console.WriteLine("Wähle einer der Nummern aus!");
                         continue;

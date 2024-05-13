@@ -13,6 +13,7 @@ namespace Cosmic_Explorer
         public int hunger = 100;
         public int thirst = 100;
         public int oxygen = 100;
+        public long gold = 1000;
         public bool isDeath = false;
         Random random = new Random();
         private Game game;
@@ -25,6 +26,14 @@ namespace Cosmic_Explorer
                 Console.WriteLine("Objekte Initalisiert[Player]. [NUR WÄHREND DES DEBUGS VISIBLE]");
                 Console.ResetColor();
             }
+        }
+        public void AddGold(long amount)
+        {
+            gold += amount;
+        }
+        public void RemoveGold(long amount)
+        {
+            gold -= amount;
         }
         public void EasyActions()
         {

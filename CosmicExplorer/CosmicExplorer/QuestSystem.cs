@@ -16,8 +16,8 @@ namespace Cosmic_Explorer
         private Activities actions;
         private PassivSystem passiv;
         private Inventory inventory;
-        private Math math;
-        public void QuestSystemInit(Quest quest, Space space, Activities action, Game games, World world, PassivSystem systems, Inventory inv, Math math) 
+        private OwnMath math;
+        public void QuestSystemInit(Quest quest, Space space, Activities action, Game games, World world, PassivSystem systems, Inventory inv, OwnMath math) 
         {
             this.game = games;
             this.Space = space;
@@ -44,7 +44,7 @@ namespace Cosmic_Explorer
             {
                 if (QState[i] != 0 && QState[i] != 15)
                 {
-                    string message = quest.QuestInfos(i);
+                    string message = quest.QuestInfos(i, QState);
                     if (message != "QuestID not found")
                     {
                         Console.WriteLine(message);
@@ -70,6 +70,14 @@ namespace Cosmic_Explorer
                     if (index == 1)
                     {
                         world.WorldQuest(index, x, y, true);
+                    }
+                    //NPC Quests
+                    if(index == 2)
+                    {
+                        if (game._save[10] == 1)
+                        {
+                            QState[2] = 2;
+                        }
                     }
                 }
             }

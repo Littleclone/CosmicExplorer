@@ -14,8 +14,8 @@ namespace Cosmic_Explorer
         private Activities actions;
         private PassivSystem passiv;
         private Inventory inventory;
-        private Math math;
-        public void Space_(SpaceShuttle shuttle, Activities action, Game games, World world, PassivSystem systems, Inventory inv, Math math)
+        private OwnMath math;
+        public void Space_(SpaceShuttle shuttle, Activities action, Game games, World world, PassivSystem systems, Inventory inv, OwnMath math)
         {
             this.game = games;
             this.shuttle = shuttle;

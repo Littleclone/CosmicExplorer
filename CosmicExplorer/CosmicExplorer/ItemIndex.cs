@@ -25,12 +25,12 @@ namespace Cosmic_Explorer
                 }
                 if(ID == 3)
                 {
-                    itemName = "iron";
+                    itemName = "iron_ore";
                     return true;
                 }
                 if(ID == 4)
                 {
-                    itemName = "copper";
+                    itemName = "copper_ore";
                     return true;
                 }
             }
@@ -50,11 +50,11 @@ namespace Cosmic_Explorer
                 }
                 if(ID == 3)
                 {
-                    return itemName = "Eisen";
+                    return itemName = "Eisen Erz";
                 }
                 if(ID == 4)
                 {
-                    return itemName = "Kupfer";
+                    return itemName = "Kupfer Erz";
                 }
                 return "ItemID not found";
             }

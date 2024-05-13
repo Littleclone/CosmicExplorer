@@ -19,6 +19,8 @@ namespace Cosmic_Explorer
         private Inventory inventory;
         private QuestSystem questSystem;
         private Science sciene;
+        private NPC hanna;
+        private NPC lea;
         public int _playerX = 0;
         public int _playerY = 0;
         //players Old Position
@@ -27,22 +29,6 @@ namespace Cosmic_Explorer
         CellType[,] world = new CellType[1619, 1619]; //Eine 1619x1619 Welt oder 2.621.440 Zellen
         int[,] sepWorld = new int[1620, 1620]; // 2.624.400
         CourseType[,] arr1 = new CourseType[1620, 1620]; //Eine 1620x1620 oder 2.624.400 mögliche Zellen
-        public enum CellType
-        {
-            Space,
-            Player,
-            Asteroid,
-            CopperAsteroid,
-            IronAsteroid,
-            Planet,
-            Sun,
-            Spaceship,
-        }
-        public enum CourseType
-        {
-            notWritten,
-            Written,
-        }
         public void Worlds(SpaceShuttle shuttle, Space space, Activities action, Game games, PassivSystem systems, Inventory inv, QuestSystem questS, Science scient)
         {
             this.game = games;
@@ -59,6 +45,36 @@ namespace Cosmic_Explorer
                 Console.WriteLine("Objekte Initalisiert[World]. [NUR WÄHREND DES DEBUGS VISIBLE]");
                 Console.ResetColor();
             }
+        }
+        public void InitNPCData(NPC npc, NPC lea)
+        {
+            this.hanna = npc;
+            this.lea = lea;
+            if (game.debug)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("NPC's Initalisiert[World]. [NUR WÄHREND DES DEBUGS VISIBLE]");
+                Console.ResetColor();
+            }
+        }
+        public enum CellType
+        {
+            Space,
+            Player,
+            Asteroid,
+            CopperAsteroid,
+            IronAsteroid,
+            Planet,
+            Sun,
+            Spaceship,
+            //NPC
+            HannaNPC,
+            LeaNPC,
+        }
+        public enum CourseType
+        {
+            notWritten,
+            Written,
         }
         public void WorldGenerator()
         {
@@ -180,17 +196,13 @@ namespace Cosmic_Explorer
                     }
                 }
             }
-            int counter = 0;
-            for (int e = 1; e < sepWorld.GetLength(0); e++)
-            {
-                for (int r = 0; r < sepWorld.GetLength(1); r++)
-                {
-                    counter++;
-                    sepWorld[e, r] = counter;
-                }
-            }
             world[1, 1] = CellType.Player;
-            FindCellsByType(CellType.Player, true);
+            if(game.dev)
+            {
+                world[1, 2] = CellType.HannaNPC;
+            }
+            world[2, 5] = CellType.LeaNPC;
+            SepWorld();
             if (game.debug)
             {
                 Console.ForegroundColor = ConsoleColor.Magenta;
@@ -210,6 +222,21 @@ namespace Cosmic_Explorer
                 Console.ResetColor();
             }
         }
+        public void SepWorld()
+        {
+            int counter = 0;
+            for (int e = 1; e < sepWorld.GetLength(0); e++)
+            {
+                for (int r = 0; r < sepWorld.GetLength(1); r++)
+                {
+                    counter++;
+                    sepWorld[e, r] = counter;
+                }
+            }
+            FindCellsByType(CellType.Player, true);
+            c = _playerX;
+            d = _playerY;
+        }
         public void SaveWorld()
         {
             WorldDataManager.SaveWorldData(world);
@@ -220,18 +247,7 @@ namespace Cosmic_Explorer
             {
                 CellType[,] loadedWorld = WorldDataManager.LoadWorldData<CellType>();
                 world = loadedWorld;
-                int counter = 0;
-                for (int e = 1; e < sepWorld.GetLength(0); e++)
-                {
-                    for (int r = 0; r < sepWorld.GetLength(1); r++)
-                    {
-                        counter++;
-                        sepWorld[e, r] = counter;
-                    }
-                }
-                FindCellsByType(CellType.Player, true);
-                c = _playerX;
-                d = _playerY;
+                SepWorld();
                 if (game.debug)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -466,11 +482,14 @@ namespace Cosmic_Explorer
             {
                 Console.WriteLine("Kollisionen erkannt: " + counter + " [Debug]");
             }
-            if (questSystem.QState[1] == 0)
+            if(game.debug)
             {
-                if (world[1, 400] == CellType.Player)
+                if (questSystem.QState[1] == 0)
                 {
-                    questSystem.QState[1] = 1;
+                    if (world[1, 400] == CellType.Player)
+                    {
+                        questSystem.QState[1] = 1;
+                    }
                 }
             }
             //science
@@ -522,9 +541,31 @@ namespace Cosmic_Explorer
             }
             Console.WriteLine("Du hast " + counter + " Asteroiden Abgebaut und insgesammt folgendes erhalten:");
             Console.WriteLine("Asteroiden Stücke: "+inventory.asteroid_pieces);
-            Console.WriteLine("Eisen: "+inventory.iron);
-            Console.WriteLine("Kupfer: " + inventory.copper);
+            Console.WriteLine("Eisen Erz: "+inventory.iron_ore);
+            Console.WriteLine("Kupfer Erz: " + inventory.copper_ore);
             passiv.ActionMaked();
+        }
+        public void CallNPC()
+        {
+            for (int i = -1; i < 2; i++)
+            {
+                for(int j = -1; j < 2; j++)
+                {
+                    if (world[_playerX + i,_playerY + j] == CellType.HannaNPC)
+                    {
+                        Console.WriteLine("Du hast verbindung zu hanna aufgenommen");
+                        hanna.NPCStartHanna();
+                        return;
+                    }
+                    if (world[_playerX + i, _playerY + j] == CellType.LeaNPC)
+                    {
+                        Console.WriteLine("Du hast verbindung zu Lea aufgenommen");
+                        lea.NPCStartLea();
+                        return;
+                    }
+                }
+            }
+            Console.WriteLine("Es konnte kein NPC in der nähe gefunden werden");
         }
         public void ShowPosition()
         {
@@ -589,6 +630,7 @@ namespace Cosmic_Explorer
                     }
                 }
             }
+            passiv.ActionMaked();
             Console.WriteLine(" ");
         }
         public void ScannerFern(int X, int Y)
@@ -596,6 +638,7 @@ namespace Cosmic_Explorer
             if(X >= 0 && X < world.GetLength(0) && Y >= 0 && Y < world.GetLength(1))
             {
                 Console.WriteLine("Bei den angegeben Koordinaten befindet sich: " + world[X, Y]);
+                passiv.ActionMaked();
             }
             else
             {

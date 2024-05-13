@@ -16,7 +16,7 @@ namespace Cosmic_Explorer
         private Activities actions;
         private PassivSystem passiv;
         private Inventory inventory;
-        private Math math;
+        private OwnMath math;
         private Quest quest;
         private QuestSystem questSystem;
         private Player player;
@@ -30,7 +30,7 @@ namespace Cosmic_Explorer
         //Passiv System bool flags
         bool antiCrashSystem = true;
         public bool sonarActive = false;
-        public void SpaceShip(Space space, Activities action, Game games, World world, PassivSystem systems, Inventory inv, Math math, Quest quest, QuestSystem questS, Player player, Science scient)
+        public void SpaceShip(Space space, Activities action, Game games, World world, PassivSystem systems, Inventory inv, OwnMath math, Quest quest, QuestSystem questS, Player player, Science scient)
         {
             this.game = games;
             this.Space = space;
@@ -131,6 +131,7 @@ namespace Cosmic_Explorer
             Console.WriteLine("In die Küche gehen.[4]");
             Console.WriteLine("Zum Lagerraum gehen.[5]");
             Console.WriteLine("Zum Generator gehen.[6]");
+            Console.WriteLine("Ins Labor gehen.[7]");
             while (true)
             {
                 Console.Write("Eingabe:");
@@ -168,6 +169,9 @@ namespace Cosmic_Explorer
                     case "6":
                         Console.WriteLine("Noch nicht Implementiert!");
                         continue;
+                    case "7":
+                        science.Laboratory();
+                        break;
                     default:
                         Console.WriteLine("Wähle einer der Nummern aus!");
                         continue;
@@ -186,6 +190,7 @@ namespace Cosmic_Explorer
             Console.WriteLine("In die Küche gehen.[4]");
             Console.WriteLine("Zum Lagerraum gehen.[5]");
             Console.WriteLine("Zum Generator gehen.[6]");
+            Console.WriteLine("Ins Labor gehen.[7]");
             while (true)
             {
                 Console.Write("Eingabe:");
@@ -224,6 +229,9 @@ namespace Cosmic_Explorer
                     case "6":
                         Console.WriteLine("Noch nicht Implementiert!");
                         continue;
+                    case "7":
+                        science.Laboratory();
+                        break;
                     default:
                         Console.WriteLine("Wähle einer der Nummern aus!");
                         continue;
@@ -448,6 +456,17 @@ namespace Cosmic_Explorer
                                 continue;
                             }
                             world.Mining();
+                            goto Start;
+                        case "call":
+                            if(Energy < 5)
+                            {
+                                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                                Console.WriteLine("Du hast zu Wenig Energie um eine Aktion durchzuführen!");
+                                Console.ResetColor();
+                                continue;
+                            }
+                            Energy -= 5;
+                            world.CallNPC();
                             goto Start;
                         default:
                             Console.WriteLine("Wähle einer der (implementierten) Befehle aus!");

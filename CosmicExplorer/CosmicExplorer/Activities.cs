@@ -40,9 +40,9 @@ namespace Cosmic_Explorer
         private Space Space;
         private Activities actions;
         private Inventory inventory;
-        private Math math;
+        private OwnMath math;
         private QuestSystem qSystem;
-        public void Passiv(SpaceShuttle shuttle, Space space, Activities action, Game games, World world, Inventory inv, Math math, QuestSystem qSystem)
+        public void Passiv(SpaceShuttle shuttle, Space space, Activities action, Game games, World world, Inventory inv, OwnMath math, QuestSystem qSystem)
         {
             this.game = games;
             this.shuttle = shuttle;

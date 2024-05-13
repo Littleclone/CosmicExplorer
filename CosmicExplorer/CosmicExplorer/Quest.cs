@@ -22,12 +22,27 @@ namespace Cosmic_Explorer
             }
         }
         string message = "error";
-        public string QuestInfos(int QuestID)
+        public string QuestInfos(int QuestID, sbyte[] state)
         {
             if(QuestID == 1)
             {
                 message = "Name: Test Quest\nAufgabe: Gehe zu 5, 475 [DEBUG QUEST]";
                 return message;
+            }
+            if(QuestID == 2)
+            {
+                if (state[2] == 1)
+                {
+                    message = "Name: Helfe Lea\nAufgabe: Erforsche Benzin komplett." +
+                     "\nBeschreibung: Lea hat dich gefragt ob du vielleicht herausfinden kannst wie sie mit Weniger Benzin die gleiche Strecke\nFliegen kann.";
+                    return message;
+                }
+                if (state[2] == 2)
+                {
+                    message = "Name: Helfe Lea\nAufgabe: Rede mit Lea." +
+                     "\nBeschreibung: Lea hat dich gefragt ob du vielleicht herausfinden kannst wie sie mit Weniger Benzin die gleiche Strecke\nFliegen kann.";
+                    return message;
+                }
             }
             return message = "QuestID not found";
         }
