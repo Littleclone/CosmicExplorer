@@ -61,16 +61,18 @@ namespace Cosmic_Explorer
             Console.WriteLine("Du bist im Schlafzimmer, was willst du machen? [Uhrzeit: "+ currentTime + ":00]");
             Console.WriteLine("In die Kommando Zentrale gehen.[1]");
             Console.WriteLine("Zur Luftschleuse gehen.[2]");
-            Console.WriteLine("In die Küche gehen.[3]");
+            Console.WriteLine("In die Küche gehen.[3] X");
             Console.WriteLine("Zum Lagerraum gehen.[4]");
-            Console.WriteLine("Zum Generator gehen.[5]");
+            Console.WriteLine("Zum Generator gehen.[5] X");
             Console.WriteLine("Ins Labor gehen.[6]");
-            Console.WriteLine("Dich ausruhen (Regeniert bissen leben).[7]");
+            Console.WriteLine("Dich ausruhen (Regeniert bissen leben).[7] X");
             Console.WriteLine("Schlafen (Tag beenden).[8]");
             Console.WriteLine("Hauptmenü öffnen (ES SPEICHERT NUR WENN EIN NEUER TAG STARTET) [9]");
             while (true)
             {
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("Eingabe:");
+                Console.ResetColor();
                 message = Console.ReadLine();
                 //Auswahlverfahren von was der User ausgewählt hat
                 switch (message)
@@ -128,20 +130,22 @@ namespace Cosmic_Explorer
             Console.WriteLine("Die Konsole öffnen.[1]");
             Console.WriteLine("Ins Schlafzimmer gehen.[2]");
             Console.WriteLine("Zur Luftschleuse gehen.[3]");
-            Console.WriteLine("In die Küche gehen.[4]");
+            Console.WriteLine("In die Küche gehen.[4] X");
             Console.WriteLine("Zum Lagerraum gehen.[5]");
-            Console.WriteLine("Zum Generator gehen.[6]");
+            Console.WriteLine("Zum Generator gehen.[6] X");
             Console.WriteLine("Ins Labor gehen.[7]");
             while (true)
             {
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("Eingabe:");
+                Console.ResetColor();
                 message = Console.ReadLine();
                 switch (message)
                 {
                     case "1":
                         ;
                         currentTime++;
-                        if (Energy !< 10)
+                        if (Energy < 10)
                         {
                             Console.ForegroundColor = ConsoleColor.DarkCyan;
                             Console.WriteLine("Nicht genügend Energie!");
@@ -183,22 +187,24 @@ namespace Cosmic_Explorer
             currentRoom = 3;
             //Überprüft ob es bereits 23 Uhr ist
             game.NewDayStart(currentTime);
-            Console.WriteLine("Du bist in der Luftschleuse, was willst du machen? [Uhrzeit: " + currentTime + ":00]");
+            Console.WriteLine("Du bist in der Luftschleuse, was willst du machen? [Uhrzeit: " + currentTime + ":00] | [Restliche Energie: " + Energy +"]");
             Console.WriteLine("In den Weltraum gehen[1]");
             Console.WriteLine("Ins Schlafzimmer gehen[2]");
             Console.WriteLine("In die Kommando Zentrale gehen.[3]");
-            Console.WriteLine("In die Küche gehen.[4]");
+            Console.WriteLine("In die Küche gehen.[4] X");
             Console.WriteLine("Zum Lagerraum gehen.[5]");
-            Console.WriteLine("Zum Generator gehen.[6]");
+            Console.WriteLine("Zum Generator gehen.[6] X");
             Console.WriteLine("Ins Labor gehen.[7]");
             while (true)
             {
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("Eingabe:");
+                Console.ResetColor();
                 message = Console.ReadLine();
                 switch (message)
                 {
                     case "1":
-                        if (Energy !< 20)
+                        if (Energy < 20)
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("Du hast zu Wenig Energie um diese Aktion durchzuführen!");
@@ -246,7 +252,9 @@ namespace Cosmic_Explorer
             Console.WriteLine("Welchen Befehl willst du machen? [Nutze help wenn du dich nicht mehr erinnerst]");
             while (true)
             {
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("Eingabe:");
+                Console.ResetColor();
                 message = Console.ReadLine();
                 //überprüft ob Shuttle Energie Größer als 5 ist (5 Ist die Kleinst Mögliche Energy benötigung für eine Aktion)
                 if (Energy < 5 && message != "exit")
@@ -274,6 +282,7 @@ namespace Cosmic_Explorer
                             Console.WriteLine("pSystems = Zeigt dir die Passiven systeme an und ob sie aktiv sind und wie viel energie sie brauchen [Kostet keine Energie]");
                             Console.WriteLine("quests = Zeigt dir deine Aktuellen Quests an [Kostet keine Energie]");
                             Console.WriteLine("mine = Baut die 3 Asterioden vor dem Player ab [Kostet 20 Energie Pro Asteroid Aktiv]");
+                            Console.WriteLine("call = Stelle eine Verbindung zu einem NPC um dich erhum her [Kostet 5 Energie]");
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("Mehr ist noch nicht Implementiert!");
                             Console.ResetColor();

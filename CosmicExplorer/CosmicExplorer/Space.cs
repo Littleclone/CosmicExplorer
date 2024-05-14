@@ -44,23 +44,23 @@ namespace Cosmic_Explorer
         public void InSpace()
         {
             //Überprüft ob es bereits 23 Uhr ist
-            if (currentTime == 23)
-            {
-                game.NewDayStart(currentTime);
-            }
-            Console.WriteLine("Du bist im Weltraum, was willst du machen? [Uhrzeit: " + currentTime + ":00] | [Restliche Energie: " + spaceSuitEnergy + "]");
+            game.NewDayStart(currentTime);
+            Console.WriteLine("Du bist im Weltraum, was willst du machen? [Uhrzeit: " + currentTime + ":00] | [Restliche Energie im Weltraum Anzug: " + spaceSuitEnergy + "]");
+            Console.WriteLine("Die Integrität des Raumschiffes ist bei: " + shuttle.Health + "%");
             Console.WriteLine("Repariere das Shuttle[1]");
             Console.WriteLine("Geh zu den Solar Panellen[2]");
             Console.WriteLine("Geh zu den Antennen[3]");
             Console.WriteLine("Geh zurück ins Shuttle[4]");
             while (true)
             {
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("Eingabe:");
+                Console.ResetColor();
                 message = Console.ReadLine();
                 switch (message)
                 {
                     case "1":
-                        if (spaceSuitEnergy !< 10)
+                        if (spaceSuitEnergy < 10)
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("Du hast zu Wenig Energie um diese Aktion durchzuführen!");
@@ -80,26 +80,10 @@ namespace Cosmic_Explorer
                         }
                         continue;
                     case "2":
-                        if (spaceSuitEnergy !< 5)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Du hast zu Wenig Energie um diese Aktion durchzuführen!");
-                            Console.ResetColor();
-                            continue;
-                        }
-                        spaceSuitEnergy -= 5;
                         currentTime++;
                         Solar();
                         break;
                     case "3":
-                        if (spaceSuitEnergy !< 5)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Du hast zu Wenig Energie um diese Aktion durchzuführen!");
-                            Console.ResetColor();
-                            continue;
-                        }
-                        spaceSuitEnergy -= 5;
                         currentTime++;
                         Antennas();
                         break;
@@ -116,37 +100,25 @@ namespace Cosmic_Explorer
         }
         public void Solar()
         {
-            Console.WriteLine("Du bist bei den Solar Panelle, was willst du machen? [Uhrzeit: " + currentTime + ":00] | [Restliche Energie: " + spaceSuitEnergy + "]");
+            game.NewDayStart(currentTime);
+            Console.WriteLine("Du bist bei den Solar Panelle, was willst du machen? [Uhrzeit: " + currentTime + ":00] | [Restliche Energie im Weltraum Anzug: " + spaceSuitEnergy + "]");
+            Console.WriteLine("Die Integrität der Solar Panelle ist bei: " + SolarPanelHealth + "%");
             Console.WriteLine("Zurück zur Tür[1]");
             Console.WriteLine("Zu den Antennen[2]");
             Console.WriteLine("Mehr ist noch nicht vorhanden");
             while (true)
             {
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("Eingabe:");
+                Console.ResetColor();
                 message = Console.ReadLine();
                 switch (message)
                 {
                     case "1":
-                        if (spaceSuitEnergy !< 5)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Du hast zu Wenig Energie um diese Aktion durchzuführen!");
-                            Console.ResetColor();
-                            continue;
-                        }
-                        spaceSuitEnergy -= 5;
                         currentTime++;
                         InSpace();
                         continue;
                     case "2":
-                        if (spaceSuitEnergy !< 5)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Du hast zu Wenig Energie um diese Aktion durchzuführen!");
-                            Console.ResetColor();
-                            continue;
-                        }
-                        spaceSuitEnergy -= 5;
                         currentTime++;
                         Antennas();
                         break;
@@ -158,38 +130,25 @@ namespace Cosmic_Explorer
         }
         public void Antennas()
         {
-            Console.WriteLine("Du bist bei den Antennen, was willst du machen? [Uhrzeit: " + currentTime + ":00] | [Restliche Energie: " + spaceSuitEnergy + "]");
+            game.NewDayStart(currentTime);
+            Console.WriteLine("Du bist bei den Antennen, was willst du machen? [Uhrzeit: " + currentTime + ":00] | [Restliche Energie im Weltraum Anzug: " + spaceSuitEnergy + "]");
+            Console.WriteLine("Die Integrität der Antennen ist bei: " + AntennenHealth + "%");
             Console.WriteLine("Zurück zur Tür[1]");
             Console.WriteLine("Zu den Solar Panellen[2]");
             Console.WriteLine("Mehr ist noch nicht vorhanden");
             while (true)
             {
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("Eingabe:");
+                Console.ResetColor();
                 message = Console.ReadLine();
                 switch (message)
                 {
                     case "1":
-
-                        if (spaceSuitEnergy !< 5)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Du hast zu Wenig Energie um diese Aktion durchzuführen!");
-                            Console.ResetColor();
-                            continue;
-                        }
-                        spaceSuitEnergy -= 5;
                         currentTime++;
                         InSpace();
                         continue;
                     case "2":
-                        if (spaceSuitEnergy !< 5)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Du hast zu Wenig Energie um diese Aktion durchzuführen!");
-                            Console.ResetColor();
-                            continue;
-                        }
-                        spaceSuitEnergy -= 5;
                         currentTime++;
                         Solar();
                         break;

@@ -48,7 +48,9 @@ namespace Cosmic_Explorer
                 Console.WriteLine("Ins Labor gehen.[7]");
                 while (true)
                 {
+                    Console.ForegroundColor = ConsoleColor.White;
                     Console.Write("Eingabe:");
+                    Console.ResetColor();
                     message = Console.ReadLine();
                     switch (message)
                     {

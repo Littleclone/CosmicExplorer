@@ -69,7 +69,9 @@ namespace Cosmic_Explorer
                 while (true)
                 {
                     Console.WriteLine("Welchen Debug Command willst du nutzen?");
+                    Console.ForegroundColor = ConsoleColor.White;
                     Console.Write("Eingabe:");
+                    Console.ResetColor();
                     messages = Console.ReadLine();
                     if(game.dev)
                     {
@@ -132,7 +134,9 @@ namespace Cosmic_Explorer
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine(name +":\nHey Charlotte, willst du was Kaufen[1] oder Verkaufen[2]? Wenn du schon genug hast kannst du auch 'exit' nutzen.");
                     Console.ResetColor();
+                    Console.ForegroundColor = ConsoleColor.White;
                     Console.Write("Eingabe:");
+                    Console.ResetColor();
                     messages = Console.ReadLine();
                     switch (messages)
                     {
@@ -142,7 +146,9 @@ namespace Cosmic_Explorer
                                 Console.WriteLine("Gib die ID an die du kaufen willst (Immer nur eine ID gleichzeitig)" + " Dein gold: " + player.gold +
                                     "\nDu kannst solange kaufen bist du 'exit' eingibtst");
                                 trade.TradeInterfaceSell(canSell, discount);
+                                Console.ForegroundColor = ConsoleColor.White;
                                 Console.Write("Eingabe:");
+                                Console.ResetColor();
                                 messages = Console.ReadLine();
                                 int x = 0;
                                 int y = 0;
@@ -151,7 +157,9 @@ namespace Cosmic_Explorer
                                 {
                                     case "01":
                                         Console.WriteLine("Wie viel Liter Benzin willst du kaufen?");
+                                        Console.ForegroundColor = ConsoleColor.White;
                                         Console.Write("Eingabe:");
+                                        Console.ResetColor();
                                         messages = Console.ReadLine();
                                         try
                                         {
@@ -178,7 +186,9 @@ namespace Cosmic_Explorer
                                         break;
                                     case "02":
                                         Console.WriteLine("Wie viele Asteroiden stücke willst du kaufen?");
+                                        Console.ForegroundColor = ConsoleColor.White;
                                         Console.Write("Eingabe:");
+                                        Console.ResetColor();
                                         messages = Console.ReadLine();
                                         try
                                         {
@@ -205,7 +215,9 @@ namespace Cosmic_Explorer
                                         break;
                                     case "03":
                                         Console.WriteLine("Wie viel Eisen Erz willst du kaufen?");
+                                        Console.ForegroundColor = ConsoleColor.White;
                                         Console.Write("Eingabe:");
+                                        Console.ResetColor();
                                         messages = Console.ReadLine();
                                         try
                                         {
@@ -232,7 +244,9 @@ namespace Cosmic_Explorer
                                         break;
                                         case "04":
                                         Console.WriteLine("Wie viel Kupfer Erz willst du kaufen?");
+                                        Console.ForegroundColor = ConsoleColor.White;
                                         Console.Write("Eingabe:");
+                                        Console.ResetColor();
                                         messages = Console.ReadLine();
                                         try
                                         {
@@ -273,7 +287,9 @@ namespace Cosmic_Explorer
                                 Console.WriteLine("Gib die ID an die du verkaufen willst (Immer nur eine ID gleichzeitig)" + " Dein gold: " + player.gold +
                                     "\nDu kannst solange kaufen bist du 'exit' eingibtst");
                                 trade.TradeInterfaceBuy(canBuy, extra);
+                                Console.ForegroundColor = ConsoleColor.White;
                                 Console.Write("Eingabe:");
+                                Console.ResetColor();
                                 messages = Console.ReadLine();
                                 int x = 0;
                                 int y = 0;
@@ -282,7 +298,9 @@ namespace Cosmic_Explorer
                                 {
                                     case "01":
                                         Console.WriteLine("Wie viel Liter Benzin willst du verkaufen?");
+                                        Console.ForegroundColor = ConsoleColor.White;
                                         Console.Write("Eingabe:");
+                                        Console.ResetColor();
                                         messages = Console.ReadLine();
                                         try
                                         {
@@ -309,7 +327,9 @@ namespace Cosmic_Explorer
                                         break;
                                     case "02":
                                         Console.WriteLine("Wie viele Asteroiden stücke willst du verkaufen?");
+                                        Console.ForegroundColor = ConsoleColor.White;
                                         Console.Write("Eingabe:");
+                                        Console.ResetColor();
                                         messages = Console.ReadLine();
                                         try
                                         {
@@ -336,7 +356,9 @@ namespace Cosmic_Explorer
                                         break;
                                     case "03":
                                         Console.WriteLine("Wie viel Eisen Erz willst du verkaufen?");
+                                        Console.ForegroundColor = ConsoleColor.White;
                                         Console.Write("Eingabe:");
+                                        Console.ResetColor();
                                         messages = Console.ReadLine();
                                         try
                                         {
@@ -363,7 +385,9 @@ namespace Cosmic_Explorer
                                         break;
                                     case "04":
                                         Console.WriteLine("Wie viel Kupfer Erz willst du verkaufen?");
+                                        Console.ForegroundColor = ConsoleColor.White;
                                         Console.Write("Eingabe:");
+                                        Console.ResetColor();
                                         messages = Console.ReadLine();
                                         try
                                         {

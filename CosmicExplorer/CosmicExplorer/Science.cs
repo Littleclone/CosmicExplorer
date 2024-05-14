@@ -38,12 +38,14 @@ namespace Cosmic_Explorer
                 Console.WriteLine("Ins Schlafzimmer gehen.[2]");
                 Console.WriteLine("In die Kommando Zentrale gehen.[3]");
                 Console.WriteLine("Zur Luftschleuse gehen.[4]");
-                Console.WriteLine("In die Küche gehen.[5]");
+                Console.WriteLine("In die Küche gehen.[5] X");
                 Console.WriteLine("Zum Lagerraum gehen.[6]");
-                Console.WriteLine("Zum Generator gehen.[7]");
+                Console.WriteLine("Zum Generator gehen.[7] X");
                 while (true)
                 {
+                    Console.ForegroundColor = ConsoleColor.White;
                     Console.Write("Eingabe:");
+                    Console.ResetColor();
                     message = Console.ReadLine();
                     switch (message)
                     {
@@ -97,7 +99,9 @@ namespace Cosmic_Explorer
                         Console.WriteLine("Welches Item willst du erforschen? (Du bruachst die ID die im Storage angezeigt wird)");
                         while (true)
                         {
+                            Console.ForegroundColor = ConsoleColor.White;
                             Console.Write("Eingabe:");
+                            Console.ResetColor();
                             message = Console.ReadLine();
                             switch(message)
                             {

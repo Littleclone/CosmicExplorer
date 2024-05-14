@@ -196,12 +196,35 @@ namespace Cosmic_Explorer
                     }
                 }
             }
+            bool lea = false;
+            while (true)
+            {
+                for (int i = 0; i < world.GetLength(0); i++)
+                {
+                    for (int j = 0; j < world.GetLength(1); j++)
+                    {
+                        if (world[i, j] == CellType.Spaceship)
+                        {
+                            int randomNumber = random.Next(1, 101); // Beispiel: Zufallszahl zwischen 1 und 100
+                            if (randomNumber <= 40 && !lea)
+                            {
+                                world[i, j] = CellType.LeaNPC;
+                                lea = true;
+                            }
+                        }
+                    }
+                }
+                //Schaut ob alle NPC's gesetzt wurden, wenn nein wiederhole
+                if(lea)
+                {
+                    break;
+                }
+            }
             world[1, 1] = CellType.Player;
             if(game.dev)
             {
                 world[1, 2] = CellType.HannaNPC;
             }
-            world[2, 5] = CellType.LeaNPC;
             SepWorld();
             if (game.debug)
             {

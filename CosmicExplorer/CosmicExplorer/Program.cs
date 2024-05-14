@@ -32,7 +32,7 @@ namespace Cosmic_Explorer
         NPC hanna = new NPC("hanna", 1, 2, 0, 0);
         NPC lea = new NPC("Lea", 2, 2, 01020304, 01020304);
         ulong CurrentDay = 0; //Start Tag
-        public int[] _save = new int[60]; //Space um werte zu speichern (Für abfragen)
+        public int[] _save = new int[300]; //Space um werte zu speichern (Für abfragen)
         //Flags
         public bool debug = false; //Flag for Debug Mode, this show some information and processes happened in the background (for public)
         public bool dev = false; //Flag for Dev Mode (not for Public)
@@ -51,10 +51,12 @@ namespace Cosmic_Explorer
                 Console.WriteLine("Cosmic Explorer");
                 Console.WriteLine("Guten Tag, das ist Cosmic Explorer, ein Text Basiertes Weltraum Spiel\nDieses Text Game befindet sich in der Testphase und wird noch Entwickelt von mir um mehr C# zu lernen.");
                 Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("Game Version: 0.1.9 Dev Phase Deutsch / German");
+                Console.WriteLine("Game Version: 0.2.0 Dev Phase Deutsch / German");
                 Console.ResetColor();
                 Console.WriteLine("Willst du starten? [start = Starte das spiel, exit = Verlasse das Spiel, new game = löscht deine Save File]");
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("Eingabe:");
+                Console.ResetColor();
                 message = Console.ReadLine();
                 switch (message)
                 {
@@ -70,6 +72,8 @@ namespace Cosmic_Explorer
                         Console.WriteLine("Bist du dir sicher das du sie löschen willst?(yes/no)");
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Sie lässt sich NICHT mehr wiederherstellen und ist dann für IMMER weg");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.Write("Eingabe:");
                         Console.ResetColor();
                         message = Console.ReadLine();
                         switch (message)
@@ -85,7 +89,6 @@ namespace Cosmic_Explorer
                         }
                     case "start skip":
                         Console.WriteLine("Starte das game und skippe Introduction");
-                        debug = true;
                         _save[0] = 1;
                         initObjekts();
                         LoadSaveFile();
