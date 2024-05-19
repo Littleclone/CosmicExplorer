@@ -9,11 +9,10 @@ namespace Cosmic_Explorer
     public class Trade
     {
         //canSell ist welche Items der NPC verkaufen kann und canBuy welche Items der NPC kaufen kann (also welche Items der Spieler an den NPC verkaufen kann)
-        public void TradeInterfaceSell(int canSell, float discount)
+        public void TradeInterfaceSell(string canSell, float discount)
         {
             int j = 1;
-            string x = "0";
-            x += Convert.ToString(canSell);
+            string x = canSell;
             List<string> canSellList = new List<string>();
             for (int i = 0; i < x.Length; i += 2)
             {
@@ -46,11 +45,10 @@ namespace Cosmic_Explorer
                 }
             }
         }
-        public void TradeInterfaceBuy(int canBuy, float extraCharge)
+        public void TradeInterfaceBuy(string canBuy, float extraCharge)
         {
             int j = 1;
-            string y = "0";
-            y += Convert.ToString(canBuy);
+            string y = canBuy;
             List<string> canBuyList = new List<string>();
             for (int i = 0; i < y.Length; i += 2)
             {
@@ -66,7 +64,7 @@ namespace Cosmic_Explorer
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.Write(ItemIndex.ItemName(j) + ": " + Convert.ToInt32(PriceList.SellPrice(i, extraCharge)) + " Gold, " + " ID: " + i + "  ");
                     Console.ForegroundColor = ConsoleColor.Cyan;
-                    Console.WriteLine("  " + Math.Abs(z) + "% Rabat");
+                    Console.WriteLine("  " + Math.Abs(z) + "% Aufpreis");
                     Console.ResetColor();
                     Console.WriteLine("");
                     j++;

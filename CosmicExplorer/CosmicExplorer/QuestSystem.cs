@@ -17,7 +17,8 @@ namespace Cosmic_Explorer
         private PassivSystem passiv;
         private Inventory inventory;
         private OwnMath math;
-        public void QuestSystemInit(Quest quest, Space space, Activities action, Game games, World world, PassivSystem systems, Inventory inv, OwnMath math) 
+        private Science science;
+        public void QuestSystemInit(Quest quest, Space space, Activities action, Game games, World world, PassivSystem systems, Inventory inv, OwnMath math, Science science) 
         {
             this.game = games;
             this.Space = space;
@@ -27,6 +28,8 @@ namespace Cosmic_Explorer
             this.inventory = inv;
             this.math = math;
             this.quest = quest;
+            this.science = science;
+            game.qsystem = true;
             if(game.debug)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -47,7 +50,10 @@ namespace Cosmic_Explorer
                     string message = quest.QuestInfos(i, QState);
                     if (message != "QuestID not found")
                     {
+                        Console.WriteLine("----------------");
+                        Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine(message);
+                        Console.ResetColor();
                     }
                     else
                     {
@@ -57,6 +63,7 @@ namespace Cosmic_Explorer
                     }
                 }
             }
+            Console.WriteLine("----------------");
         }
         //Updated the Quest Progress / State
         public void QuestSystemUpdate()
@@ -69,12 +76,22 @@ namespace Cosmic_Explorer
                     //World
                     if (index == 1)
                     {
-                        world.WorldQuest(index, x, y, true);
+                        if (QState[1] == 1)
+                        {
+                            world.WorldQuest(index, x, y, true);
+                        }
+                        if (QState[1] == 3)
+                        {
+                            if (science.progress[3] == 2 && science.progress[4] == 2)
+                            {
+                                QState[1] = 4;
+                            }
+                        }
                     }
                     //NPC Quests
                     if(index == 2)
                     {
-                        if (game._save[10] == 1)
+                        if (science.progress[1] == 3)
                         {
                             QState[2] = 2;
                         }

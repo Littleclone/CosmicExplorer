@@ -21,6 +21,7 @@ namespace Cosmic_Explorer
         private QuestSystem questSystem;
         private Player player;
         private Science science;
+        private NPC npc;
         string message;
         public int currentRoom = 0;
         public int currentTime;
@@ -30,7 +31,7 @@ namespace Cosmic_Explorer
         //Passiv System bool flags
         bool antiCrashSystem = true;
         public bool sonarActive = false;
-        public void SpaceShip(Space space, Activities action, Game games, World world, PassivSystem systems, Inventory inv, OwnMath math, Quest quest, QuestSystem questS, Player player, Science scient)
+        public void SpaceShip(Space space, Activities action, Game games, World world, PassivSystem systems, Inventory inv, OwnMath math, Quest quest, QuestSystem questS, Player player, Science scient, NPC gfi)
         {
             this.game = games;
             this.Space = space;
@@ -43,6 +44,8 @@ namespace Cosmic_Explorer
             this.questSystem = questS;
             this.player = player;
             this.science = scient;
+            this.npc = gfi;
+            game.spaceShip = true;
             if(game.debug)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -52,6 +55,7 @@ namespace Cosmic_Explorer
         }
         public void Bedroom(int currentTime1)
         {
+            game.newGame = false;
             //Setzt die Zeit und tag auf den aktuellen wert. (Und weil es im ersten Raum startet wird current Room auf 1 gesetzt)
             currentTime = currentTime1;
             currentRoom = 1;
@@ -65,15 +69,16 @@ namespace Cosmic_Explorer
             Console.WriteLine("Zum Lagerraum gehen.[4]");
             Console.WriteLine("Zum Generator gehen.[5] X");
             Console.WriteLine("Ins Labor gehen.[6]");
-            Console.WriteLine("Dich ausruhen (Regeniert bissen leben).[7] X");
-            Console.WriteLine("Schlafen (Tag beenden).[8]");
-            Console.WriteLine("Hauptmenü öffnen (ES SPEICHERT NUR WENN EIN NEUER TAG STARTET) [9]");
+            Console.WriteLine("In die Werkstatt gehen.[7]");
+            Console.WriteLine("Dich ausruhen (Regeniert bissen leben).[8] X");
+            Console.WriteLine("Schlafen (Tag beenden).[9]");
+            Console.WriteLine("Hauptmenü öffnen (ES SPEICHERT NUR WENN EIN NEUER TAG STARTET) [10]");
             while (true)
             {
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("Eingabe:");
                 Console.ResetColor();
-                message = Console.ReadLine();
+                message = Console.ReadLine().Trim();
                 //Auswahlverfahren von was der User ausgewählt hat
                 switch (message)
                 {
@@ -99,20 +104,23 @@ namespace Cosmic_Explorer
                         science.Laboratory();
                         break;
                     case "7":
+                        currentTime++;
+                        inventory.WorkshopRoom();
+                        break;
+                    case "8":
                         Console.WriteLine("Noch nicht Implementiert!");
                         continue;
-                    case "8":
+                    case "9":
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("Es verging viel Zeit.");
                         Console.ResetColor();
                         game.NewDayStart(23);
                         break;
-                    case "9":
+                    case "10":
                         game.Start();
                         break;
-                        //Debug Action
+                    //Debug Action
                     case "99":
-                        inventory.AddItem(1, 2, false);
                         continue;
                     default:
                         Console.WriteLine("Wähle einer der Nummern aus!");
@@ -134,12 +142,14 @@ namespace Cosmic_Explorer
             Console.WriteLine("Zum Lagerraum gehen.[5]");
             Console.WriteLine("Zum Generator gehen.[6] X");
             Console.WriteLine("Ins Labor gehen.[7]");
+            Console.WriteLine("In die Werkstatt gehen.[8]");
+            Console.WriteLine("Nehme Kontakt zu GFI auf.[9]");
             while (true)
             {
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("Eingabe:");
                 Console.ResetColor();
-                message = Console.ReadLine();
+                message = Console.ReadLine().Trim();
                 switch (message)
                 {
                     case "1":
@@ -176,6 +186,15 @@ namespace Cosmic_Explorer
                     case "7":
                         science.Laboratory();
                         break;
+                    case "8":
+                        currentTime++;
+                        inventory.WorkshopRoom();
+                        break;
+                    case "9":
+                        Console.WriteLine(" ");
+                        npc.NPCStartGFI();
+                        Commandcenter();
+                        break;
                     default:
                         Console.WriteLine("Wähle einer der Nummern aus!");
                         continue;
@@ -195,12 +214,13 @@ namespace Cosmic_Explorer
             Console.WriteLine("Zum Lagerraum gehen.[5]");
             Console.WriteLine("Zum Generator gehen.[6] X");
             Console.WriteLine("Ins Labor gehen.[7]");
+            Console.WriteLine("In die Werkstatt gehen.[8]");
             while (true)
             {
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("Eingabe:");
                 Console.ResetColor();
-                message = Console.ReadLine();
+                message = Console.ReadLine().Trim();
                 switch (message)
                 {
                     case "1":
@@ -238,6 +258,10 @@ namespace Cosmic_Explorer
                     case "7":
                         science.Laboratory();
                         break;
+                    case "8":
+                        currentTime++;
+                        inventory.WorkshopRoom();
+                        break;
                     default:
                         Console.WriteLine("Wähle einer der Nummern aus!");
                         continue;
@@ -255,7 +279,7 @@ namespace Cosmic_Explorer
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("Eingabe:");
                 Console.ResetColor();
-                message = Console.ReadLine();
+                message = Console.ReadLine().Trim().ToLower(); ;
                 //überprüft ob Shuttle Energie Größer als 5 ist (5 Ist die Kleinst Mögliche Energy benötigung für eine Aktion)
                 if (Energy < 5 && message != "exit")
                 {
@@ -274,17 +298,17 @@ namespace Cosmic_Explorer
                             break;
                         case "help":
                             Console.WriteLine("help = Zeigt diese liste an [Kostet keine Energie]");
-                            Console.WriteLine("info = gib den namen des Passiven Systems an um mehr darüber zu erfahren [Kostet keine Energie]");
-                            Console.WriteLine("kurs X Y = Steuert dein Schiff zu diesen Koordinaten [Nutzt X Liter Benzin proportional zu der entfernung]");
-                            Console.WriteLine("standort = Zeigt deine aktuelle X und Y Koordinate an [Nutzt 5 Energie aktiv]");
+                            Console.WriteLine("info = gib den namen des Passiven Systems an um mehr darüber zu erfahren. [Kostet keine Energie]");
+                            Console.WriteLine("kurs X Y = Steuert dein Schiff zu diesen Koordinaten. [Nutzt X Liter Benzin proportional zu der entfernung und 10 Energie]");
+                            Console.WriteLine("standort = Zeigt deine aktuelle X und Y Koordinate an. [Nutzt 5 Energie aktiv]");
                             Console.WriteLine("sonar = Lässt dich das Sonar aktivieren / Deaktivieren [Nutzt 5 Energie Passiv]");
-                            Console.WriteLine("scanner = Lässt dich entweder Objekte in deiner Nähe Scannen oder ein Objekt in der Ferne [10 Energie Aktiv]");
-                            Console.WriteLine("pSystems = Zeigt dir die Passiven systeme an und ob sie aktiv sind und wie viel energie sie brauchen [Kostet keine Energie]");
-                            Console.WriteLine("quests = Zeigt dir deine Aktuellen Quests an [Kostet keine Energie]");
-                            Console.WriteLine("mine = Baut die 3 Asterioden vor dem Player ab [Kostet 20 Energie Pro Asteroid Aktiv]");
-                            Console.WriteLine("call = Stelle eine Verbindung zu einem NPC um dich erhum her [Kostet 5 Energie]");
+                            Console.WriteLine("scanner = Lässt dich entweder Objekte in deiner Nähe Scannen oder ein Objekt in der. [10 Energie Aktiv]");
+                            Console.WriteLine("pSystems = Zeigt dir die Passiven systeme an und ob sie aktiv sind und wie viel energie sie brauchen. [Kostet keine Energie]");
+                            Console.WriteLine("quests = Zeigt dir deine Aktuellen Quests an. [Kostet keine Energie]");
+                            Console.WriteLine("mine = Baut die 3 Asterioden vor dem Player ab. [Kostet 20 Energie Pro Asteroid Aktiv]");
+                            Console.WriteLine("call = Stelle eine Verbindung zu einem NPC um dich erhum her. [Kostet 5 Energie]");
                             Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Mehr ist noch nicht Implementiert!");
+                            Console.WriteLine("Mehr kommt in den Nächsten Updates!");
                             Console.ResetColor();
                             goto Start;
                         case "info":
@@ -294,17 +318,28 @@ namespace Cosmic_Explorer
                             switch (message)
                             {
                                 case "sonar":
-                                    Console.WriteLine("Zeigt bei jeder Aktiven Aktion die Koordinaten umgebener Objekte an\n");
+                                    Console.WriteLine("Zeigt bei jeder Aktiven Aktion die Koordinaten umgebener Objekte an.\n");
+                                    goto Start;
+                                case "anticrash":
+                                    Console.WriteLine("Verhindert das du gegen Asteroiden oder andere Objekte fliegst.\n");
                                     goto Start;
                                 default:
                                     Console.WriteLine("Ungültiges System! Vorgang wird abgebrochen");
                                     continue;
                             }
                         case "kurs":
-                            if (Energy < 10)
+                            if (inventory.itemIndex[1] == 0)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Du hast kein Treibstoff! Kauf dir neues bei Händlern oder Rufe GFI an.");
+                                Console.ResetColor();
+                                continue;
+                            }
+                            if (Energy < 20)
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("Du hast zu Wenig Energie um diese Aktion durchzuführen!");
+                                Console.WriteLine("Beachte das das Anti Crash System auch 10 Energie benötigt und es daher insgesamt 20 Energie sind.");
                                 Console.ResetColor();
                                 continue;
                             }
@@ -312,7 +347,7 @@ namespace Cosmic_Explorer
                             int y;
                         x:
                             Console.WriteLine("Bitte den Kurs für koordinate X ein");
-                            message = Console.ReadLine();
+                            message = Console.ReadLine().Trim();
                             try
                             {
                                 x = Convert.ToInt32(message);
@@ -325,7 +360,7 @@ namespace Cosmic_Explorer
                             }
                         y:
                             Console.WriteLine("Bitte den Kurs für koordinate Y ein");
-                            message = Console.ReadLine();
+                            message = Console.ReadLine().Trim();
                             try
                             {
                                 y = Convert.ToInt32(message);
@@ -365,7 +400,7 @@ namespace Cosmic_Explorer
                             Console.ResetColor();
                             sonarTemp:
                             Console.Write("Eingabe: ");
-                            message = Console.ReadLine();
+                            message = Console.ReadLine().Trim().ToLower();
                             switch (message)
                             {
                                 case "aktivieren":
@@ -392,7 +427,7 @@ namespace Cosmic_Explorer
                         Scanner:
                             Console.WriteLine("Willst du den Nahbereich Scanner nutzen oder ein entferntes Objekt scannen?(nah/fern)");
                             Console.Write("Eingabe: ");
-                            message = Console.ReadLine();
+                            message = Console.ReadLine().Trim().ToLower();
                             switch (message)
                             {
                                 case "nah":
@@ -404,7 +439,7 @@ namespace Cosmic_Explorer
                                     int yCord;
                                 XScan:
                                     Console.WriteLine("Bitte die koordinate für X eingeben");
-                                    message = Console.ReadLine();
+                                    message = Console.ReadLine().Trim();
                                     try
                                     {
                                         xCord = Convert.ToInt32(message);
@@ -417,7 +452,7 @@ namespace Cosmic_Explorer
                                     }
                                 YScan:
                                     Console.WriteLine("Bitte die koordinate für Y eingeben");
-                                    message = Console.ReadLine();
+                                    message = Console.ReadLine().Trim();
                                     try
                                     {
                                         yCord = Convert.ToInt32(message);
@@ -435,9 +470,22 @@ namespace Cosmic_Explorer
                                     Console.WriteLine("Bitte nutze einer der beiden eingaben! ");
                                     goto Scanner;
                             }
-                        //PSystems = Passiv, Systems
-                        case "pSystems":
+                        case "psystems":
                             Console.WriteLine("Passiv Systems:");
+                            //AntiCrash
+                            Console.Write("AntiCrash: [Info: Kann derzeit NICHT deaktiviert werden]");
+                            if (antiCrashSystem)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.Write("Aktiviert");
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.Write("Deaktiviert");
+                            }
+                            Console.ResetColor();
+                            Console.WriteLine(", Braucht: 10 Energie [Nur wenn der Kurs befehl genutzt wird]");
                             //Sonar
                             Console.Write("Sonar: ");
                             if (sonarActive)

@@ -24,6 +24,7 @@ namespace Cosmic_Explorer
             this.passiv = systems;
             this.inventory = inv;
             this.math = math;
+            game.spaces = true;
             if (game.debug)
             {
                 Console.ForegroundColor = ConsoleColor.Red;

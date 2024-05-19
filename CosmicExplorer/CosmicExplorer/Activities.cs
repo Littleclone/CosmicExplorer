@@ -24,6 +24,7 @@ namespace Cosmic_Explorer
             this.world = world;
             this.passiv = systems;
             this.inventory = inv;
+            game.actions = true;
             if (game.debug)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -52,6 +53,7 @@ namespace Cosmic_Explorer
             this.inventory = inv;
             this.math = math;
             this.qSystem = qSystem;
+            game.passivs = true;
             if (game.debug)
             {
                 Console.ForegroundColor = ConsoleColor.Red;

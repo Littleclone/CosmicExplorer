@@ -21,13 +21,14 @@ namespace Cosmic_Explorer
         private Science sciene;
         private NPC hanna;
         private NPC lea;
+        private NPC supplier;
         public int _playerX = 0;
         public int _playerY = 0;
         //players Old Position
         int d = 1;
         int c = 1;
         CellType[,] world = new CellType[1619, 1619]; //Eine 1619x1619 Welt oder 2.621.440 Zellen
-        int[,] sepWorld = new int[1620, 1620]; // 2.624.400
+        int[,] sepWorld = new int[1619, 1619]; // 2.621.440 Zellen
         CourseType[,] arr1 = new CourseType[1620, 1620]; //Eine 1620x1620 oder 2.624.400 mögliche Zellen
         public void Worlds(SpaceShuttle shuttle, Space space, Activities action, Game games, PassivSystem systems, Inventory inv, QuestSystem questS, Science scient)
         {
@@ -39,6 +40,7 @@ namespace Cosmic_Explorer
             this.inventory = inv;
             this.questSystem = questS;
             this.sciene = scient;
+            game.worlds = true;
             if(game.debug)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -46,10 +48,12 @@ namespace Cosmic_Explorer
                 Console.ResetColor();
             }
         }
-        public void InitNPCData(NPC npc, NPC lea)
+        public void InitNPCData(NPC npc, NPC lea, NPC supplier)
         {
             this.hanna = npc;
             this.lea = lea;
+            this.supplier = supplier;
+            game.worldInit = true;
             if (game.debug)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -64,12 +68,14 @@ namespace Cosmic_Explorer
             Asteroid,
             CopperAsteroid,
             IronAsteroid,
+            GoldAsteroid,
             Planet,
             Sun,
             Spaceship,
             //NPC
             HannaNPC,
             LeaNPC,
+            SupplierNPC,
         }
         public enum CourseType
         {
@@ -85,6 +91,7 @@ namespace Cosmic_Explorer
             int planetCount1 = 0;
             int asteroidCount = 0;
             int asteroidCount1 = 0;
+            int goldAsteroidCount = 0;
             int ironAsteroidCount = 0;
             int cuperAsteroidCount = 0;
             int spaceShipCount = 0;
@@ -103,7 +110,16 @@ namespace Cosmic_Explorer
                         //Welten Generation Regeln
                         if (world[x - 1, y - 1] == CellType.Asteroid || world[x, y - 1] == CellType.Asteroid || world[x - 1, y] == CellType.Asteroid)
                         {
-                            if (randomNumber <= 20) //Wenn neben dem Asteroid ein Asteroid ist, ist die Chance höher das ein weitere Spawnt mit dem Element Eisen.
+                            if (randomNumber <= 10) //Wenn neben dem Asteroid ein Asteroid ist, ist die Chance höher das ein weitere Spawnt mit dem Element Gold.
+                            {
+                                world[x, y] = CellType.GoldAsteroid;
+                                goldAsteroidCount++;
+                                continue;
+                            }
+                        }
+                        if (world[x - 1, y - 1] == CellType.Asteroid || world[x, y - 1] == CellType.Asteroid || world[x - 1, y] == CellType.Asteroid)
+                        {
+                            if (randomNumber <= 25) //Wenn neben dem Asteroid ein Asteroid ist, ist die Chance höher das ein weitere Spawnt mit dem Element Eisen.
                             {
                                 world[x, y] = CellType.IronAsteroid;
                                 ironAsteroidCount++;
@@ -196,6 +212,10 @@ namespace Cosmic_Explorer
                     }
                 }
             }
+            //Quest things
+            world[2, 1381] = CellType.Space;
+            world[3, 1381] = CellType.SupplierNPC;
+            //NPC SetIntoWorld
             bool lea = false;
             while (true)
             {
@@ -215,13 +235,13 @@ namespace Cosmic_Explorer
                     }
                 }
                 //Schaut ob alle NPC's gesetzt wurden, wenn nein wiederhole
-                if(lea)
+                if (lea)
                 {
                     break;
                 }
             }
             world[1, 1] = CellType.Player;
-            if(game.dev)
+            if (game.dev)
             {
                 world[1, 2] = CellType.HannaNPC;
             }
@@ -239,6 +259,7 @@ namespace Cosmic_Explorer
                 Console.WriteLine("Es gibt " + asteroidCount1 + " Asteroiden");
                 Console.WriteLine("Es gibt " + cuperAsteroidCount + " Kupfer Asteroiden[Regeln]");
                 Console.WriteLine("Es gibt " + ironAsteroidCount + " Eisen Asteroiden[Regeln]");
+                Console.WriteLine("Es gibt " + goldAsteroidCount + " Gold Asteroiden[Regeln]");
                 Console.WriteLine("Es gibt " + spaceCount + " Space[Regeln]");
                 Console.WriteLine("Es gibt " + spaceCount1 + " Space");
                 Console.WriteLine("Welt generation abgeschlossen [NUR WÄHREND DES DEBUGS VISIBLE]");
@@ -262,14 +283,42 @@ namespace Cosmic_Explorer
         }
         public void SaveWorld()
         {
-            WorldDataManager.SaveWorldData(world);
+            try
+            {
+                WorldDataManager.SaveWorldData(world);
+                game.failedToSaveWorld = false;
+            }
+            catch (InvalidDataException ex)
+            {
+                // Behandlung der InvalidDataException
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine($"Fehler beim Speichern der Welt-Daten: {ex.Message}");
+                Console.ResetColor();
+                game.failedToSaveWorld = true;
+            }
+            catch (FileNotFoundException ex)
+            {
+                // Behandlung der FileNotFoundException
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine($"Fehler beim Speichern der Welt-Daten: {ex.Message}");
+                Console.ResetColor();
+                game.failedToSaveWorld = true;
+            }
+            catch (Exception ex)
+            {
+                // Allgemeine Exception-Behandlung für alle anderen Fälle
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine($"Ein Fehler ist aufgetreten: {ex.Message}");
+                Console.ResetColor();
+                game.failedToSaveWorld = true;
+            }
         }
         public void LoadWorld()
         {
             try
             {
-                CellType[,] loadedWorld = WorldDataManager.LoadWorldData<CellType>();
-                world = loadedWorld;
+                world = WorldDataManager.LoadWorldData<CellType>();
+                game.failedToLoadWorld = false;
                 SepWorld();
                 if (game.debug)
                 {
@@ -284,6 +333,7 @@ namespace Cosmic_Explorer
                 Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.WriteLine($"Fehler beim Laden der Welt-Daten: {ex.Message}");
                 Console.ResetColor();
+                game.failedToLoadWorld = true;
             }
             catch (FileNotFoundException ex)
             {
@@ -291,6 +341,7 @@ namespace Cosmic_Explorer
                 Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.WriteLine($"Fehler beim Laden der Welt-Daten: {ex.Message}");
                 Console.ResetColor();
+                game.failedToLoadWorld = true;
             }
             catch (Exception ex)
             {
@@ -298,27 +349,28 @@ namespace Cosmic_Explorer
                 Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.WriteLine($"Ein Fehler ist aufgetreten: {ex.Message}");
                 Console.ResetColor();
+                game.failedToLoadWorld = true;
             }
         }
         //Ab hier sind die Aktivitäten die irgendwas mit der Welt zu tun haben:
         public void Course(int X, int Y, bool antiCrash)
         {
-            const int BREAKER = 1;
             //Kontroll Variablen
             int counter = 0;
             float petrolCounter = 0;
             int xCord = -1;
             int yCord = -1;
             //Ist unnötig da nach der Weltengenierung der Player einmal gefunden wird, jedoch bleibt dies erstmal falls fehler entstehen sollten
-            if (_playerX == 0 && _playerY == 0)
+            if (_playerX == 0 || _playerY == 0)
             {
-                Console.WriteLine("Bitte schaue erst wo dein Standort ist[Error by Finding Player Position]");
+                Console.WriteLine("[Error by Finding Player Position]");
                 return;
             }
             //Übersetzt die Koordinaten (X und Y) in array einträge (Spalte und Zeile)
-            for (int e = 0; e < 1620; e++)
+            Console.WriteLine("Koordinaten werden umgerechnet.");
+            for (int e = 0; e < 1619; e++)
             {
-                for (int r = 0; r < 1620; r++)
+                for (int r = 0; r < 1619; r++)
                 {
                     int p;
                     p = sepWorld[e, r];
@@ -334,7 +386,7 @@ namespace Cosmic_Explorer
                     o = sepWorld[e, r];
                     if (o == Y)
                     {
-                        yCord = r;
+                        yCord = r +1;
                         if(game.debug)
                         {
                             Console.WriteLine(yCord + "yCord [Debug]");
@@ -361,11 +413,14 @@ namespace Cosmic_Explorer
                     return;
                 }
             }
-            Console.WriteLine("Kurs wird berechnet");
+            Console.WriteLine("Koordinaten wurden umgerechnet.");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine($"X:{xCord}, Y:{yCord}");
+            Console.ResetColor();
+            //Console.WriteLine("Kurs wird berechnet");
             if (antiCrash)
             {
-                int playerX;
-                int playerY;
+                shuttle.Energy -= 10;
                 if(xCord < _playerX)
                 {
                     for (int k = _playerX; k >= xCord; k--)
@@ -376,19 +431,8 @@ namespace Cosmic_Explorer
                             {
                                 if (world[k, l] == CellType.Space)
                                 {
-                                    int z = k;
-                                    int w = l;
-                                    playerX = k;
-                                    playerY = l;
-                                    k -= playerX;
-                                    l -= playerY;
-                                    if (k <= BREAKER && l <= BREAKER)
-                                    {
-                                        arr1[z, w] = CourseType.Written;
-                                        k = z;
-                                        l = w;
-                                        petrolCounter++;
-                                    }
+                                    arr1[k, l] = CourseType.Written;
+                                    petrolCounter++;
                                 }
                                 if (world[k, l] != CellType.Space)
                                 {
@@ -402,19 +446,8 @@ namespace Cosmic_Explorer
                             {
                                 if (world[k, l] == CellType.Space)
                                 {
-                                    int z = k;
-                                    int w = l;
-                                    playerX = k;
-                                    playerY = l;
-                                    k -= playerX;
-                                    l -= playerY;
-                                    if (k <= BREAKER && l <= BREAKER)
-                                    {
-                                        arr1[z, w] = CourseType.Written;
-                                        k = z;
-                                        l = w;
-                                        petrolCounter++;
-                                    }
+                                    arr1[k, l] = CourseType.Written;
+                                    petrolCounter++;
                                 }
                                 if (world[k, l] != CellType.Space)
                                 {
@@ -434,19 +467,8 @@ namespace Cosmic_Explorer
                             {
                                 if (world[k, l] == CellType.Space)
                                 {
-                                    int z = k;
-                                    int w = l;
-                                    playerX = k;
-                                    playerY = l;
-                                    k -= playerX;
-                                    l -= playerY;
-                                    if (k <= BREAKER && l <= BREAKER)
-                                    {
-                                        arr1[z, w] = CourseType.Written;
-                                        k = z;
-                                        l = w;
-                                        petrolCounter++;
-                                    }
+                                    arr1[k, l] = CourseType.Written;
+                                    petrolCounter++;
                                 }
                                 if (world[k, l] != CellType.Space)
                                 {
@@ -460,19 +482,8 @@ namespace Cosmic_Explorer
                             {
                                 if (world[k, l] == CellType.Space)
                                 {
-                                    int z = k;
-                                    int w = l;
-                                    playerX = k;
-                                    playerY = l;
-                                    k -= playerX;
-                                    l -= playerY;
-                                    if (k <= BREAKER && l <= BREAKER)
-                                    {
-                                        arr1[z, w] = CourseType.Written;
-                                        k = z;
-                                        l = w;
-                                        petrolCounter++;
-                                    }
+                                    arr1[k, l] = CourseType.Written;
+                                    petrolCounter++;
                                 }
                                 if (world[k, l] != CellType.Space)
                                 {
@@ -483,6 +494,7 @@ namespace Cosmic_Explorer
                     }
                 }
             }
+            //Console.WriteLine("Kurs wurde berechnet");
             //Set Player Position
             for (int p = 1; p <= xCord; p++)
             {
@@ -500,20 +512,9 @@ namespace Cosmic_Explorer
                 }
             }
             FindCellsByType(CellType.Player, true);
-            Console.WriteLine("Kurs wurde berechnet");
             if(game.debug)
             {
                 Console.WriteLine("Kollisionen erkannt: " + counter + " [Debug]");
-            }
-            if(game.debug)
-            {
-                if (questSystem.QState[1] == 0)
-                {
-                    if (world[1, 400] == CellType.Player)
-                    {
-                        questSystem.QState[1] = 1;
-                    }
-                }
             }
             //science
             if (sciene.progress[1] != 3)
@@ -541,8 +542,10 @@ namespace Cosmic_Explorer
                     if (world[_playerX + 1, _playerY + i] == CellType.Asteroid)
                     {
                         inventory.AddItem(2, random.Next(2, 7), true);
-                        inventory.AddItem(3, random.Next(0, 3), true);
+                        inventory.AddItem(3, random.Next(0, 4), true);
                         inventory.AddItem(4, random.Next(0, 5), true);
+                        inventory.AddItem(5, random.Next(5, 12), true);
+                        inventory.AddItem(9, random.Next(0, 3), true);
                         counter++;
                         shuttle.Energy -= 20;
                     }
@@ -550,6 +553,8 @@ namespace Cosmic_Explorer
                     {
                         inventory.AddItem(2, random.Next(2, 7), true);
                         inventory.AddItem(4, random.Next(20, 27), true);
+                        inventory.AddItem(5, random.Next(5, 12), true);
+                        inventory.AddItem(9, random.Next(0, 5), true);
                         counter++;
                         shuttle.Energy -= 20;
                     }
@@ -557,6 +562,16 @@ namespace Cosmic_Explorer
                     {
                         inventory.AddItem(2, random.Next(2, 7), true);
                         inventory.AddItem(3, random.Next(10, 19), true);
+                        inventory.AddItem(5, random.Next(5, 12), true);
+                        inventory.AddItem(9, random.Next(0, 5), true);
+                        counter++;
+                        shuttle.Energy -= 20;
+                    }
+                    if (world[_playerX + 1, _playerY + i] == CellType.GoldAsteroid)
+                    {
+                        inventory.AddItem(2, random.Next(2, 7), true);
+                        inventory.AddItem(5, random.Next(5, 12), true);
+                        inventory.AddItem(9, random.Next(5, 16), true);
                         counter++;
                         shuttle.Energy -= 20;
                     }
@@ -564,6 +579,8 @@ namespace Cosmic_Explorer
             }
             Console.WriteLine("Du hast " + counter + " Asteroiden Abgebaut und insgesammt folgendes erhalten:");
             Console.WriteLine("Asteroiden Stücke: "+inventory.asteroid_pieces);
+            Console.WriteLine("Asteroiden Stücke: "+inventory.asteroid_dust);
+            Console.WriteLine("Gold Erz: " + inventory.gold_ore);
             Console.WriteLine("Eisen Erz: "+inventory.iron_ore);
             Console.WriteLine("Kupfer Erz: " + inventory.copper_ore);
             passiv.ActionMaked();
@@ -578,6 +595,21 @@ namespace Cosmic_Explorer
                     {
                         Console.WriteLine("Du hast verbindung zu hanna aufgenommen");
                         hanna.NPCStartHanna();
+                        return;
+                    }
+                    if (world[_playerX + i, _playerY + j] == CellType.SupplierNPC)
+                    {
+                        if(supplier.state == 0)
+                        {
+                            Console.WriteLine("Du hast verbindung zum Lieferanten aufgenommen");
+                            supplier.NPCStartSupplier();
+                            inventory.AddItem(11, 2, false);
+                            inventory.AddItem(12, 2, false);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Der Lieferant verbindet sich nicht mit dir.");
+                        }
                         return;
                     }
                     if (world[_playerX + i, _playerY + j] == CellType.LeaNPC)
@@ -598,13 +630,25 @@ namespace Cosmic_Explorer
         {
             const int BREAKER = 1;
             Console.WriteLine("Objekte gefunden bei: ");
-            for (int i = _playerX-15; i <= _playerX+15; i++)
+            for (int i = _playerX-10; i <= _playerX+10; i++)
             {
-                for (int j = _playerY-15; j <= _playerY+15; j++)
+                for (int j = _playerY-10; j <= _playerY+10; j++)
                 {
                     if (i >= BREAKER && j >= BREAKER)
                     {
                         if (world[i, j] == CellType.Asteroid)
+                        {
+                            Console.Write(i + "|" + j + ", ");
+                        }
+                        else if (world[i, j] == CellType.CopperAsteroid)
+                        {
+                            Console.Write(i + "|" + j + ", ");
+                        }
+                        else if (world[i, j] == CellType.IronAsteroid)
+                        {
+                            Console.Write(i + "|" + j + ", ");
+                        }
+                        else if (world[i, j] == CellType.GoldAsteroid)
                         {
                             Console.Write(i + "|" + j + ", ");
                         }
@@ -620,6 +664,18 @@ namespace Cosmic_Explorer
                         {
                             Console.Write(i + "|" + j + ", ");
                         }
+                        else if (world[i, j] == CellType.LeaNPC)
+                        {
+                            Console.Write(i + "|" + j + ", ");
+                        }
+                        else if (world[i, j] == CellType.SupplierNPC)
+                        {
+                            Console.Write(i + "|" + j + ", ");
+                        }
+                        else if (world[i, j] == CellType.Player)
+                        {
+                            Console.Write(i + "|" + j + " You, ");
+                        }
                     }
                 }
             }
@@ -628,15 +684,27 @@ namespace Cosmic_Explorer
         public void ScannerNah()
         {
             const int BREAKER = 1;
-            for (int i = _playerX - 5; i <= _playerX + 5; i++)
+            for (int i = _playerX - 3; i <= _playerX + 3; i++)
             {
-                for (int j = _playerY - 5; j <= _playerY + 5; j++)
+                for (int j = _playerY - 3; j <= _playerY + 3; j++)
                 {
                     if (i >= BREAKER && j >= BREAKER)
                     {
                         if (world[i, j] == CellType.Asteroid)
                         {
                             Console.WriteLine("Asteroid gefunden bei: " + i + ", " + j);
+                        }
+                        else if (world[i, j] == CellType.CopperAsteroid)
+                        {
+                            Console.WriteLine("Kupfer Asteroid gefunden bei: " + i + ", " + j);
+                        }
+                        else if (world[i, j] == CellType.IronAsteroid)
+                        {
+                            Console.WriteLine("Eisen Asteroid gefunden bei: " + i + ", " + j);
+                        }
+                        else if (world[i, j] == CellType.GoldAsteroid)
+                        {
+                            Console.WriteLine("Gold Asteroid gefunden bei: " + i + ", " + j);
                         }
                         else if (world[i, j] == CellType.Sun)
                         {
@@ -649,6 +717,18 @@ namespace Cosmic_Explorer
                         else if (world[i, j] == CellType.Planet)
                         {
                             Console.WriteLine("Planet gefunden bei: " + i + ", " + j);
+                        }
+                        else if (world[i, j] == CellType.LeaNPC)
+                        {
+                            Console.WriteLine("NPC Lea gefunden bei: " + i + ", " + j);
+                        }
+                        else if (world[i, j] == CellType.SupplierNPC)
+                        {
+                            Console.WriteLine("NPC Lieferant gefunden bei: " + i + ", " + j);
+                        }
+                        else if (world[i, j] == CellType.Player)
+                        {
+                            Console.WriteLine("Du befindest dich hier: " + i + ", " + j);
                         }
                     }
                 }
@@ -677,13 +757,11 @@ namespace Cosmic_Explorer
                 {
                     if(targetType == CellType.Player)
                     {
-                        if (world[x, y] == targetType && silent == false)
+                        if (world[x, y] == targetType && !silent)
                         {
+                            //X get Y and then Y get Y? Sep world
                             //Braucht ein dekodierer um Spalte und Zeile in Koordinaten umzurechnen
-                            if(game.debug)
-                            {
-                                Console.WriteLine("Deine Position: (" + x + ", " + y + ") [Debug]");
-                            }
+                            Console.WriteLine("Deine Position: (" + x + ", " + y + ")");
                             _playerX = x;
                             _playerY = y;
                             return;
@@ -709,8 +787,7 @@ namespace Cosmic_Explorer
             {
                 if (world[cordX, cordY] == CellType.Player)
                 {
-                    questSystem.QState[index] = 15;
-                    Console.WriteLine("Quest abgeschlossen[Debug]");
+                    questSystem.QState[index] = 2;
                 }
             }
         }

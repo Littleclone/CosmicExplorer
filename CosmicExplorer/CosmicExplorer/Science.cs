@@ -12,21 +12,24 @@ namespace Cosmic_Explorer
         private Inventory inventory;
         private SpaceShuttle shuttle;
         private PassivSystem passiv;
-        public void Init(Inventory inv, Game game, SpaceShuttle shuttle, PassivSystem passiv)
+        private QuestSystem qSystem;
+        public void Init(Inventory inv, Game game, SpaceShuttle shuttle, PassivSystem passiv, QuestSystem qSystem)
         {
             this.inventory = inv;
             this.game = game;
             this.shuttle = shuttle;
             this.passiv = passiv;
+            this.qSystem = qSystem;
+            game.sciences = true;
             if (game.debug)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Objekte Initalisiert[SpaceShuttle]. [NUR WÄHREND DES DEBUGS VISIBLE]");
+                Console.WriteLine("Objekte Initalisiert[Science]. [NUR WÄHREND DES DEBUGS VISIBLE]");
                 Console.ResetColor();
             }
         }
         string message = "error";
-        public SByte[] progress = new SByte[10];
+        public SByte[] progress = new SByte[100];
         public void Laboratory()
         {
             while (true)
@@ -41,12 +44,13 @@ namespace Cosmic_Explorer
                 Console.WriteLine("In die Küche gehen.[5] X");
                 Console.WriteLine("Zum Lagerraum gehen.[6]");
                 Console.WriteLine("Zum Generator gehen.[7] X");
+                Console.WriteLine("In die Werkstatt gehen.[8]");
                 while (true)
                 {
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.Write("Eingabe:");
                     Console.ResetColor();
-                    message = Console.ReadLine();
+                    message = Console.ReadLine().Trim();
                     switch (message)
                     {
                         case "1":
@@ -75,6 +79,10 @@ namespace Cosmic_Explorer
                         case "7":
                             Console.WriteLine("Noch nicht Implementiert!");
                             continue;
+                        case "8":
+                            shuttle.currentTime++;
+                            inventory.WorkshopRoom();
+                            break;
                         default:
                             Console.WriteLine("Wähle einer der Nummern aus!");
                             continue;
@@ -91,57 +99,137 @@ namespace Cosmic_Explorer
                 Console.WriteLine("Du bist bei deinem Equipment, was willst du nutzen? [Uhrzeit: " + shuttle.currentTime + ":00]");
                 Console.WriteLine("Nutz dein Mikroskop.[1]");
                 Console.WriteLine("Geh zurück[4]");
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("Eingabe:");
-                message = Console.ReadLine();
+                Console.ResetColor();
+                message = Console.ReadLine().Trim();
                 switch (message)
                 {
                     case "1":
-                        Console.WriteLine("Welches Item willst du erforschen? (Du bruachst die ID die im Storage angezeigt wird)");
                         while (true)
                         {
+                            Console.WriteLine("Welches Item willst du erforschen?");
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Hinweis, das Item wird verbraucht wenn du es Forschen willst!");
+                            Console.ResetColor();
+                            Console.WriteLine(ItemIndex.ItemName(1) + ", ID: 01");
+                            Console.WriteLine(ItemIndex.ItemName(5) + ", ID: 05");
+                            if (qSystem.QState[1] == 3)
+                            {
+                                Console.WriteLine(ItemIndex.ItemName(11) + ", ID: 11");
+                                Console.WriteLine(ItemIndex.ItemName(12) + ", ID: 12");
+                            }
                             Console.ForegroundColor = ConsoleColor.White;
                             Console.Write("Eingabe:");
                             Console.ResetColor();
-                            message = Console.ReadLine();
-                            switch(message)
+                            message = Console.ReadLine().Trim().ToLower();
+                            if(message == "01")
                             {
-                                case "01":
-                                    if (progress[1] != 4)
+                                if (progress[1] != 4)
+                                {
+                                    if (inventory.itemIndex[1] >= 1)
                                     {
-                                        if (inventory.itemIndex[1] >= 1)
-                                        {
-                                            Console.WriteLine(ScienceProgress.ScienceProg(1, progress[1]));
-                                            inventory.RemoveItem(1, 1, false);
-                                            progress[1]++;
-                                            shuttle.currentTime += 3;
-                                            Console.ResetColor();
-                                            if (progress[1] == 3)
-                                            {
-                                                game._save[10] = 1;
-                                            }
-                                            passiv.ActionMaked();
-                                            break;
-                                        }
-                                        else
-                                        {
-                                            Console.ForegroundColor = ConsoleColor.Red;
-                                            Console.WriteLine("Du hast nicht genügend Benzin!");
-                                            Console.ResetColor();
-                                            continue;
-                                        }
+                                        Console.WriteLine(ScienceProgress.ScienceProg(1, progress[1]));
+                                        inventory.RemoveItem(1, 1, false);
+                                        progress[1]++;
+                                        shuttle.currentTime += 3;
+                                        Console.ResetColor();
+                                        passiv.ActionMaked();
+                                        continue;
                                     }
                                     else
                                     {
-                                        Console.WriteLine("Du hast es bereits fertig erforscht. Wähle eine andere ID (oder 'exit')");
+                                        Console.ForegroundColor = ConsoleColor.Red;
+                                        Console.WriteLine("Du hast nicht genügend Treibstoff!");
+                                        Console.ResetColor();
                                         continue;
                                     }
-                                case "exit":
-                                    break;
-                                default:
-                                    Console.WriteLine("Wähle eine gültige ID oder 'exit'");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Du hast es bereits fertig erforscht. Wähle eine andere ID (oder 'exit')");
                                     continue;
+                                }
                             }
-                            break;
+                            else if (message == "02")
+                            {
+                                if (progress[2] != 4)
+                                {
+                                    if (inventory.itemIndex[2] >= 1)
+                                    {
+                                        Console.WriteLine(ScienceProgress.ScienceProg(2, progress[2]));
+                                        inventory.RemoveItem(2, 1, false);
+                                        progress[2]++;
+                                        shuttle.currentTime += 3;
+                                        Console.ResetColor();
+                                        passiv.ActionMaked();
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Red;
+                                        Console.WriteLine("Du hast kein Asteroiden Stück!");
+                                        Console.ResetColor();
+                                        continue;
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Du hast es bereits fertig erforscht. Wähle eine andere ID (oder 'exit')");
+                                    continue;
+                                }
+                            }
+                            else if (message == "11" && qSystem.QState[1] == 3)
+                            {
+                                if (progress[3] != 2)
+                                {
+                                    if (inventory.itemIndex[11] >= 1)
+                                    {
+                                        Console.WriteLine(ScienceProgress.ScienceProg(3, progress[3]));
+                                        inventory.RemoveItem(11, 1, false);
+                                        progress[3]++;
+                                        shuttle.currentTime += 3;
+                                        Console.ResetColor();
+                                        passiv.ActionMaked();
+                                        continue;
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Du hast es bereits fertig erforscht. Wähle eine andere ID (oder 'exit')");
+                                    continue;
+                                }
+                            }
+                            else if (message == "12" && qSystem.QState[1] == 3)
+                            {
+                                if (progress[4] != 2)
+                                {
+                                    if (inventory.itemIndex[12] >= 1)
+                                    {
+                                        Console.WriteLine(ScienceProgress.ScienceProg(4, progress[4]));
+                                        inventory.RemoveItem(12, 1, false);
+                                        progress[4]++;
+                                        shuttle.currentTime += 3;
+                                        Console.ResetColor();
+                                        passiv.ActionMaked();
+                                        continue;
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Du hast es bereits fertig erforscht. Wähle eine andere ID (oder 'exit')");
+                                    continue;
+                                }
+                            }
+                            else if(message == "exit")
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Wähle eine gültige ID oder 'exit'");
+                                continue;
+                            }
                         }
                         break;
                     case "2":

@@ -14,6 +14,7 @@ namespace Cosmic_Explorer
         {
             this.QSystem = quest;
             this.game = game;
+            game.quests = true;
             if(game.debug)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -26,14 +27,36 @@ namespace Cosmic_Explorer
         {
             if(QuestID == 1)
             {
-                message = "Name: Test Quest\nAufgabe: Gehe zu 5, 475 [DEBUG QUEST]";
-                return message;
+                if (state[1] == 1)
+                {
+                    message = "Name: Die ersten Proben\nAufgabe: Gehe zu den Koordinaten X:2800, Y:3000." +
+                    "\nBeschreibung: Du musst dir deine ersten Proben zum erforschen von einem Lieferanten des Galaktische Forschungsinstitut \n(GFI) holen.";
+                    return message;
+                }
+                if (state[1] == 2)
+                {
+                    message = "Name: Die ersten Proben\nAufgabe: Sprich mit dem Lieferanten. (Call befehl in der Konsole)" +
+                    "\nBeschreibung: Du musst dir deine ersten Proben zum erforschen von einem Lieferanten des Galaktische Forschungsinstitut \n(GFI) holen.";
+                    return message;
+                }
+                if (state[1] == 3)
+                {
+                    message = "Name: Die ersten Proben\nAufgabe: Erforsche die Proben komplett. (Im Labor)" +
+                    "\nBeschreibung: Du musst dir deine ersten Proben zum erforschen von einem Lieferanten des Galaktische Forschungsinstitut \n(GFI) holen.";
+                    return message;
+                }
+                if (state[1] == 4)
+                {
+                    message = "Name: Die ersten Proben\nAufgabe: Nehme wieder Kontakt zur GFI auf." +
+                    "\nBeschreibung: Du musst dir deine ersten Proben zum erforschen von einem Lieferanten des Galaktische Forschungsinstitut \n(GFI) holen.";
+                    return message;
+                }
             }
             if(QuestID == 2)
             {
                 if (state[2] == 1)
                 {
-                    message = "Name: Helfe Lea\nAufgabe: Erforsche Benzin komplett." +
+                    message = "Name: Helfe Lea\nAufgabe: Erforsche Treibstoff komplett." +
                      "\nBeschreibung: Lea hat dich gefragt ob du vielleicht herausfinden kannst wie sie mit Weniger Benzin die gleiche Strecke\nFliegen kann.";
                     return message;
                 }
@@ -44,6 +67,13 @@ namespace Cosmic_Explorer
                     return message;
                 }
             }
+            if(QuestID == 3)
+            {
+                if (state[3] == 1)
+                {
+
+                }
+            }
             return message = "QuestID not found";
         }
         public void QuestGoal(int QuestID, sbyte counter)
@@ -52,8 +82,8 @@ namespace Cosmic_Explorer
             {
                 if(counter == 1)
                 {
-                    QSystem.x = 5;
-                    QSystem.y = 475;
+                    QSystem.x = 2;
+                    QSystem.y = 1381;
                 }
             }
         }

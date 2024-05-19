@@ -24,30 +24,28 @@ namespace Cosmic_Explorer
             this.quest = quest;
             this.inventory = inv;
             this.player = player;
-            //if (game.dev)
-            //{
-            //    Console.ForegroundColor = ConsoleColor.Red;
-            //    Console.WriteLine("Objekte Initalisiert[NPC's]. [NUR WÄHREND DES DEBUGS VISIBLE]");
-            //    Console.ResetColor();
-            //}
+            if(name == "Hanna")
+            {
+                game.npcHanna = true;
+            }
+            else if(name == "Lea")
+            {
+                game.npcLea = true;
+            }
         }
         public sbyte state;
         string name;
         int npcID;
-        int maxMessages;
-        int canSell;
-        int canBuy;
+        string canSell;
+        string canBuy;
         string messages;
-        public NPC(string npcName, int NPCID, int NPCmaxMessages, int npcCanSell, int npcCanBuy) 
+        string _x;
+        public NPC(string npcName, int NPCID, string npcCanSell, string npcCanBuy) 
         {
             name = npcName;
             npcID = NPCID;
-            maxMessages = NPCmaxMessages;
             canSell = npcCanSell;
             canBuy = npcCanBuy;
-            //Console.ForegroundColor = ConsoleColor.DarkCyan;
-            //Console.WriteLine(npcName + ", " + npcID + ", " + maxMessages);
-            //Console.ResetColor();
         }
         //For the NPC Hanna
         public void NPCStartHanna()
@@ -72,15 +70,200 @@ namespace Cosmic_Explorer
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.Write("Eingabe:");
                     Console.ResetColor();
-                    messages = Console.ReadLine();
+                    messages = Console.ReadLine().Trim().ToLower();
                     if(game.dev)
                     {
                         switch (messages)
                         {
+                            case "item":
+                                while (true)
+                                {
+                                    Console.WriteLine("Was willst du machen beim Inventar?");
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    Console.Write("Eingabe:");
+                                    Console.ResetColor();
+                                    messages = Console.ReadLine().Trim().ToLower();
+                                    switch (messages)
+                                    {
+                                        case "give":
+                                            while (true)
+                                            {
+                                                Console.WriteLine("Gib die ItemID an");
+                                                Console.ForegroundColor = ConsoleColor.White;
+                                                Console.Write("Eingabe:");
+                                                Console.ResetColor();
+                                                messages = Console.ReadLine();
+                                                try
+                                                {
+                                                    int x = Convert.ToInt32(messages);
+                                                    Console.WriteLine("Gib die Item Anzahl an");
+                                                    Console.ForegroundColor = ConsoleColor.White;
+                                                    Console.Write("Eingabe:");
+                                                    Console.ResetColor();
+                                                    messages = Console.ReadLine();
+                                                    int y = Convert.ToInt32(messages);
+                                                    inventory.AddItem(x, y, false);
+                                                }
+                                                catch (Exception ex)
+                                                {
+                                                    Console.WriteLine(ex.Message);
+                                                    continue;
+                                                }
+                                                break;
+                                            }
+                                            continue;
+                                        case "remove":
+                                            while (true)
+                                            {
+                                                Console.WriteLine("Gib die ItemID an");
+                                                Console.ForegroundColor = ConsoleColor.White;
+                                                Console.Write("Eingabe:");
+                                                Console.ResetColor();
+                                                messages = Console.ReadLine();
+                                                try
+                                                {
+                                                    int x = Convert.ToInt32(messages);
+                                                    Console.WriteLine("Gib die Item Anzahl an");
+                                                    Console.ForegroundColor = ConsoleColor.White;
+                                                    Console.Write("Eingabe:");
+                                                    Console.ResetColor();
+                                                    messages = Console.ReadLine();
+                                                    int y = Convert.ToInt32(messages);
+                                                    inventory.RemoveItem(x, y, false);
+                                                }
+                                                catch (Exception ex)
+                                                {
+                                                    Console.WriteLine(ex.Message);
+                                                    continue;
+                                                }
+                                                break;
+                                            }
+                                            continue;
+                                        case "exit":
+                                            break;
+                                        default:
+                                            Console.WriteLine("Nutz einer der Validen Debug Commands");
+                                            continue;
+                                    }
+                                    break;
+                                }
+                                continue;
+                            case "gold":
+                                while (true)
+                                {
+                                    Console.WriteLine("Gib die anzahl an Gold an");
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    Console.Write("Eingabe:");
+                                    Console.ResetColor();
+                                    messages = Console.ReadLine();
+                                    try
+                                    {
+                                        int x = Convert.ToInt32(messages);
+                                        if(x < 0)
+                                        {
+                                            player.RemoveGold(x);
+                                        }
+                                        else
+                                        {
+                                            player.AddGold(x);
+                                        }
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Console.WriteLine(ex.Message);
+                                        continue;
+                                    }
+                                    break;
+                                }
+                                continue;
+                            case "quest":
+                                while (true)
+                                {
+                                    Console.WriteLine("Gib die QuestID an");
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    Console.Write("Eingabe:");
+                                    Console.ResetColor();
+                                    messages = Console.ReadLine();
+                                    try
+                                    {
+                                        int x = Convert.ToInt32(messages);
+                                        Console.WriteLine("Gib den State der Quest an");
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        Console.Write("Eingabe:");
+                                        Console.ResetColor();
+                                        messages = Console.ReadLine();
+                                        SByte y = Convert.ToSByte(messages);
+                                        qSystem.QState[x] = y;
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Console.WriteLine(ex.Message);
+                                        continue;
+                                    }
+                                    break;
+                                }
+                                continue;
+                            case "science":
+                                while (true)
+                                {
+                                    Console.WriteLine("Gib die ForschungsID an");
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    Console.Write("Eingabe:");
+                                    Console.ResetColor();
+                                    messages = Console.ReadLine();
+                                    try
+                                    {
+                                        int x = Convert.ToInt32(messages);
+                                        Console.WriteLine("Gib den progress der Forschung an");
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        Console.Write("Eingabe:");
+                                        Console.ResetColor();
+                                        messages = Console.ReadLine();
+                                        SByte y = Convert.ToSByte(messages);
+                                        science.progress[x] = y;
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Console.WriteLine(ex.Message);
+                                        continue;
+                                    }
+                                    break;
+                                }
+                                continue;
+                            case "_save":
+                                while (true)
+                                {
+                                    Console.WriteLine("Gib den _saveIndex an");
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    Console.Write("Eingabe:");
+                                    Console.ResetColor();
+                                    messages = Console.ReadLine();
+                                    try
+                                    {
+                                        int x = Convert.ToInt32(messages);
+                                        Console.WriteLine("Gib den State des _save's an");
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        Console.Write("Eingabe:");
+                                        Console.ResetColor();
+                                        messages = Console.ReadLine();
+                                        SByte y = Convert.ToSByte(messages);
+                                        game._save[x] = y;
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Console.WriteLine(ex.Message);
+                                        continue;
+                                    }
+                                    break;
+                                }
+                                continue;
+                            case "exit":
+                                break;
                             default: 
                                 Console.WriteLine("Nutz einer der Validen Debug Commands");
                                 continue;
                         }
+                        break;
                     }
                     else
                     {
@@ -90,6 +273,79 @@ namespace Cosmic_Explorer
                         break;
                     }
                 }
+            }
+        }
+        public void NPCStartGFI()
+        {
+            if (state == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                for (int i = 1; i <= 9; i++)
+                {
+                    Console.WriteLine(StringHandler.NPCMessages(name, npcID, i));
+                    Console.ReadKey();
+                    Console.WriteLine("");
+                    state = 1;
+                }
+                Console.ResetColor();
+                qSystem.QState[1] = 1;
+                return;
+            }
+            if(state == 1 && qSystem.QState[1] == 4)
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                for (int i = 10; i <= 15; i++)
+                {
+                    Console.WriteLine(StringHandler.NPCMessages(name, npcID, i));
+                    Console.ReadKey();
+                    Console.WriteLine("");
+                    state = 2;
+                }
+                Console.ResetColor();
+                qSystem.QState[1] = 15;
+                return;
+            }
+            if (inventory.itemIndex[1] == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("GFI : \nWas Gibts Charlotte?");
+                Console.WriteLine("");
+                Console.ReadKey();
+                Console.WriteLine("Charlotte : \nIch habe kein Treibstoff mehr und brauche neues.");
+                Console.WriteLine("");
+                Console.ReadKey();
+                Console.WriteLine("GFI : \n*Seufzt* Okay, wir schicken dir neues.");
+                Console.WriteLine("");
+                Console.ReadKey();
+                inventory.AddItem(1, 1000, false);
+                Console.WriteLine("Du hast 1000 Treibstoff erhalten [Achte darauf Händler wie 'Lea' zu finden um Treibstoff zu kaufen]");
+                Console.WriteLine("Hinweis: Dies ist nur derzeit um gegen Softlock anzukommen, im Fertigem Spiel wird es dies nicht geben.");
+                Console.WriteLine("");
+                Console.ReadKey();
+                Console.ResetColor();
+                return;
+            }
+            if(state == 1)
+            {
+                ulong x = 30;
+                x -= game.DayCounter;
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("GFI ist gerade nicht Erreichbar, versuch es Später nochmal wenn du mit der Quest Weiter bist.");
+                if(x > 1)
+                {
+                    Console.WriteLine($"Es sind noch {x} Tage bis zu deinem Nächsten Gehalt.");
+                }
+                else if(x == 1)
+                {
+                    Console.WriteLine("1 Tag noch bis zu deinem Nächstem Gehalt.");
+                }
+                else
+                {
+                    Console.WriteLine("Du hast heute dein Gehalt bekommen.");
+                }
+                Console.ResetColor();
+                Console.WriteLine("");
+                Console.ReadKey();
             }
         }
         //For the NPC Lea
@@ -108,7 +364,7 @@ namespace Cosmic_Explorer
                 Console.ResetColor();
                 qSystem.QState[2] = 1;
             }
-            if (game._save[10] == 1 && qSystem.QState[2] == 2)
+            if (qSystem.QState[2] == 2)
             {
                 Console.ForegroundColor = ConsoleColor.White;
                 for (int i = 8; i <= 16; i++)
@@ -144,148 +400,82 @@ namespace Cosmic_Explorer
                             while (true)
                             {
                                 Console.WriteLine("Gib die ID an die du kaufen willst (Immer nur eine ID gleichzeitig)" + " Dein gold: " + player.gold +
-                                    "\nDu kannst solange kaufen bist du 'exit' eingibtst");
+                                    "\nDu kannst solange kaufen bist du 'exit' eingibst\n");
                                 trade.TradeInterfaceSell(canSell, discount);
                                 Console.ForegroundColor = ConsoleColor.White;
                                 Console.Write("Eingabe:");
                                 Console.ResetColor();
                                 messages = Console.ReadLine();
+                                if(messages == "exit")
+                                {
+                                    break;
+                                }
                                 int x = 0;
                                 int y = 0;
                                 int z = 0;
-                                switch (messages)
+                                int w = 0;
+                                try
                                 {
-                                    case "01":
-                                        Console.WriteLine("Wie viel Liter Benzin willst du kaufen?");
-                                        Console.ForegroundColor = ConsoleColor.White;
-                                        Console.Write("Eingabe:");
-                                        Console.ResetColor();
-                                        messages = Console.ReadLine();
-                                        try
-                                        {
-                                            x = Convert.ToInt32(messages);
-                                            z = Convert.ToInt32(messages);
-                                            y = Convert.ToInt32(PriceList.BuyPrice("01", discount));
-                                            x *= y;
-                                            if(player.gold < x)
-                                            {
-                                                Console.ForegroundColor = ConsoleColor.Red;
-                                                Console.WriteLine("Du hast nicht genügend Gold!");
-                                                Console.ResetColor();
-                                                break;
-                                            }
-                                            player.gold -= x;
-                                            inventory.AddItem(1, z, false);
-                                        }
-                                        catch (Exception e)
-                                        {
-                                            Console.WriteLine(e.Message);
-                                            Console.WriteLine("Falsches Format!");
-                                            continue;
-                                        }
-                                        break;
-                                    case "02":
-                                        Console.WriteLine("Wie viele Asteroiden stücke willst du kaufen?");
-                                        Console.ForegroundColor = ConsoleColor.White;
-                                        Console.Write("Eingabe:");
-                                        Console.ResetColor();
-                                        messages = Console.ReadLine();
-                                        try
-                                        {
-                                            x = Convert.ToInt32(messages);
-                                            z = Convert.ToInt32(messages);
-                                            y = Convert.ToInt32(PriceList.BuyPrice("02", discount));
-                                            x *= y;
-                                            if (player.gold < x)
-                                            {
-                                                Console.ForegroundColor = ConsoleColor.Red;
-                                                Console.WriteLine("Du hast nicht genügend Gold!");
-                                                Console.ResetColor();
-                                                break;
-                                            }
-                                            player.gold -= x;
-                                            inventory.AddItem(2, z, false);
-                                        }
-                                        catch (Exception e)
-                                        {
-                                            Console.WriteLine(e.Message);
-                                            Console.WriteLine("Falsches Format!");
-                                            continue;
-                                        }
-                                        break;
-                                    case "03":
-                                        Console.WriteLine("Wie viel Eisen Erz willst du kaufen?");
-                                        Console.ForegroundColor = ConsoleColor.White;
-                                        Console.Write("Eingabe:");
-                                        Console.ResetColor();
-                                        messages = Console.ReadLine();
-                                        try
-                                        {
-                                            x = Convert.ToInt32(messages);
-                                            z = Convert.ToInt32(messages);
-                                            y = Convert.ToInt32(PriceList.BuyPrice("03", discount));
-                                            x *= y;
-                                            if (player.gold < x)
-                                            {
-                                                Console.ForegroundColor = ConsoleColor.Red;
-                                                Console.WriteLine("Du hast nicht genügend Gold!");
-                                                Console.ResetColor();
-                                                break;
-                                            }
-                                            player.gold -= x;
-                                            inventory.AddItem(3, z, false);
-                                        }
-                                        catch (Exception e)
-                                        {
-                                            Console.WriteLine(e.Message);
-                                            Console.WriteLine("Falsches Format!");
-                                            continue;
-                                        }
-                                        break;
-                                        case "04":
-                                        Console.WriteLine("Wie viel Kupfer Erz willst du kaufen?");
-                                        Console.ForegroundColor = ConsoleColor.White;
-                                        Console.Write("Eingabe:");
-                                        Console.ResetColor();
-                                        messages = Console.ReadLine();
-                                        try
-                                        {
-                                            x = Convert.ToInt32(messages);
-                                            z = Convert.ToInt32(messages);
-                                            y = Convert.ToInt32(PriceList.BuyPrice("04", discount));
-                                            x *= y;
-                                            if (player.gold < x)
-                                            {
-                                                Console.ForegroundColor = ConsoleColor.Red;
-                                                Console.WriteLine("Du hast nicht genügend Gold!");
-                                                Console.ResetColor();
-                                                break;
-                                            }
-                                            player.gold -= x;
-                                            inventory.AddItem(4, z, false);
-                                        }
-                                        catch (Exception e)
-                                        {
-                                            Console.WriteLine(e.Message);
-                                            Console.WriteLine("Falsches Format!");
-                                            continue;
-                                        }
-                                        break;
-                                        case "exit":
-                                        goto Temp;
-                                        default:
-                                        Console.WriteLine("Gib eine Gültige ID ein!");
-                                        continue;
+                                    x = Convert.ToInt32(messages);
                                 }
+                                catch (Exception e)
+                                {
+                                    Console.WriteLine(e.Message);
+                                    Console.WriteLine("Falsches Format!");
+                                    break;
+                                }
+                                if (x == 1 || x == 2 || x == 3 || x == 4 || x == 5 || x == 6 || x == 7 || x == 8)
+                                {
+                                    while (true)
+                                    {
+                                        TradeString(x, false, false);
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        Console.Write("Eingabe:");
+                                        Console.ResetColor();
+                                        messages = Console.ReadLine();
+                                        if (messages == "exit")
+                                        {
+                                            break;
+                                        }
+                                        try
+                                        {
+                                            y = Convert.ToInt32(messages);
+                                            z = Convert.ToInt32(messages);
+                                            w = Convert.ToInt32(PriceList.BuyPrice(_x, discount));
+                                            y *= w;
+                                            if (player.gold < y)
+                                            {
+                                                Console.ForegroundColor = ConsoleColor.Red;
+                                                Console.WriteLine("Du hast nicht genügend Gold!");
+                                                Console.ResetColor();
+                                                break;
+                                            }
+                                            player.gold -= y;
+                                            inventory.AddItem(x, z, false);
+                                            break;
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            Console.WriteLine(e.Message);
+                                            Console.WriteLine("Falsches Format!");
+                                            break;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Das wird hier nicht verkauft");
+                                    break;
+                                }
+
                                 continue;
                             }
-                            Temp:
                             continue;
                         case "2":
                             while (true)
                             {
                                 Console.WriteLine("Gib die ID an die du verkaufen willst (Immer nur eine ID gleichzeitig)" + " Dein gold: " + player.gold +
-                                    "\nDu kannst solange kaufen bist du 'exit' eingibtst");
+                                    "\nDu kannst solange kaufen bist du 'exit' eingibst\n");
                                 trade.TradeInterfaceBuy(canBuy, extra);
                                 Console.ForegroundColor = ConsoleColor.White;
                                 Console.Write("Eingabe:");
@@ -294,133 +484,62 @@ namespace Cosmic_Explorer
                                 int x = 0;
                                 int y = 0;
                                 int z = 0;
-                                switch (messages)
+                                int w = 0;
+                                try
                                 {
-                                    case "01":
-                                        Console.WriteLine("Wie viel Liter Benzin willst du verkaufen?");
-                                        Console.ForegroundColor = ConsoleColor.White;
-                                        Console.Write("Eingabe:");
-                                        Console.ResetColor();
-                                        messages = Console.ReadLine();
-                                        try
-                                        {
-                                            x = Convert.ToInt32(messages);
-                                            z = Convert.ToInt32(messages);
-                                            y = Convert.ToInt32(PriceList.SellPrice("01", extra));
-                                            x *= y;
-                                            if (inventory.itemIndex[1] < z)
-                                            {
-                                                Console.ForegroundColor = ConsoleColor.Red;
-                                                Console.WriteLine("Du hast nicht genügend Benzin!");
-                                                Console.ResetColor();
-                                                break;
-                                            }
-                                            player.gold += x;
-                                            inventory.RemoveItem(1, z, false);
-                                        }
-                                        catch (Exception e)
-                                        {
-                                            Console.WriteLine(e.Message);
-                                            Console.WriteLine("Falsches Format!");
-                                            continue;
-                                        }
-                                        break;
-                                    case "02":
-                                        Console.WriteLine("Wie viele Asteroiden stücke willst du verkaufen?");
-                                        Console.ForegroundColor = ConsoleColor.White;
-                                        Console.Write("Eingabe:");
-                                        Console.ResetColor();
-                                        messages = Console.ReadLine();
-                                        try
-                                        {
-                                            x = Convert.ToInt32(messages);
-                                            z = Convert.ToInt32(messages);
-                                            y = Convert.ToInt32(PriceList.SellPrice("02", extra));
-                                            x *= y;
-                                            if (inventory.itemIndex[2] < z)
-                                            {
-                                                Console.ForegroundColor = ConsoleColor.Red;
-                                                Console.WriteLine("Du hast nicht genügend Asteroiden stücke!");
-                                                Console.ResetColor();
-                                                break;
-                                            }
-                                            player.gold += x;
-                                            inventory.RemoveItem(2, z, false);
-                                        }
-                                        catch (Exception e)
-                                        {
-                                            Console.WriteLine(e.Message);
-                                            Console.WriteLine("Falsches Format!");
-                                            continue;
-                                        }
-                                        break;
-                                    case "03":
-                                        Console.WriteLine("Wie viel Eisen Erz willst du verkaufen?");
-                                        Console.ForegroundColor = ConsoleColor.White;
-                                        Console.Write("Eingabe:");
-                                        Console.ResetColor();
-                                        messages = Console.ReadLine();
-                                        try
-                                        {
-                                            x = Convert.ToInt32(messages);
-                                            z = Convert.ToInt32(messages);
-                                            y = Convert.ToInt32(PriceList.SellPrice("03", extra));
-                                            x *= y;
-                                            if (inventory.itemIndex[3] < z)
-                                            {
-                                                Console.ForegroundColor = ConsoleColor.Red;
-                                                Console.WriteLine("Du hast nicht genügend Eisen Erz!");
-                                                Console.ResetColor();
-                                                break;
-                                            }
-                                            player.gold += x;
-                                            inventory.RemoveItem(3, z, false);
-                                        }
-                                        catch (Exception e)
-                                        {
-                                            Console.WriteLine(e.Message);
-                                            Console.WriteLine("Falsches Format!");
-                                            continue;
-                                        }
-                                        break;
-                                    case "04":
-                                        Console.WriteLine("Wie viel Kupfer Erz willst du verkaufen?");
-                                        Console.ForegroundColor = ConsoleColor.White;
-                                        Console.Write("Eingabe:");
-                                        Console.ResetColor();
-                                        messages = Console.ReadLine();
-                                        try
-                                        {
-                                            x = Convert.ToInt32(messages);
-                                            z = Convert.ToInt32(messages);
-                                            y = Convert.ToInt32(PriceList.SellPrice("04", extra));
-                                            x *= y;
-                                            if (inventory.itemIndex[4] < z)
-                                            {
-                                                Console.ForegroundColor = ConsoleColor.Red;
-                                                Console.WriteLine("Du hast nicht genügend Kuper Erz!");
-                                                Console.ResetColor();
-                                                break;
-                                            }
-                                            player.gold += x;
-                                            inventory.RemoveItem(4, z, false);
-                                        }
-                                        catch (Exception e)
-                                        {
-                                            Console.WriteLine(e.Message);
-                                            Console.WriteLine("Falsches Format!");
-                                            continue;
-                                        }
-                                        break;
-                                    case "exit":
-                                        goto Temp1;
-                                    default:
-                                        Console.WriteLine("Gib eine Gültige ID ein!");
-                                        continue;
+                                    x = Convert.ToInt32(messages);
                                 }
+                                catch (Exception e)
+                                {
+                                    Console.WriteLine(e.Message);
+                                    Console.WriteLine("Falsches Format!");
+                                    break;
+                                }
+                                if (x == 1 || x == 2 || x == 3 || x == 4 || x == 5 || x == 6 || x == 7 || x == 8)
+                                {
+                                    while (true)
+                                    {
+                                        TradeString(x, true, false);
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        Console.Write("Eingabe:");
+                                        Console.ResetColor();
+                                        messages = Console.ReadLine();
+                                        if (messages == "exit")
+                                        {
+                                            break;
+                                        }
+                                        try
+                                        {
+                                            y = Convert.ToInt32(messages);
+                                            z = Convert.ToInt32(messages);
+                                            w = Convert.ToInt32(PriceList.SellPrice(_x, discount));
+                                            y *= w;
+                                            if (inventory.itemIndex[x] < z)
+                                            {
+                                                Console.ForegroundColor = ConsoleColor.Red;
+                                                TradeString(x, true, true);
+                                                Console.ResetColor();
+                                                break;
+                                            }
+                                            player.gold += y;
+                                            inventory.RemoveItem(x, z, false);
+                                            break;
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            Console.WriteLine(e.Message);
+                                            Console.WriteLine("Falsches Format!");
+                                            break;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Das wird hier nicht gekauft.");
+                                }
+
                                 continue;
                             }
-                            Temp1:
                             continue;
                         case "exit":
                             Console.ForegroundColor = ConsoleColor.White;
@@ -438,5 +557,136 @@ namespace Cosmic_Explorer
             }
         }
         //For the NPC...
+        public void NPCStartSupplier()
+        {
+            if (state == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                for (int i = 1; i <= 10; i++)
+                {
+                    Console.WriteLine(StringHandler.NPCMessages(name, npcID, i));
+                    Console.ReadKey();
+                    Console.WriteLine("");
+                    state = 1;
+                }
+                Console.ResetColor();
+                qSystem.QState[1] = 3;
+            }
+            if (state == 1 && qSystem.QState[1] == 4)
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                for (int i = 11; i <= 20; i++)
+                {
+                    Console.WriteLine(StringHandler.NPCMessages(name, npcID, i));
+                    Console.ReadKey();
+                    Console.WriteLine("");
+                    state = 2;
+                }
+                Console.ResetColor();
+                qSystem.QState[1] = 15;
+            }
+        }
+        public void TradeString(int x, bool isBuy, bool notEnough)
+        {
+            if (notEnough)
+            {
+                Console.WriteLine("Du hast nicht genügend " + ItemIndex.ItemName(x) + "!");
+                return;
+            }
+            //Kaufen
+            if (x == 1 && !isBuy)
+            {
+                Console.WriteLine("Wie viel Liter Treibstoff willst du kaufen?");
+                _x = "01";
+                return;
+            }
+            //Asteroiden Stücke, Eisenbarren Kupfer barren
+            if(x == 2 || x == 6 || x == 7 && !isBuy)
+            {
+                Console.WriteLine("Wie viele "+ ItemIndex.ItemName(x) + " stücke willst du kaufen?");
+                if (x == 2)
+                {
+                    _x = "02";
+                }
+                else if (x == 6)
+                {
+                    _x = "06";
+                }
+                else if (x == 7)
+                {
+                    _x = "07";
+                }
+                return;
+            }
+            //Eisen Erz, Kupfer Erz, Asteroiden Staub, Kohle
+            if(x == 3 || x == 4 || x == 5 || x == 8 && !isBuy)
+            {
+                Console.WriteLine("Wie viel "+ ItemIndex.ItemName(x) + " willst du kaufen?");
+                if (x == 3)
+                {
+                    _x = "03";
+                }
+                else if (x == 4)
+                {
+                    _x = "04";
+                }
+                else if (x == 5)
+                {
+                    _x = "05";
+                }
+                else if (x == 8)
+                {
+                    _x = "08";
+                }
+                return;
+            }
+            //Verkaufen
+            if (x == 1 && isBuy)
+            {
+                Console.WriteLine("Wie viel Liter Treibstoff willst du verkaufen?");
+                _x = "01";
+                return;
+            }
+            //Asteroiden Stücke, Eisenbarren Kupfer barren
+            if (x == 2 || x == 6 || x == 7 && isBuy)
+            {
+                Console.WriteLine("Wie viele " + ItemIndex.ItemName(x) + " stücke willst du verkaufen?");
+                if (x == 2)
+                {
+                    _x = "02";
+                }
+                else if (x == 6)
+                {
+                    _x = "06";
+                }
+                else if (x == 7)
+                {
+                    _x = "07";
+                }
+                return;
+            }
+            //Eisen Erz, Kupfer Erz, Asteroiden Staub, Kohle
+            if (x == 3 || x == 4 || x == 5 || x == 8 && isBuy)
+            {
+                Console.WriteLine("Wie viel " + ItemIndex.ItemName(x) + " willst du verkaufen?");
+                if(x == 3)
+                {
+                    _x = "03";
+                }
+                else if(x == 4)
+                {
+                    _x = "04";
+                }
+                else if (x == 5)
+                {
+                    _x = "05";
+                }
+                else if (x == 8)
+                {
+                    _x = "08";
+                }
+                return;
+            }
+        }
     }
 }

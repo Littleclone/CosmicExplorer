@@ -14,7 +14,7 @@ namespace Cosmic_Explorer
         {
             if(itemID == "01")
             {
-                item = "Petrol";
+                item = "fuel";
                 if(discount > 0)
                 {
                     return 100f * discount;
@@ -35,18 +35,54 @@ namespace Cosmic_Explorer
                 item = "iron_ore";
                 if (discount > 0)
                 {
-                    return 250f * discount;
+                    return 75f * discount;
                 }
-                return 250f;
+                return 75f;
             }
             if(itemID == "04")
             {
                 item = "copper_ore";
                 if (discount > 0)
                 {
-                    return 150f * discount;
+                    return 45f * discount;
                 }
-                return 150f;
+                return 45f;
+            }
+            if(itemID == "05")
+            {
+                item = "asteroid dust";
+                if(discount > 0)
+                {
+                    return 10f * discount;
+                }
+                return 10f;
+            }
+            if(itemID == "06")
+            {
+                item = "iron_ingot";
+                if(discount > 0)
+                {
+                    return 250f * discount;
+                }
+                return 250f;
+            }
+            if (itemID == "07")
+            {
+                item = "copper_ingot";
+                if (discount > 0)
+                {
+                    return 175f * discount;
+                }
+                return 175f;
+            }
+            if (itemID == "08")
+            {
+                item = "coal";
+                if (discount > 0)
+                {
+                    return 55f * discount;
+                }
+                return 55f;
             }
             return 9999999;
         }
@@ -54,7 +90,7 @@ namespace Cosmic_Explorer
         {
             if (itemID == "01")
             {
-                item = "Petrol";
+                item = "fuel";
                 if (extraCharge > 0)
                 {
                     return 75f / extraCharge;
@@ -75,18 +111,54 @@ namespace Cosmic_Explorer
                 item = "iron_ore";
                 if (extraCharge > 0)
                 {
-                    return 175f / extraCharge;
+                    return 45f / extraCharge;
                 }
-                return 175f;
+                return 45f;
             }
             if (itemID == "04")
             {
                 item = "copper_ore";
                 if (extraCharge > 0)
                 {
-                    return 100f / extraCharge;
+                    return 25f / extraCharge;
                 }
-                return 100f;
+                return 25f;
+            }
+            if (itemID == "05")
+            {
+                item = "asteroid dust";
+                if (extraCharge > 0)
+                {
+                    return 5f * extraCharge;
+                }
+                return 5f;
+            }
+            if (itemID == "06")
+            {
+                item = "iron_ingot";
+                if (extraCharge > 0)
+                {
+                    return 175f * extraCharge;
+                }
+                return 175f;
+            }
+            if (itemID == "07")
+            {
+                item = "copper_ingot";
+                if (extraCharge > 0)
+                {
+                    return 105f * extraCharge;
+                }
+                return 105f;
+            }
+            if (itemID == "08")
+            {
+                item = "coal";
+                if (extraCharge > 0)
+                {
+                    return 20f * extraCharge;
+                }
+                return 20f;
             }
             return 1;
         }

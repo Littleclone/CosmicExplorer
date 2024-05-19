@@ -20,6 +20,7 @@ namespace Cosmic_Explorer
         public void ObjInit(Game game)
         {
             this.game = game;
+            game.mainPlayer = true;
             if(game.debug)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
