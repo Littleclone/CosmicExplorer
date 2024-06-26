@@ -195,6 +195,10 @@ namespace Cosmic_Explorer
                         world[x, y] = CellType.Sun;
                         sunCount1++;
                     }
+                    //else if(randomNumber <= 10)
+                    //{
+                    //    world[x, y] = CellType.Spaceship;
+                    //}
                     else if (randomNumber <= 20) // Beispiel: 20% Wahrscheinlichkeit für Planeten
                     {
                         world[x, y] = CellType.Planet;
@@ -226,9 +230,10 @@ namespace Cosmic_Explorer
                         if (world[i, j] == CellType.Spaceship)
                         {
                             int randomNumber = random.Next(1, 101); // Beispiel: Zufallszahl zwischen 1 und 100
-                            if (randomNumber <= 40 && !lea)
+                            if (randomNumber <= 70 && !lea)
                             {
                                 world[i, j] = CellType.LeaNPC;
+                                Console.WriteLine($"i: {i}, j: {j}");
                                 lea = true;
                             }
                         }
@@ -666,15 +671,21 @@ namespace Cosmic_Explorer
                         }
                         else if (world[i, j] == CellType.LeaNPC)
                         {
-                            Console.Write(i + "|" + j + ", ");
+                            Console.ForegroundColor = ConsoleColor.Cyan;
+                            Console.Write(i + "|" + j + "NPC, ");
+                            Console.ResetColor();
                         }
                         else if (world[i, j] == CellType.SupplierNPC)
                         {
-                            Console.Write(i + "|" + j + ", ");
+                            Console.ForegroundColor = ConsoleColor.Cyan;
+                            Console.Write(i + "|" + j + "NPC, ");
+                            Console.ResetColor();
                         }
                         else if (world[i, j] == CellType.Player)
                         {
+                            Console.ForegroundColor = ConsoleColor.Cyan;
                             Console.Write(i + "|" + j + " You, ");
+                            Console.ResetColor();
                         }
                     }
                 }

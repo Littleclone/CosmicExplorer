@@ -82,19 +82,20 @@ namespace Cosmic_Explorer
                     {
                         return message = "Charlotte: \nGut, bis dann.";
                     }
-                    if (messageID == 14)
+                    if (messageID == -3)
                     {
                         return message = "Das war das ende der Story Misson fürs erste, mehr kommt in weiteren Updates. Vergiss bitte nicht das dies ein Prototyp ist." +
                             "Es kommt darauf an wie viel interesse das Spiel erzeugt für neue Updates. Versteh mich nicht falsch, ich habe die \nzeit genossen " +
                             "die ich an diesem Spiel verbracht habe. Jedoch ist meine Lebens Situation etwas schwierig weshalb ich dann \nwenn dies auf geringes interesse" +
                             "stößt mich neuen sachen widmen werde um auch mehr über C# zu \nlernen, dennoch werde ich dieses Projekt nicht aufgeben.";
                     }
-                    if (messageID == 15)
+                    if (messageID == -3)
                     {
                         return message = "Danke fürs Spielen, sollte es dir gefallen habe dann komm auf mein Discord und berichte mir davon." +
                             "\nWie gesagt selbst wenn dies auf kleines interesse stößt werde ich immer wieder mal daran arbeiten, das nächste update" +
                             "\nsollte also nicht all zu lang auf sich warten lassen. :)" +
-                            "\nJetzt hab spaß mit dem Rest der Welt und den Funktionen die es gibt, es gibt beispielsweise noch den NPC 'Lea'";
+                            "\nJetzt hab spaß mit dem Rest der Welt und den Funktionen die es gibt, es gibt beispielsweise noch den NPC 'Lea'" +
+                            "\nLea ist ab frühestens X:25 zu finden und sollte nicht all zu weit davon entfernt sein. (Nutz das Sonar)";
                     }
                     return message = "Message ID not found";
                 }

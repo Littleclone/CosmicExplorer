@@ -81,7 +81,7 @@ namespace Cosmic_Explorer
                 Console.WriteLine("Cosmic Explorer");
                 Console.WriteLine("Guten Tag, das ist Cosmic Explorer, ein Text Basiertes Weltraum Spiel\nDieses Text Game befindet sich in der Testphase und wird noch Entwickelt von mir um mehr C# zu lernen.");
                 Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("Game Version: 0.2.1 Dev Phase, Deutsch / German");
+                Console.WriteLine("Game Version: 0.2.2 Dev Phase, Deutsch / German");
                 Console.ResetColor();
                 Console.WriteLine("Willst du starten? [start = Starte das spiel, exit = Verlasse das Spiel, new game = löscht deine Save File]");
                 Console.ForegroundColor = ConsoleColor.White;
@@ -343,26 +343,47 @@ namespace Cosmic_Explorer
             introduction:
                 Console.WriteLine("\nBevor es Losgeht, in diesem Spiel bist du eine Forscherin namens Charlotte, du befindest dich auf einem Raumschiff und \nlebst da allein. Dieses Spiel ist rein auf Text basiert und der Kreativität von dir. Es wird für die nächste Aktion \nimmer auf Input gewartet (von der Tastatur), auch damit Texte weiter gehen.");
                 Console.ReadKey();
-                Console.WriteLine("\nCharlotte arbeitet beim Galaktische Forschungsinstitut [GFI], dies ist eine Staatliche Organisation. " +
+                Console.WriteLine("\nCharlotte arbeitet beim Galaktischen Forschungsinstitut [GFI], dies ist eine Staatliche Organisation. " +
                     "\n[Mehr infos in Kommenden Updates].");
                 Console.ReadKey();
-                Console.WriteLine("\nWillkommen Charlotte, dies ist dein Erster Tag hier auf dem Schiff stimmts?\nKeine Sorge, ich werde dir eine kurze Einführung geben in die Systeme des schiffs");
+                Console.WriteLine("\nWillkommen Charlotte, dies ist dein Erster Tag hier auf dem Schiff stimmts?\nKeine Sorge, ich werde dir eine kurze Einführung geben in die Systeme des schiffs\n");
                 Console.ReadKey();
-                Console.WriteLine("Wichtigste Info Vorab, es gibt ein Tag System, fast alle aktionen verbrauchen Energie (Darauf später zurück)\nund Zeit (Darauf später zurück)");
+                Console.WriteLine("Wichtigste Info Vorab, es gibt ein Tag System, fast alle aktionen verbrauchen Energie (Darauf später zurück)\nund Zeit (Darauf später zurück)\n");
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Es SPEICHERT IMMER ERST wenn ein NEUER Tag STARTET.");
+                Console.WriteLine("Es SPEICHERT IMMER ERST wenn ein NEUER Tag STARTET.\n");
                 Console.ResetColor();
                 Console.ReadKey();
-                Console.WriteLine("Das Energie System:\nDas Raumschiff hat Energie, diese wird durch ein Generator und Sonnar Panelle bereit gestellt.\nBei vielen aktionen im Schiff wird Aktiv Energie Verwendet, heißt eine Aktion wo das Schiff etwas aktives tut \nverbraucht Energie.");
+                Console.WriteLine("Es gibt ein Energie System sowie Zeit System das bestimmt wieviel du am Tag machen kannst. Wenn es zu" +
+                    "\nspät wird (23 Uhr) dann gehtst ins Bett und beendest dein Tag, aber keine sorge, die tage haben" +
+                    "\nkeine große bedeutung bis auf den Realismus. Sollte dir die Energie ausgehen musst du ins Bett gehen.\n");
                 Console.ReadKey();
-                Console.WriteLine("Es gibt aber auch Passive aktionen die die Energie des schiffes verbrauchen, beispiel das das Licht an ist oder das \nLebenserhaltungs System funktioniert.\nBei weiteren erklärungen wird immer gesagt ob dies Passiv (also immer energie verbraucht solange es aktiv ist und \neine aktive Aktion ausgeführt wird) oder eine aktive aktion ist.");
+                Console.WriteLine("In der Kommando Zentrale kannst du an die Konsole gehen wo du mit 'help' schauen kannst was für befehle du zur" +
+                    "\nverfügung hast und wieviel energie diese verbrauchen. Außerdem gibt es auch ein Aktions System. Bei Aktiven Aktionen" +
+                    "\nwerden immer passive aktionen ausgeführt, diese können auch Energie verbrauchen, diese kann man aber deaktivieren" +
+                    "\n(derzeit gibt es nur ein passives system das du einstellen kannst und insgesamt gibt es zwei passive Systeme," +
+                    "\nmehr dazu kannst du in der Konsole einsehen.)\n");
                 Console.ReadKey();
-                Console.WriteLine("Aber nochmal im grobem gesagt:\nImmer wenn eine Aktive aktion ausgeführt wird, werden auch die Passiven ausgeführt\nund damit werden die Passiven System auch energie verwenden.");
+                Console.WriteLine("Das System funktioniert so das du die Zahlen eingibst wo du hinwillst. So einfach ist das." +
+                    "\nBeispiel: In die Kommando Zentrale gehen.[1]" +
+                    "\nDann kommt dazu noch ein eingabe Feld wo du die Zahl eintippen kannst, hier wäre es 1 und wenn du dann" +
+                    "\nenter drückts gehst du in die Kommando Zentrale.\n");
                 Console.ReadKey();
-                Console.WriteLine("Dein Raumanzug hat auch Energie, diese wird bei jeder aktiven aktion verbraucht, außerdem hat diese auch ein \npaar Passive aktionen wie das bereitstellen von Atemluft (oder kurz gesagt, das Lebenserhaltungs System).");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Wichtige Info!!!:" +
+                    "\nDie Welt in der du dich befindest ist ein 2D Array oder kurz gesagt sind Spalten und Zeilen, daher werden\n" +
+                    "dir deine Position und die andere Objekte in X:1, Y:200 (Oder fürs Array [1,200])angezeigt aber keine sorge,\n" +
+                    "du kannst einfach normale Koordiaten wie X:3500 und Y:6855 eingeben, diese werden automatisch übersetzt, aber\n" +
+                    "hier die genauen infos: Die welt ist 1619x1619 Zellen groß, das heißt X:3500 und Y:6855 sind im array:\n" +
+                    "X:3 und Y:379. Im übrigen, 1619x1619 sind insgesamt 2.621.440 Zellen." +
+                    "\nDIESES SYSTEM KANN SICH ÄNDERN!!!\n");
+                Console.ResetColor();
                 Console.ReadKey();
-                Console.WriteLine("Aber keine sorge, es wird recht offensichtlich sein welche aktion aktiv und welche passiv sind (Bei den help\nCommands (In der konsole) wird auch immer angezeigt wieviel energie etwas verwendet und ob es aktiv oder passiv ist.)");
+                Console.WriteLine("Beachte: Dies ist ein Prototyp und die Story ist nicht so lang, für mich scheint alles\n" +
+                    "selbst erklärend, solltest du aber probleme damit haben schreib mich auf Discord an:\n" +
+                    "littleclone (Nenn dein grund direkt wenn du mir schreibst, ich gehe nicht auf Random nachrichten ein.)\n");
                 Console.ReadKey();
+                Console.WriteLine("Das erste was du gleich machen solltest wäre ins Kommando Zentrum gehen und die\n" +
+                    "GFI zu kontaktieren. Du kannst dir aber auch natürlich alles vorher anschauen\n");
             //Weiteres kommt bei größerem Entwicklungs Fortschritt des Games
             verstanden:
                 Console.WriteLine("Hast du soweit alles verstanden?(ja, nein)");
@@ -384,9 +405,9 @@ namespace Cosmic_Explorer
         }
         public void NewDayStart(int time) //Funktion um den neuen Tag zu starten
         {
-            const bool WorldBREAKER = true;
             if (time >= 23.0)
             {
+                const bool WorldBREAKER = true;
                 CurrentDay++;
                 DayCounter++;
                 Console.ForegroundColor = ConsoleColor.Yellow;

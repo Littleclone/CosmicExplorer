@@ -25,5 +25,33 @@ namespace Cosmic_Explorer
                 x = has;
             }
         }
+
+        // Addition von zwei Zahlen
+        public int Add(int a, int b)
+        {
+            return a + b;
+        }
+
+        // Subtraktion von zwei Zahlen
+        public int Subtract(int a, int b)
+        {
+            return a - b;
+        }
+
+        // Multiplikation von zwei Zahlen
+        public int Multiply(int a, int b)
+        {
+            return a * b;
+        }
+
+        // Division von zwei Zahlen
+        public double Divide(int a, int b)
+        {
+            if (b == 0)
+            {
+                throw new DivideByZeroException("Teiler darf nicht null sein");
+            }
+            return (double)a / b;
+        }
     }
 }

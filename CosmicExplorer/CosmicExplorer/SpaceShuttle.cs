@@ -318,7 +318,8 @@ namespace Cosmic_Explorer
                             switch (message)
                             {
                                 case "sonar":
-                                    Console.WriteLine("Zeigt bei jeder Aktiven Aktion die Koordinaten umgebener Objekte an.\n");
+                                    Console.WriteLine("Zeigt bei jeder Aktiven Aktion die Koordinaten umgebener Objekte an.\n" +
+                                        "NPC's und du werden Farbig markiert.\n");
                                     goto Start;
                                 case "anticrash":
                                     Console.WriteLine("Verhindert das du gegen Asteroiden oder andere Objekte fliegst.\n");
@@ -390,15 +391,16 @@ namespace Cosmic_Explorer
                             if (sonarActive)
                             {
                                 Console.ForegroundColor = ConsoleColor.Green;
-                                Console.WriteLine("Aktiviert]");
+                                Console.Write("Aktiviert");
                             }
                             else
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("Deaktivert]");
+                                Console.Write("Deaktivert");
                             }
                             Console.ResetColor();
-                            sonarTemp:
+                            Console.WriteLine("]");
+                        sonarTemp:
                             Console.Write("Eingabe: ");
                             message = Console.ReadLine().Trim().ToLower();
                             switch (message)
