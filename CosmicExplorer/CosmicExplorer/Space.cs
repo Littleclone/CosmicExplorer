@@ -42,6 +42,16 @@ namespace Cosmic_Explorer
         public int SolarPanelHealth = 100;
         public int SolarPanelEfficiency = 20;//Percantage. Maybe moved later to a different thing
         public int AntennenHealth = 100;
+        public void ResetVar()
+        {
+            currentTime = 0;
+            spaceSuitHealth = 100;
+            spaceSuitEnergy = 100;
+            spaceSuitOxygen = 100f;
+            SolarPanelHealth = 100;
+            SolarPanelEfficiency = 20;
+            AntennenHealth = 100;
+        }
         public void InSpace()
         {
             //Überprüft ob es bereits 23 Uhr ist

@@ -41,6 +41,12 @@ namespace Cosmic_Explorer
         public string message = "error";
         public uint x;
         public uint y;
+        public void ResetVar()
+        {
+            x = 0;
+            y = 0;
+            Array.Fill<sbyte>(QState, 0);
+        }
         public void Quest()
         {
             for (int i = 1; i < 69; i++)

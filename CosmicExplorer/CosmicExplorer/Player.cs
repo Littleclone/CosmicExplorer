@@ -28,6 +28,15 @@ namespace Cosmic_Explorer
                 Console.ResetColor();
             }
         }
+        public void ResetVar()
+        {
+            health = 100;
+            hunger = 100;
+            thirst = 100;
+            oxygen = 100;
+            gold = 1000;
+            isDeath = false;
+        }
         public void AddGold(long amount)
         {
             gold += amount;

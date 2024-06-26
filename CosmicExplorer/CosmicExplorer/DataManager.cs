@@ -78,6 +78,7 @@ namespace CosmicExplorer
 
             try
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 // Löschen der save_data.txt
                 if (File.Exists(saveDataFilePath))
                 {
@@ -99,11 +100,14 @@ namespace CosmicExplorer
                 {
                     Console.WriteLine("world_data.txt existiert nicht.");
                 }
+                Console.ResetColor();
             }
             catch (Exception ex)
             {
                 // Fehlerbehandlung
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"Fehler beim Löschen der Dateien: {ex.Message}");
+                Console.ResetColor();
             }
             InitializeSaveFileFirst();
         }
@@ -118,6 +122,7 @@ namespace CosmicExplorer
             try
             {
                 // Löschen der vorhandenen Backup-Dateien, falls vorhanden
+                Console.ForegroundColor = ConsoleColor.Red;
                 if (File.Exists(saveDataBackupFilePath))
                 {
                     File.Delete(saveDataBackupFilePath);
@@ -149,11 +154,14 @@ namespace CosmicExplorer
                 {
                     Console.WriteLine("world_data.txt existiert nicht.");
                 }
+                Console.ResetColor();
             }
             catch (Exception ex)
             {
                 // Fehlerbehandlung
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"Fehler beim Erstellen der Backup-Dateien: {ex.Message}");
+                Console.ResetColor();
             }
             InitializeSaveFile();
         }
@@ -177,6 +185,7 @@ namespace CosmicExplorer
                     File.Delete(worldDataFilePath);
                 }
                 // Umbenennen der Backup-Dateien zu den aktuellen Dateinamen
+                Console.ForegroundColor = ConsoleColor.Red;
                 if (File.Exists(saveDataBackupFilePath))
                 {
                     File.Move(saveDataBackupFilePath, saveDataFilePath);
@@ -196,11 +205,14 @@ namespace CosmicExplorer
                 {
                     Console.WriteLine("Kein Backup von world_data.txt vorhanden.");
                 }
+                Console.ResetColor();
             }
             catch (Exception ex)
             {
                 // Fehlerbehandlung
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"Fehler beim Wiederherstellen der Backup-Dateien: {ex.Message}");
+                Console.ResetColor();
             }
         }
 

@@ -61,6 +61,16 @@ namespace Cosmic_Explorer
                 Console.ResetColor();
             }
         }
+        public void ResetVar()
+        {
+            Array.Clear(world, 0, world.Length);
+            Array.Clear(sepWorld, 0, sepWorld.Length);
+            Array.Clear(arr1, 0, arr1.Length);
+            _playerX = 0;
+            _playerY = 0;
+            d = 1;
+            c = 1;
+        }
         public enum CellType
         {
             Space,

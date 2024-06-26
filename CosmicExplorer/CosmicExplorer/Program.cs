@@ -117,6 +117,18 @@ namespace Cosmic_Explorer
                                 continue;
                             case "yes":
                                 DataManager.DeleteSaveFiles();
+                                ResetVar();
+                                inventory.ResetVar();
+                                hanna.ResetVar();
+                                gfi.ResetVar();
+                                lea.ResetVar();
+                                supplier.ResetVar();
+                                player.ResetVar();
+                                questSystem.ResetVar();
+                                science.ResetVar();
+                                space.ResetVar();
+                                shuttle.ResetVar();
+                                world.ResetVar();
                                 continue;
                             default:
                                 Console.WriteLine("Bitte wähle eines der beiden optionen!");
@@ -244,7 +256,7 @@ namespace Cosmic_Explorer
                 }
             }
         }
-        public void SaveData()
+        private void SaveData()
         {
             try
             {
@@ -309,7 +321,7 @@ namespace Cosmic_Explorer
                 failedToSave = true;
             }
         }
-        public void initObjekts()
+        private void initObjekts()
         {
             //Erstmalige generierung der Welt und zuweisung von Objekten
             if (init_Objects == false)
@@ -334,7 +346,7 @@ namespace Cosmic_Explorer
                 supplier.initObj(questSystem, this, trade, science, quest, inventory, player);
             }
         }
-        public void introduction()
+        private void introduction()
         {
             if (_save[0] == 0)
             {
@@ -446,6 +458,29 @@ namespace Cosmic_Explorer
             {
                 return;
             }
+        }
+        private void ResetVar()
+        {
+            //Setz alle Variablen hier auf ihre standartwert wie oben initialisiert
+            CurrentDay = 0;
+            DayCounter = 0;
+            Array.Fill(_save, 0);
+            //Flags
+            debug = false;
+            dev = true;
+            hardCore = false;
+            //Kontroll Variablen
+            //init_Objects = false;
+            isWorld = false;
+            needSave = false;
+            newGame = true;
+            currentSession = false;
+            //Error Variablen
+            fileManipulation = false;
+            failedToSave = false;
+            failedToSaveWorld = false;
+            failedToLoad = false;
+            failedToLoadWorld = false;
         }
         public void ErrorHandling()
         {

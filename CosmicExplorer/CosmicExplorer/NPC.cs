@@ -47,6 +47,10 @@ namespace Cosmic_Explorer
             canSell = npcCanSell;
             canBuy = npcCanBuy;
         }
+        public void ResetVar()
+        {
+            state = 0;
+        }
         //For the NPC Hanna
         public void NPCStartHanna()
         {
@@ -422,7 +426,7 @@ namespace Cosmic_Explorer
                                 {
                                     Console.WriteLine(e.Message);
                                     Console.WriteLine("Falsches Format!");
-                                    break;
+                                    continue;
                                 }
                                 if (x == 1 || x == 2 || x == 3 || x == 4 || x == 5 || x == 6 || x == 7 || x == 8)
                                 {

@@ -30,6 +30,10 @@ namespace Cosmic_Explorer
         }
         string message = "error";
         public SByte[] progress = new SByte[100];
+        public void ResetVar()
+        {
+            Array.Fill<SByte>(progress, 0);
+        }
         public void Laboratory()
         {
             while (true)

@@ -593,5 +593,21 @@ namespace Cosmic_Explorer
                 }
             }
         }
+        public void ResetVar()
+        {
+            //Setze alle variablen zurück und leere das itemindex array
+            petrol = 0;
+            asteroid_pieces = 0;
+            asteroid_dust = 0;
+            iron_ore = 0;
+            iron_ingot = 0;
+            copper_ore = 0;
+            copper_ingot = 0;
+            coal = 0;
+            gold_ore = 0;
+            gold_ingot = 0;
+            Array.Fill(itemIndex, 0);
+
+        }
     }
 }

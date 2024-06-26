@@ -53,6 +53,15 @@ namespace Cosmic_Explorer
                 Console.ResetColor();
             }
         }
+        public void ResetVar()
+        {
+            currentRoom = 0;
+            currentTime = 0;
+            Health = 100;
+            Energy = 100;
+            antiCrashSystem = true;
+            sonarActive = false;
+        }
         public void Bedroom(int currentTime1)
         {
             game.newGame = false;
