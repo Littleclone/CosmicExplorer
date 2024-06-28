@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
+using Cosmic_Explorer;
 using Newtonsoft.Json;
 
 namespace CosmicExplorer
@@ -14,6 +16,11 @@ namespace CosmicExplorer
         static DataManager()
         {
             InitializeSaveFileFirst();
+        }
+        private static Game game;
+        public static void Init(Game game1)
+        {
+            game = game1;
         }
 
         public static void InitializeSaveFileFirst()
@@ -83,22 +90,34 @@ namespace CosmicExplorer
                 if (File.Exists(saveDataFilePath))
                 {
                     File.Delete(saveDataFilePath);
-                    Console.WriteLine("save_data.txt wurde gelöscht.");
+                    if(game.debug)
+                    {
+                        Console.WriteLine("save_data.txt wurde gelöscht.");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("save_data.txt existiert nicht.");
+                    if(game.debug)
+                    {
+                        Console.WriteLine("save_data.txt existiert nicht.");
+                    }
                 }
 
                 // Löschen der world_data.txt
                 if (File.Exists(worldDataFilePath))
                 {
                     File.Delete(worldDataFilePath);
-                    Console.WriteLine("world_data.txt wurde gelöscht.");
+                    if(game.debug)
+                    {
+                        Console.WriteLine("world_data.txt wurde gelöscht.");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("world_data.txt existiert nicht.");
+                    if (game.debug)
+                    {
+                        Console.WriteLine("world_data.txt existiert nicht.");
+                    }
                 }
                 Console.ResetColor();
             }
@@ -126,33 +145,51 @@ namespace CosmicExplorer
                 if (File.Exists(saveDataBackupFilePath))
                 {
                     File.Delete(saveDataBackupFilePath);
-                    Console.WriteLine("Vorhandenes Backup von save_data.txt wurde gelöscht.");
+                    if(game.debug)
+                    {
+                        Console.WriteLine("Vorhandenes Backup von save_data.txt wurde gelöscht.");
+                    }
                 }
                 if (File.Exists(worldDataBackupFilePath))
                 {
                     File.Delete(worldDataBackupFilePath);
-                    Console.WriteLine("Vorhandenes Backup von world_data.txt wurde gelöscht.");
+                    if(game.debug)
+                    {
+                        Console.WriteLine("Vorhandenes Backup von world_data.txt wurde gelöscht.");
+                    }
                 }
 
                 // Umbenennen der aktuellen Dateien zu Backup-Dateien
                 if (File.Exists(saveDataFilePath))
                 {
                     File.Move(saveDataFilePath, saveDataBackupFilePath);
-                    Console.WriteLine("save_data.txt wurde zu save_dataBACKUP.txt umbenannt.");
+                    if(game.debug)
+                    {
+                        Console.WriteLine("save_data.txt wurde zu save_dataBACKUP.txt umbenannt.");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("save_data.txt existiert nicht.");
+                    if(game.debug)
+                    {
+                        Console.WriteLine("save_data.txt existiert nicht.");
+                    }
                 }
 
                 if (File.Exists(worldDataFilePath))
                 {
                     File.Move(worldDataFilePath, worldDataBackupFilePath);
-                    Console.WriteLine("world_data.txt wurde zu world_dataBACKUP.txt umbenannt.");
+                    if (game.debug)
+                    {
+                        Console.WriteLine("world_data.txt wurde zu world_dataBACKUP.txt umbenannt.");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("world_data.txt existiert nicht.");
+                    if(game.debug)
+                    {
+                        Console.WriteLine("world_data.txt existiert nicht.");
+                    }
                 }
                 Console.ResetColor();
             }
@@ -189,21 +226,41 @@ namespace CosmicExplorer
                 if (File.Exists(saveDataBackupFilePath))
                 {
                     File.Move(saveDataBackupFilePath, saveDataFilePath);
-                    Console.WriteLine("save_dataBACKUP.txt wurde zu save_data.txt zurückbenannt.");
+                    if(game.debug)
+                    {
+                        Console.WriteLine("save_dataBACKUP.txt wurde zu save_data.txt zurückbenannt.");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Kein Backup von save_data.txt vorhanden.");
+                    if(game.debug)
+                    {
+                        Console.WriteLine("Kein Backup von save_data.txt vorhanden.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Es wurde kein Backup für die Speicherdatei gefunden!");
+                    }
                 }
 
                 if (File.Exists(worldDataBackupFilePath))
                 {
                     File.Move(worldDataBackupFilePath, worldDataFilePath);
-                    Console.WriteLine("world_dataBACKUP.txt wurde zu world_data.txt zurückbenannt.");
+                    if (game.debug)
+                    {
+                        Console.WriteLine("world_dataBACKUP.txt wurde zu world_data.txt zurückbenannt.");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Kein Backup von world_data.txt vorhanden.");
+                    if (game.debug)
+                    {
+                        Console.WriteLine("Kein Backup von world_data.txt vorhanden.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Es wurde kein Backup für die Weltdatei gefunden!");
+                    }
                 }
                 Console.ResetColor();
             }

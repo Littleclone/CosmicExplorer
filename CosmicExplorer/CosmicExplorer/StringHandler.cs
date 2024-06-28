@@ -76,11 +76,36 @@ namespace Cosmic_Explorer
                     }
                     if (messageID == 12)
                     {
-                        return message = npcName + ": \nSuper, das freut mich zu hören, wir melden uns wenn wir eine neue Aufgabe für dich haben.";
+                        return message = npcName + ": \nSuper, das freut mich zu hören, melde dich bei uns wenn du eine neue Aufgabe brauchst.";
                     }
                     if (messageID == 13)
                     {
-                        return message = "Charlotte: \nGut, bis dann.";
+                        return message = "Charlotte: \nGut, ich werde mich melden, bis dann.";
+                    }
+                    if (messageID == 14)
+                    {
+                        return message = "Dev Note: Du hast deine erste Story Quest abgeschlossen, such nun weiter nach anderen NPC's" +
+                            "\n(mithilfe der Sonar funktion), diese werden dann hervorgehoben und im Logbuch gespeichert." +
+                            "\nAnsonsten kannst du natürlich auch machen was du willst. Ruf die einfach wieder an für eine neue quest.";
+                    }
+                    if (messageID == 15)
+                    {
+                        return message = npcName + ": \nHallo Charlotte, was gibts?";
+                    }
+                    if (messageID == 16)
+                    {
+                        return message = "Charlotte: \nIch würde gerne eine neue mission anfordern.";
+                    }
+                    if (messageID == 17)
+                    {
+                        return message = npcName + ": \nKlar, ich habe eine neue Aufgabe für dich, falls du dich schon damit beschäftigt hast, dein Raumschiff" +
+                            "\nkann Asteroiden abbauen und du sollst Asteroiden abbauen und dein gold auf 2000 Bringen. (Falls noch nicht gefunden," +
+                            "\ndu kannst bei 'Lea', ein NPC, sachen kaufen aber auch verkaufen, sie gibt dir beim ersten mal ansprechen auch eine " +
+                            "\nquest).";
+                    }
+                    if (messageID == 18)
+                    {
+                        return message = "Charlotte: \nOkay, ich werde mich darum kümmern.";
                     }
                     if (messageID == -3)
                     {

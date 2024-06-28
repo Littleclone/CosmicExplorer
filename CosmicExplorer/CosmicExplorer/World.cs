@@ -205,10 +205,6 @@ namespace Cosmic_Explorer
                         world[x, y] = CellType.Sun;
                         sunCount1++;
                     }
-                    //else if(randomNumber <= 10)
-                    //{
-                    //    world[x, y] = CellType.Spaceship;
-                    //}
                     else if (randomNumber <= 20) // Beispiel: 20% Wahrscheinlichkeit für Planeten
                     {
                         world[x, y] = CellType.Planet;

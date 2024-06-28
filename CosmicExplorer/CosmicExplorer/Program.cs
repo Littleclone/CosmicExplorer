@@ -326,6 +326,7 @@ namespace Cosmic_Explorer
             //Erstmalige generierung der Welt und zuweisung von Objekten
             if (init_Objects == false)
             {
+                DataManager.Init(this);
                 init_Objects = true;
                 shuttle.SpaceShip(space, activities, this, world, system, inventory, math, quest, questSystem, player, science, gfi);
                 world.Worlds(shuttle, space, activities, this, system, inventory, questSystem, science);
@@ -452,6 +453,7 @@ namespace Cosmic_Explorer
                     Console.WriteLine("Du hast ein Gehalt von 1500 Gold bekommen.");
                     Console.ResetColor();
                 }
+                gfi.state = 2;
                 shuttle.Bedroom(6);
             }
             else

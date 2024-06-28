@@ -71,7 +71,10 @@ namespace Cosmic_Explorer
             {
                 if (state[3] == 1)
                 {
-
+                    message = "Name: Besorg die mehr Gold\nAufgabe: Krieg 2000 Gold." +
+                    "\nBeschreibung: Die GFI verlangt das du 2000 Gold besitzt, wahrscheinlich für eine neue mission, verkaufe dafür sachen" +
+                    "\nbei Lea (in dem du Asteroiden abbaust) oder warte auf dein nächstes Gehalt.";
+                    return message;
                 }
             }
             return message = "QuestID not found";

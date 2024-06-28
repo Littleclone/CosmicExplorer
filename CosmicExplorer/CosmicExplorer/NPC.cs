@@ -295,20 +295,6 @@ namespace Cosmic_Explorer
                 qSystem.QState[1] = 1;
                 return;
             }
-            if(state == 1 && qSystem.QState[1] == 4)
-            {
-                Console.ForegroundColor = ConsoleColor.White;
-                for (int i = 10; i <= 15; i++)
-                {
-                    Console.WriteLine(StringHandler.NPCMessages(name, npcID, i));
-                    Console.ReadKey();
-                    Console.WriteLine("");
-                    state = 2;
-                }
-                Console.ResetColor();
-                qSystem.QState[1] = 15;
-                return;
-            }
             if (inventory.itemIndex[1] == 0)
             {
                 Console.ForegroundColor = ConsoleColor.White;
@@ -329,7 +315,35 @@ namespace Cosmic_Explorer
                 Console.ResetColor();
                 return;
             }
-            if(state == 1)
+            if (state == 1 && qSystem.QState[1] == 4)
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                for (int i = 10; i <= 14; i++)
+                {
+                    Console.WriteLine(StringHandler.NPCMessages(name, npcID, i));
+                    Console.ReadKey();
+                    Console.WriteLine("");
+                }
+                Console.ResetColor();
+                state = 2;
+                qSystem.QState[1] = 15;
+                return;
+            }
+            if (state == 2)
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                for (int i = 15; i <= 18; i++)
+                {
+                    Console.WriteLine(StringHandler.NPCMessages(name, npcID, i));
+                    Console.ReadKey();
+                    Console.WriteLine("");
+                }
+                Console.ResetColor();
+                state = 3;
+                qSystem.QState[3] = 1;
+                return;
+            }
+            if (state > 0)
             {
                 ulong x = 30;
                 x -= game.DayCounter;
