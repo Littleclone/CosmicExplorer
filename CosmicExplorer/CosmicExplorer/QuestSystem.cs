@@ -18,7 +18,8 @@ namespace Cosmic_Explorer
         private Inventory inventory;
         private OwnMath math;
         private Science science;
-        public void QuestSystemInit(Quest quest, Space space, Activities action, Game games, World world, PassivSystem systems, Inventory inv, OwnMath math, Science science) 
+        private Player player;
+        public void QuestSystemInit(Quest quest, Space space, Activities action, Game games, World world, PassivSystem systems, Inventory inv, OwnMath math, Science science, Player player) 
         {
             this.game = games;
             this.Space = space;
@@ -29,6 +30,7 @@ namespace Cosmic_Explorer
             this.math = math;
             this.quest = quest;
             this.science = science;
+            this.player = player;
             game.qsystem = true;
             if(game.debug)
             {
@@ -100,6 +102,23 @@ namespace Cosmic_Explorer
                         if (science.progress[1] == 3)
                         {
                             QState[2] = 2;
+                        }
+                    }
+                    if (index == 3)
+                    {
+                        if(QState[3] == 1)
+                        {
+                            if(player.gold >= 3000)
+                            {
+                                QState[3] = 2;
+                            }
+                        }
+                        if (QState[3] == 3)
+                        {
+                            if (inventory.itemIndex[13] >= 5)
+                            {
+                                QState[3] = 4;
+                            }
                         }
                     }
                 }

@@ -71,9 +71,33 @@ namespace Cosmic_Explorer
             {
                 if (state[3] == 1)
                 {
-                    message = "Name: Besorg die mehr Gold\nAufgabe: Krieg 2000 Gold." +
-                    "\nBeschreibung: Die GFI verlangt das du 2000 Gold besitzt, wahrscheinlich für eine neue mission, verkaufe dafür sachen" +
+                    message = "Name: Besorg die mehr Gold\nAufgabe: Krieg 3000 Gold." +
+                    "\nBeschreibung: Die GFI verlangt das du 3000 Gold besitzt, wahrscheinlich für eine neue mission, verkaufe dafür sachen" +
                     "\nbei Lea (in dem du Asteroiden abbaust) oder warte auf dein nächstes Gehalt.";
+                    return message;
+                }
+                if (state[3] == 2)
+                {
+                    message = "Name: Du hast genügend Gold\nAufgabe: Sprich mit der GFI." +
+                    "\nBeschreibung: Du hast nun genügend Gold und sollst mit der GFI sprechen nun für die nächste Mission";
+                    return message;
+                }
+                if (state[3] == 3)
+                {
+                    message = "Name: Ein neues Experiment\nAufgabe: Stelle Experiemente Legierung Her." +
+                    "\nBeschreibung: Die GFI will das du Experiemente Legierung herstellst, mehr haben sie dazu nicht gesagt.";
+                    return message;
+                }
+                if (state[3] == 4)
+                {
+                    message = "Name: Du hast genügend Legierungen\nAufgabe: Sprich mit der GFI." +
+                    "\nBeschreibung: Du hast nun genügend Legierungen und sollst mit der GFI sprechen nun für die nächste Mission";
+                    return message;
+                }
+                if (state[3] == 5)
+                {
+                    message = "Name: Ende der Story Mission\nAufgabe: Hab Spaß." +
+                    "\nBeschreibung: Dies ist das Ende, mehr gibts noch nicht.";
                     return message;
                 }
             }

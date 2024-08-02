@@ -261,6 +261,13 @@ namespace Cosmic_Explorer
                                     break;
                                 }
                                 continue;
+                            case "SaveFile":
+                                while (true)
+                                {
+                                    Console.WriteLine("Noch nicht Verfügbar!");
+                                    break;
+                                }
+                                continue;
                             case "exit":
                                 break;
                             default: 
@@ -341,6 +348,34 @@ namespace Cosmic_Explorer
                 Console.ResetColor();
                 state = 3;
                 qSystem.QState[3] = 1;
+                return;
+            }
+            if(state == 3 && qSystem.QState[3] == 2)
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                for (int i = 19; i <= 23; i++)
+                {
+                    Console.WriteLine(StringHandler.NPCMessages(name, npcID, i));
+                    Console.ReadKey();
+                    Console.WriteLine("");
+                }
+                Console.ResetColor();
+                state = 4;
+                qSystem.QState[3] = 3;
+                return;
+            }
+            if (state == 4 && qSystem.QState[3] == 4)
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                for (int i = 24; i <= 26; i++)
+                {
+                    Console.WriteLine(StringHandler.NPCMessages(name, npcID, i));
+                    Console.ReadKey();
+                    Console.WriteLine("");
+                }
+                Console.ResetColor();
+                state = 5;
+                qSystem.QState[3] = 5;
                 return;
             }
             if (state > 0)
@@ -499,6 +534,10 @@ namespace Cosmic_Explorer
                                 Console.Write("Eingabe:");
                                 Console.ResetColor();
                                 messages = Console.ReadLine();
+                                if (messages == "exit")
+                                {
+                                    break;
+                                }
                                 int x = 0;
                                 int y = 0;
                                 int z = 0;

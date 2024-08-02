@@ -316,6 +316,7 @@ namespace Cosmic_Explorer
                             Console.WriteLine("quests = Zeigt dir deine Aktuellen Quests an. [Kostet keine Energie]");
                             Console.WriteLine("mine = Baut die 3 Asterioden vor dem Player ab. [Kostet 20 Energie Pro Asteroid Aktiv]");
                             Console.WriteLine("call = Stelle eine Verbindung zu einem NPC um dich erhum her. [Kostet 5 Energie]");
+                            Console.WriteLine("logbuch = Zeigt dir die Standorte von NPC die du bereits gesehen hast [Kostet keine Energie]");
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("Mehr kommt in den Nächsten Updates!");
                             Console.ResetColor();
@@ -535,6 +536,9 @@ namespace Cosmic_Explorer
                             }
                             Energy -= 5;
                             world.CallNPC();
+                            goto Start;
+                        case "logbuch":
+                            world.Logbuch();
                             goto Start;
                         default:
                             Console.WriteLine("Wähle einer der (implementierten) Befehle aus!");

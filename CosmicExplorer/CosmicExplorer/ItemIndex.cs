@@ -73,6 +73,11 @@ namespace Cosmic_Explorer
                     itemName = "dirt from an alien planet";
                     return true;
                 }
+                if (ID == 13)
+                {
+                    itemName = "Experimental alloy";
+                    return true;
+                }
             }
             return false;
         }
@@ -127,6 +132,10 @@ namespace Cosmic_Explorer
                 if (ID == 12)
                 {
                     return itemName = "Erde von einem Fremden Planeten";
+                }
+                if (ID == 13)
+                {
+                    return itemName = "Experimentelle Legierung";
                 }
                 return "ItemID not found";
             }

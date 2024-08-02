@@ -84,27 +84,31 @@ namespace Cosmic_Explorer
                 Console.WriteLine("Du bist gestorben!");
                 if(!game.hardCore)
                 {
-                    Console.WriteLine("Was willst du machen? [exit = Geh zum Hauptmenü] [load = Lade dein Letzten Tag]");
-                    Console.ResetColor();
-                    Console.Write("Eingabe:");
-                    message = Console.ReadLine();
-                    switch (message)
+                    while (true)
                     {
-                        case "exit":
-                            game.Start();
-                            break;
-                        case "load":
-                            game.LoadSaveFile();
-                            game.NewDayStart(23);
-                            break;
-                        default:
-                            break;
+                        Console.WriteLine("Was willst du machen? [exit = Geh zum Hauptmenü] [load = Lade dein Letzten Tag]");
+                        Console.ResetColor();
+                        Console.Write("Eingabe:");
+                        message = Console.ReadLine();
+                        switch (message)
+                        {
+                            case "exit":
+                                game.Start();
+                                break;
+                            case "load":
+                                game.LoadSaveFile();
+                                game.NewDayStart(23);
+                                break;
+                            default:
+                                continue;
+                        }
+                        break;
                     }
                 }
                 //Passiert wenn du den Hardcore mode aktiviert hast
                 else
                 {
-                    Console.WriteLine("Deine SaveFiles werden gelöscht. Du musst neu anfangen!");
+                    Console.WriteLine("Deine SaveFiles werden gelöscht. Du musst neu anfangen! [Hardcore Mode]");
                     Console.ResetColor();
                     DataManager.DeleteSaveFiles();
                     game.Start();

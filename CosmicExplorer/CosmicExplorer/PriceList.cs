@@ -84,6 +84,24 @@ namespace Cosmic_Explorer
                 }
                 return 55f;
             }
+            if (itemID == "09")
+            {
+                item = "gold_ore";
+                if (discount > 0)
+                {
+                    return 150f * discount;
+                }
+                return 150f;
+            }
+            if (itemID == "10")
+            {
+                item = "gold_ingot";
+                if (discount > 0)
+                {
+                    return 500f * discount;
+                }
+                return 500f;
+            }
             return 9999999;
         }
         public static float SellPrice(string itemID, float extraCharge)
@@ -129,7 +147,7 @@ namespace Cosmic_Explorer
                 item = "asteroid dust";
                 if (extraCharge > 0)
                 {
-                    return 5f * extraCharge;
+                    return 5f / extraCharge;
                 }
                 return 5f;
             }
@@ -138,7 +156,7 @@ namespace Cosmic_Explorer
                 item = "iron_ingot";
                 if (extraCharge > 0)
                 {
-                    return 175f * extraCharge;
+                    return 175f / extraCharge;
                 }
                 return 175f;
             }
@@ -147,7 +165,7 @@ namespace Cosmic_Explorer
                 item = "copper_ingot";
                 if (extraCharge > 0)
                 {
-                    return 105f * extraCharge;
+                    return 105f / extraCharge;
                 }
                 return 105f;
             }
@@ -156,9 +174,27 @@ namespace Cosmic_Explorer
                 item = "coal";
                 if (extraCharge > 0)
                 {
-                    return 20f * extraCharge;
+                    return 20f / extraCharge;
                 }
                 return 20f;
+            }
+            if (itemID == "09")
+            {
+                item = "gold_ore";
+                if (extraCharge > 0)
+                {
+                    return 80f / extraCharge;
+                }
+                return 80f;
+            }
+            if (itemID == "10")
+            {
+                item = "gold_ingot";
+                if (extraCharge > 0)
+                {
+                    return 350f / extraCharge;
+                }
+                return 350f;
             }
             return 1;
         }

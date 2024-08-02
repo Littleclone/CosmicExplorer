@@ -18,6 +18,7 @@ namespace Cosmic_Explorer
             {
                 canSellList.Add(x.Substring(i, Math.Min(2, x.Length - i)));
             }
+            j = Convert.ToInt32(canSellList[0]);
             foreach (string i in canSellList)
             {
                 if (discount > 0)
@@ -54,6 +55,7 @@ namespace Cosmic_Explorer
             {
                 canBuyList.Add(y.Substring(i, Math.Min(2, y.Length - i)));
             }
+            j = Convert.ToInt32(canBuyList[0]);
             foreach (string i in canBuyList)
             {
                 if (extraCharge > 0)

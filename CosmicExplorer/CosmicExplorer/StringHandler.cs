@@ -99,7 +99,7 @@ namespace Cosmic_Explorer
                     if (messageID == 17)
                     {
                         return message = npcName + ": \nKlar, ich habe eine neue Aufgabe für dich, falls du dich schon damit beschäftigt hast, dein Raumschiff" +
-                            "\nkann Asteroiden abbauen und du sollst Asteroiden abbauen und dein gold auf 2000 Bringen. (Falls noch nicht gefunden," +
+                            "\nkann Asteroiden abbauen und du sollst Asteroiden abbauen und dein gold auf 3000 Bringen. (Falls noch nicht gefunden," +
                             "\ndu kannst bei 'Lea', ein NPC, sachen kaufen aber auch verkaufen, sie gibt dir beim ersten mal ansprechen auch eine " +
                             "\nquest).";
                     }
@@ -107,20 +107,45 @@ namespace Cosmic_Explorer
                     {
                         return message = "Charlotte: \nOkay, ich werde mich darum kümmern.";
                     }
-                    if (messageID == -3)
+                    if (messageID == 19)
                     {
-                        return message = "Das war das ende der Story Misson fürs erste, mehr kommt in weiteren Updates. Vergiss bitte nicht das dies ein Prototyp ist." +
-                            "Es kommt darauf an wie viel interesse das Spiel erzeugt für neue Updates. Versteh mich nicht falsch, ich habe die \nzeit genossen " +
-                            "die ich an diesem Spiel verbracht habe. Jedoch ist meine Lebens Situation etwas schwierig weshalb ich dann \nwenn dies auf geringes interesse" +
-                            "stößt mich neuen sachen widmen werde um auch mehr über C# zu \nlernen, dennoch werde ich dieses Projekt nicht aufgeben.";
+                        return message = "Charlotte: \nHallo, ich habe nun die 3000 Gold, was als nächstes?";
                     }
-                    if (messageID == -3)
+                    if (messageID == 20)
+                    {
+                        return message = npcName + ": \nGut zu wissen, als nächstes wirst du dir Materialien kaufen müssen um die\n" +
+                            "nächste mission Abschließen zu können. Du wirst nämmlich viele Eisen- und Kupferbarren" +
+                            "\nund dafür brauchst du auch Kohle, das alles solltest du bei einem händler finden.";
+                    }
+                    if (messageID == 21)
+                    {
+                        return message = npcName + ": \nDaraus sollst du dann 5 Experimentelle Legierung machen." +
+                            "\nDas Rezept wird dir geschickt.";
+                    }
+                    if (messageID == 22)
+                    {
+                        return message = "Du hast das Rezept für die Experimentelle Legierung bekommen, dies benötigt pro Barren:" +
+                            "\n1 Eisenbarren" +
+                            "\n3 Kupferbarren";
+                    }
+                    if (messageID == 23)
+                    {
+                        return message = "Charlotte: \nOkay, danke, ich melde mich dann wieder.";
+                    }
+                    if (messageID == 24)
+                    {
+                        return message = "Charlotte: \nHallo, ich habe die 5 Experimentelle Legierungen gemacht, was soll ich nun tun?";
+                    }
+                    if (messageID == 25)
+                    {
+                        return message = "Das war das ende der Story Misson fürs erste, mehr wird noch kommen!";
+                    }
+                    if (messageID == 26)
                     {
                         return message = "Danke fürs Spielen, sollte es dir gefallen habe dann komm auf mein Discord und berichte mir davon." +
                             "\nWie gesagt selbst wenn dies auf kleines interesse stößt werde ich immer wieder mal daran arbeiten, das nächste update" +
                             "\nsollte also nicht all zu lang auf sich warten lassen. :)" +
-                            "\nJetzt hab spaß mit dem Rest der Welt und den Funktionen die es gibt, es gibt beispielsweise noch den NPC 'Lea'" +
-                            "\nLea ist ab frühestens X:25 zu finden und sollte nicht all zu weit davon entfernt sein. (Nutz das Sonar)";
+                            "\nJetzt hab spaß mit dem Rest der Welt und den Funktionen die es gibt";
                     }
                     return message = "Message ID not found";
                 }

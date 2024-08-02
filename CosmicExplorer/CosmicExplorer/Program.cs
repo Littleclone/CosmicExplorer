@@ -8,6 +8,7 @@ namespace Cosmic_Explorer
         static void Main(string[] args)
         {
             Game game = new Game();
+            DataManager.Init(game);
             while (true)
             {
                 game.Start();
@@ -31,7 +32,7 @@ namespace Cosmic_Explorer
         Trade trade = new Trade();
         NPC hanna = new NPC("Hanna", -1, "0", "0");
         NPC gfi = new NPC("GFI", 1, "0", "0");
-        NPC lea = new NPC("Lea", 2, "0102030405060708", "02030405060708");
+        NPC lea = new NPC("Lea", 2, "01020304050607080910", "020304050607080910");
         NPC supplier = new NPC("The Supplier", 3, "0", "0");
         ulong CurrentDay = 0; //Start Tag
         public ulong DayCounter = 0; //Zählt die Tage bis 30
@@ -221,6 +222,8 @@ namespace Cosmic_Explorer
                     gfi.state = DataManager.LoadData<sbyte>("npc", "gfi");
                     lea.state = DataManager.LoadData<sbyte>("npc", "lea");
                     supplier.state = DataManager.LoadData<sbyte>("npc", "supplier");
+                    //World
+                    world.logbuch = DataManager.LoadData<string[]>("world", "logbuch");
                     //arrays
                     int[] loadedSave = DataManager.LoadData<int[]>("saveFile", "save");
                     _save = loadedSave;
@@ -288,6 +291,8 @@ namespace Cosmic_Explorer
                 DataManager.SaveData("npc", "gfi", gfi.state);
                 DataManager.SaveData("npc", "lea", lea.state);
                 DataManager.SaveData("npc", "supplier", supplier.state);
+                //World
+                DataManager.SaveData("world", "logbuch", world.logbuch);
                 //arrays
                 DataManager.SaveData("saveFile", "save", _save);
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -326,15 +331,14 @@ namespace Cosmic_Explorer
             //Erstmalige generierung der Welt und zuweisung von Objekten
             if (init_Objects == false)
             {
-                DataManager.Init(this);
                 init_Objects = true;
                 shuttle.SpaceShip(space, activities, this, world, system, inventory, math, quest, questSystem, player, science, gfi);
                 world.Worlds(shuttle, space, activities, this, system, inventory, questSystem, science);
                 activities.Actions(shuttle, space, this, world, system, inventory);
                 system.Passiv(shuttle, space, activities, this, world, inventory, math, questSystem);
                 space.Space_(shuttle, activities, this, world, system, inventory, math);
-                inventory.InvInit(shuttle, space, activities, this, world, system, science);
-                questSystem.QuestSystemInit(quest, space, activities, this, world, system, inventory, math, science);
+                inventory.InvInit(shuttle, space, activities, this, world, system, science, questSystem);
+                questSystem.QuestSystemInit(quest, space, activities, this, world, system, inventory, math, science, player);
                 quest.QuestInit(questSystem, this);
                 player.ObjInit(this);
                 science.Init(inventory, this, shuttle, system, questSystem);

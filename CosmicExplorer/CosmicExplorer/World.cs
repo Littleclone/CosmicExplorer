@@ -22,6 +22,7 @@ namespace Cosmic_Explorer
         private NPC hanna;
         private NPC lea;
         private NPC supplier;
+        public string[] logbuch = new string[100]; 
         public int _playerX = 0;
         public int _playerY = 0;
         //players Old Position
@@ -210,7 +211,7 @@ namespace Cosmic_Explorer
                         world[x, y] = CellType.Planet;
                         planetCount1++;
                     }
-                    else if (randomNumber <= 40) // Beispiel: 40% Wahrscheinlichkeit für Asteroiden
+                    else if (randomNumber <= 60) // Beispiel: 60% Wahrscheinlichkeit für Asteroiden
                     {
                         world[x, y] = CellType.Asteroid;
                         asteroidCount1++;
@@ -364,6 +365,18 @@ namespace Cosmic_Explorer
             }
         }
         //Ab hier sind die Aktivitäten die irgendwas mit der Welt zu tun haben:
+        public void Logbuch()
+        {
+            foreach (string log in logbuch)
+            {
+                if(log != null)       
+                {
+                    Console.WriteLine("----------------");
+                    Console.WriteLine(log);
+                }
+            }
+            Console.WriteLine("----------------");
+        }
         public void Course(int X, int Y, bool antiCrash)
         {
             //Kontroll Variablen
@@ -553,8 +566,8 @@ namespace Cosmic_Explorer
                     if (world[_playerX + 1, _playerY + i] == CellType.Asteroid)
                     {
                         inventory.AddItem(2, random.Next(2, 7), true);
-                        inventory.AddItem(3, random.Next(0, 4), true);
-                        inventory.AddItem(4, random.Next(0, 5), true);
+                        inventory.AddItem(3, random.Next(1, 5), true);
+                        inventory.AddItem(4, random.Next(2, 6), true);
                         inventory.AddItem(5, random.Next(5, 12), true);
                         inventory.AddItem(9, random.Next(0, 3), true);
                         counter++;
@@ -590,7 +603,7 @@ namespace Cosmic_Explorer
             }
             Console.WriteLine("Du hast " + counter + " Asteroiden Abgebaut und insgesammt folgendes erhalten:");
             Console.WriteLine("Asteroiden Stücke: "+inventory.asteroid_pieces);
-            Console.WriteLine("Asteroiden Stücke: "+inventory.asteroid_dust);
+            Console.WriteLine("Asteroiden Staub: "+inventory.asteroid_dust);
             Console.WriteLine("Gold Erz: " + inventory.gold_ore);
             Console.WriteLine("Eisen Erz: "+inventory.iron_ore);
             Console.WriteLine("Kupfer Erz: " + inventory.copper_ore);
@@ -604,6 +617,7 @@ namespace Cosmic_Explorer
                 {
                     if (world[_playerX + i,_playerY + j] == CellType.HannaNPC)
                     {
+                        logbuch[0] = $"Hanna ist bei: X: {_playerX + i}, Y: {_playerY + j}";
                         Console.WriteLine("Du hast verbindung zu hanna aufgenommen");
                         hanna.NPCStartHanna();
                         return;
@@ -612,6 +626,7 @@ namespace Cosmic_Explorer
                     {
                         if(supplier.state == 0)
                         {
+                            logbuch[2] = $"Der Lieferant ist bei: X: {_playerX + i}, Y: {_playerY + j}";
                             Console.WriteLine("Du hast verbindung zum Lieferanten aufgenommen");
                             supplier.NPCStartSupplier();
                             inventory.AddItem(11, 2, false);
@@ -625,6 +640,7 @@ namespace Cosmic_Explorer
                     }
                     if (world[_playerX + i, _playerY + j] == CellType.LeaNPC)
                     {
+                        logbuch[1] = $"Lea ist bei: X: {_playerX + i}, Y: {_playerY + j}";
                         Console.WriteLine("Du hast verbindung zu Lea aufgenommen");
                         lea.NPCStartLea();
                         return;

@@ -15,7 +15,8 @@ namespace Cosmic_Explorer
         private Activities actions;
         private PassivSystem passiv;
         private Science science;
-        public void InvInit(SpaceShuttle shuttle, Space space, Activities action, Game games, World world, PassivSystem systems, Science science)
+        private QuestSystem quest;
+        public void InvInit(SpaceShuttle shuttle, Space space, Activities action, Game games, World world, PassivSystem systems, Science science, QuestSystem quest)
         {
             this.game = games;
             this.shuttle = shuttle;
@@ -24,6 +25,7 @@ namespace Cosmic_Explorer
             this.world = world;
             this.passiv = systems;
             this.science = science;
+            this.quest = quest;
             game.inv = true;
             if (game.debug)
             {
@@ -179,20 +181,78 @@ namespace Cosmic_Explorer
                     {
                         case "1":
                             Console.WriteLine("Welches Item wills du schmelzen? Restliche Kohle: " + itemIndex[8]);
-                            Console.WriteLine(ItemIndex.ItemName(3) + ": " + itemIndex[3] + ", ID: 03");
-                            Console.WriteLine(ItemIndex.ItemName(4) + ": " + itemIndex[4] + ", ID: 04");
                             if (science.progress[2] == 3)
                             {
-                                Console.WriteLine(ItemIndex.ItemName(5) + ": " + itemIndex[5] + ", ID: 05");
+                                Console.WriteLine(ItemIndex.ItemName(2) + ": " + itemIndex[2] + ", ID: 02");
                             }
+                            Console.WriteLine(ItemIndex.ItemName(3) + ": " + itemIndex[3] + ", ID: 03");
+                            Console.WriteLine(ItemIndex.ItemName(4) + ": " + itemIndex[4] + ", ID: 04");
                             Console.WriteLine(ItemIndex.ItemName(9) + ": " + itemIndex[9] + ", ID: 09");
+                            if (quest.QState[3] == 3)
+                            {
+                                Console.WriteLine(ItemIndex.ItemName(13) + ": " + itemIndex[13] + ", ID: 13");
+                            }
                             while (true)
                             {
                                 Console.ForegroundColor = ConsoleColor.White;
                                 Console.Write("Eingabe:");
                                 Console.ResetColor();
                                 message = Console.ReadLine().Trim();
-                                if(message == "03")
+                                if (message == "02" && game._save[11] == 1)
+                                {
+                                    bool isFinishedAsteroidPiece = false;
+                                    while (!isFinishedAsteroidPiece)
+                                    {
+                                        Console.WriteLine("Wieviele Erze möchtest du herstellen? (Es werden immer 20 Asteroiden stücke benötigt)");
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        Console.Write("Eingabe:");
+                                        Console.ResetColor();
+                                        try
+                                        {
+                                            message = Console.ReadLine().Trim().ToLower();
+                                            if (message == "exit")
+                                            {
+                                                break;
+                                            }
+                                            int x = Convert.ToInt32(message);
+                                            int y = x;
+                                            x *= 20;
+                                            if (itemIndex[2] >= x)
+                                            {
+                                                if (itemIndex[8] >= y)
+                                                {
+                                                    Random random = new Random();
+                                                    AddItem(3, random.Next(0, 3), true);
+                                                    AddItem(4, random.Next(0, 5), true);
+                                                    AddItem(9, random.Next(0, 2), true);
+                                                    RemoveItem(2, x, false);
+                                                    RemoveItem(8, y, false);
+                                                    Console.WriteLine("Du hast erhalten:");
+                                                    Console.WriteLine("Gold Erz: " + gold_ore);
+                                                    Console.WriteLine("Eisen Erz: " + iron_ore);
+                                                    Console.WriteLine("Kupfer Erz: " + copper_ore);
+                                                    Console.WriteLine("Du hast Verbraucht:\n" + ItemIndex.ItemName(2) + " " + x + "\n" + ItemIndex.ItemName(8) + " " + y);
+                                                    isFinishedAsteroidPiece = true;
+                                                }
+                                                else
+                                                {
+                                                    Console.WriteLine("Nicht genügend Kohle!");
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("Nicht genügend Asteroiden Stücke!");
+                                            }
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            Console.WriteLine(e.Message);
+                                            Console.WriteLine("Versuch es nochmal!");
+                                        }
+                                    }
+                                    break;
+                                }
+                                else if (message == "03")
                                 {
                                     bool isFinishedIron = false;
                                     while (!isFinishedIron)
@@ -209,8 +269,8 @@ namespace Cosmic_Explorer
                                                 break;
                                             }
                                             int x = Convert.ToInt32(message);
-                                            int y = x;
-                                            x *= 5;
+                                            int y = x; // Die Kohle Menge
+                                            x *= 5; // Die Menge an Eisenerz die benötigt wird
                                             if (itemIndex[3] >= x)
                                             {
                                                 if (itemIndex[8] >= y)
@@ -289,60 +349,6 @@ namespace Cosmic_Explorer
                                     break;
 
                                 }
-                                else if (message == "05" && game._save[11] == 1)
-                                {
-                                    bool isFinishedAsteroidPiece = false;
-                                    while (!isFinishedAsteroidPiece)
-                                    {
-                                        Console.WriteLine("Wieviele Erze möchtest du herstellen? (Es werden immer 20 Asteroiden stücke benötigt)");
-                                        Console.ForegroundColor = ConsoleColor.White;
-                                        Console.Write("Eingabe:");
-                                        Console.ResetColor();
-                                        try
-                                        {
-                                            message = Console.ReadLine().Trim().ToLower();
-                                            if (message == "exit")
-                                            {
-                                                break;
-                                            }
-                                            int x = Convert.ToInt32(message);
-                                            int y = x;
-                                            x *= 20;
-                                            if (itemIndex[5] >= x)
-                                            {
-                                                if (itemIndex[8] >= y)
-                                                {
-                                                    Random random = new Random();
-                                                    AddItem(3, random.Next(0, 3), true);
-                                                    AddItem(4, random.Next(0, 5), true);
-                                                    AddItem(9, random.Next(0, 2), true);
-                                                    RemoveItem(2, x, false);
-                                                    RemoveItem(8, y, false);
-                                                    Console.WriteLine("Du hast erhalten:");
-                                                    Console.WriteLine("Gold Erz: " + gold_ore);
-                                                    Console.WriteLine("Eisen Erz: " + iron_ore);
-                                                    Console.WriteLine("Kupfer Erz: " + copper_ore);
-                                                    Console.WriteLine("Du hast Verbraucht:\n" + ItemIndex.ItemName(2) + " " + x + "\n" + ItemIndex.ItemName(8) + " " + y);
-                                                    isFinishedAsteroidPiece = true;
-                                                }
-                                                else
-                                                {
-                                                    Console.WriteLine("Nicht genügend Kohle!");
-                                                }
-                                            }
-                                            else
-                                            {
-                                                Console.WriteLine("Nicht genügend Asteroiden Stücke!");
-                                            }
-                                        }
-                                        catch (Exception e)
-                                        {
-                                            Console.WriteLine(e.Message);
-                                            Console.WriteLine("Versuch es nochmal!");
-                                        }
-                                    }
-                                    break;
-                                }
                                 else if (message == "09")
                                 {
                                     bool isFinishedGold = false;
@@ -381,6 +387,63 @@ namespace Cosmic_Explorer
                                             else
                                             {
                                                 Console.WriteLine("Nicht genügend Gold Erz!");
+                                            }
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            Console.WriteLine(e.Message);
+                                            Console.WriteLine("Versuch es nochmal!");
+                                        }
+                                    }
+                                    break;
+                                }
+                                else if (message == "13" && quest.QState[3] == 3)
+                                {
+                                    bool isFinishedLegierung = false;
+                                    while (!isFinishedLegierung)
+                                    {
+                                        Console.WriteLine("Wieviele Experiemente Legierungen möchtest du herstellen?\n(Eine Experiementelle Legierung Braucht: 1 Eisenbarren, 3 Kupferbarren und 1 Kohle)");
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        Console.Write("Eingabe:");
+                                        Console.ResetColor();
+                                        try
+                                        {
+                                            message = Console.ReadLine().Trim().ToLower();
+                                            if (message == "exit")
+                                            {
+                                                break;
+                                            }
+                                            int x = Convert.ToInt32(message);
+                                            int y = x; // Die Kohle Menge die benötigt wird
+                                            int z = x; // Die Menge an Eisenbarren die benötigt wird
+                                            x *= 3; // Die Menge an Kupferbarren die benötigt wird
+                                            if (itemIndex[7] >= x)
+                                            {
+                                                if (itemIndex[6] >= z)
+                                                {
+                                                    if (itemIndex[8] >= y)
+                                                    {
+                                                        RemoveItem(7, x, false);
+                                                        RemoveItem(6, z, false);
+                                                        RemoveItem(8, y, false);
+                                                        Console.WriteLine("Du hast " + y + " " + ItemIndex.ItemName(13) + " hergestellt!");
+                                                        Console.WriteLine("Du hast Verbraucht:\n" + ItemIndex.ItemName(7) + " " + x + "\n" + ItemIndex.ItemName(6) + " " + z + "\n" + ItemIndex.ItemName(8) + " " + y);
+                                                        AddItem(13, y, false);
+                                                        isFinishedLegierung = true;
+                                                    }
+                                                    else
+                                                    {
+                                                        Console.WriteLine("Nicht genügend Kohle!");
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    Console.WriteLine("Nicht genügend Eisenbarren!");
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("Nicht genügend Kupferbarren!");
                                             }
                                         }
                                         catch (Exception e)
@@ -514,6 +577,10 @@ namespace Cosmic_Explorer
                 {
                     itemIndex[12] += amount;
                 }
+                if (ItemID == 13)
+                {
+                    itemIndex[13] += amount;
+                }
             }
         }
         public void RemoveItem(int ItemID, int amount, bool count)
@@ -590,6 +657,10 @@ namespace Cosmic_Explorer
                 if (ItemID == 12)
                 {
                     itemIndex[12] -= amount;
+                }
+                if (ItemID == 13)
+                {
+                    itemIndex[13] -= amount;
                 }
             }
         }
