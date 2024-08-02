@@ -61,9 +61,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\Cosmic Explorer.csproj",
-      "projectName": "Cosmic Explorer",
-      "projectPath": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\Cosmic Explorer.csproj",
+      "projectUniqueName": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer.csproj",
+      "projectName": "CosmicExplorer",
+      "projectPath": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer.csproj",
       "packagesPath": "C:\\Users\\leonw\\.nuget\\packages\\",
       "outputPath": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\obj\\",
       "projectStyle": "PackageReference",

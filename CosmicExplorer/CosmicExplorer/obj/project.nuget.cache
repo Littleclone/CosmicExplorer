@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "PSNx6QSBnqE=",
+  "dgSpecHash": "16L6qqseqnE=",
   "success": true,
-  "projectFilePath": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\Cosmic Explorer.csproj",
+  "projectFilePath": "E:\\Dev\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer\\CosmicExplorer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\leonw\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
   ],

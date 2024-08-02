@@ -11,12 +11,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("Cosmic Explorer")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("CosmicExplorer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f6012aad29a9cda5451c355216e24a822819584e")]
-[assembly: System.Reflection.AssemblyProductAttribute("Cosmic Explorer")]
-[assembly: System.Reflection.AssemblyTitleAttribute("Cosmic Explorer")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1a7db96efdfedc164ec0efab03a05ea82e27465d")]
+[assembly: System.Reflection.AssemblyProductAttribute("CosmicExplorer")]
+[assembly: System.Reflection.AssemblyTitleAttribute("CosmicExplorer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Von der MSBuild WriteCodeFragment-Klasse generiert.
