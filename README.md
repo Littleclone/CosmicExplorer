@@ -7,7 +7,7 @@ Willkommen zu **Cosmic Explorer**! Ein Textspiel, das im Weltraum spielt und vol
 ## Gameplay
 
 - **Textbasiert**: Das Spiel ist rein textbasiert. Du wirst durch Texte geführt und musst Befehle eingeben, um voranzukommen.
-- **Tag- und Energiesystem**: Es gibt ein Tag-System und ein Energiesystem, das beeinflusst, wie viele Aktionen du an einem Tag durchführen kannst. Die Energie und Zeit sind wichtig, da alle Aktionen Energie verbrauchen und wenn du keine Energie mehr hast kannst du keine (bzw. nur sehr wenige) aktionen ausführen, sollte die Zeit 22 Uhr oder später sein gehst du Automatisch Schlafen.
+- **Tag- und Energiesystem**: Es gibt ein Tag-System und ein Energiesystem, das beeinflusst, wie viele Aktionen du an einem Tag durchführen kannst. Die Energie und Zeit sind wichtig, da alle Aktionen Energie verbrauchen und wenn du keine Energie mehr hast kannst du keine (bzw. nur sehr wenige) aktionen ausführen, sollte die Zeit 23 Uhr oder später sein gehst du Automatisch Schlafen.
 - **Speicherung**: Das Spiel speichert immer, wenn ein neuer Tag beginnt. Achte darauf, regelmäßig ins Bett zu gehen, um deinen Fortschritt zu speichern. (Du wirst immer benachrichtig wenn es gespeichert hat oder Spielstände geladen hat)
 - **Kommandozentrale**: In der Kommandozentrale kannst du Befehle eingeben und die verfügbaren Befehle mit `help` einsehen. Das System besteht aus passiven und aktiven Aktionen, die du verwalten kannst.
 
