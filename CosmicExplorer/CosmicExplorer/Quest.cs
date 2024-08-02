@@ -4,6 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//Copyright 2024 Littleclone
+
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+
+//       http://www.apache.org/licenses/LICENSE-2.0
+
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
+
 namespace Cosmic_Explorer
 {
     public class Quest
@@ -23,7 +37,7 @@ namespace Cosmic_Explorer
             }
         }
         string message = "error";
-        public string QuestInfos(int QuestID, sbyte[] state)
+        public string QuestInfos(int QuestID, sbyte[] state) // Hier wird die Quest beschreibung festgelegt
         {
             if(QuestID == 1)
             {
@@ -103,7 +117,7 @@ namespace Cosmic_Explorer
             }
             return message = "QuestID not found";
         }
-        public void QuestGoal(int QuestID, sbyte counter)
+        public void QuestGoal(int QuestID, sbyte counter) // Hier wird das Ziel der Quest festgelegt... hin und wieder mal :O
         {
             if(QuestID == 1)
             {

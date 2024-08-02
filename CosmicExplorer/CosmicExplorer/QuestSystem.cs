@@ -4,6 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//Copyright 2024 Littleclone
+
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+
+//       http://www.apache.org/licenses/LICENSE-2.0
+
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
+
 namespace Cosmic_Explorer
 {
     public class QuestSystem
@@ -41,15 +55,15 @@ namespace Cosmic_Explorer
         }
         public sbyte[] QState = new sbyte[100]; //Saved the Progress / State from the Quest
         public string message = "error";
-        public uint x;
-        public uint y;
+        public uint x; // Player Position X
+        public uint y; // Player Position Y
         public void ResetVar()
         {
             x = 0;
             y = 0;
             Array.Fill<sbyte>(QState, 0);
         }
-        public void Quest()
+        public void Quest() // Hier werden die Quests angezeigt bei der Kommando Console
         {
             for (int i = 1; i < 69; i++)
             {
@@ -74,11 +88,11 @@ namespace Cosmic_Explorer
             Console.WriteLine("----------------");
         }
         //Updated the Quest Progress / State
-        public void QuestSystemUpdate()
+        public void QuestSystemUpdate() // Hier wird die Quest überprüft und geupdatet
         {
-            for (int index = 0; index < 69; index++)
+            for (int index = 0; index < 69; index++) // Wird irgendwann verändert
             {
-                if (QState[index] != 0 && QState[index] != 15)
+                if (QState[index] != 0 && QState[index] != 15) // Macht so das nur Quests angezeigt werden die schon begonnen sind
                 {
                     quest.QuestGoal(index, QState[index]);
                     //World

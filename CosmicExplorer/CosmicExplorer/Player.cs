@@ -5,16 +5,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//Copyright 2024 Littleclone
+
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+
+//       http://www.apache.org/licenses/LICENSE-2.0
+
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
+
 namespace Cosmic_Explorer
 {
     public class Player
     {
-        public int health = 100;
-        public int hunger = 100;
-        public int thirst = 100;
-        public int oxygen = 100;
-        public long gold = 1000;
-        public bool isDeath = false;
+        public int health = 100; // Die Player Leben
+        public int hunger = 100; // Der Player Hunger
+        public int thirst = 100; // Der Player Durst
+        public int oxygen = 100; // Der Player Sauerstoff
+        public long gold = 1000; // Das Player Gold
+        public bool isDeath = false; // Ist der Player Tod?
         Random random = new Random();
         private Game game;
         public void ObjInit(Game game)
@@ -45,14 +59,14 @@ namespace Cosmic_Explorer
         {
             gold -= amount;
         }
-        public void EasyActions()
+        public void EasyActions() // Für alle Aktionen die nur leichte Körperliche Aktivität haben
         {
             hunger -= random.Next(0, 5);
             thirst -= random.Next(1, 8);
             oxygen -= random.Next(3, 5);
             OxygenCalculations();
         }
-        public void MediumActions()
+        public void MediumActions() // Für alle Aktionen die mittlere Körperliche Aktivität haben
         {
             {
                 hunger -= random.Next(8, 15);
@@ -61,7 +75,7 @@ namespace Cosmic_Explorer
                 OxygenCalculations();
             }
         }
-        public void HardActions()
+        public void HardActions() // Für alle Aktionen die schwere Körperliche Aktivität haben
         {
             {
                 hunger -= random.Next(17, 23);
@@ -70,7 +84,7 @@ namespace Cosmic_Explorer
                 OxygenCalculations();
             }
         }
-        public void OxygenCalculations()
+        public void OxygenCalculations() // Berechnet anhand des Sauerstoffs den Lebensverlust und den Tod
         {
             if(oxygen > 40)
             {

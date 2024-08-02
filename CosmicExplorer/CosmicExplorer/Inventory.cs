@@ -4,6 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//Copyright 2024 Littleclone
+
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+
+//       http://www.apache.org/licenses/LICENSE-2.0
+
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
+
 namespace Cosmic_Explorer
 {
     public class Inventory
@@ -194,6 +208,8 @@ namespace Cosmic_Explorer
                             }
                             while (true)
                             {
+                                // Bei jeder ID wird überprüft ob genügend Ressourcen vorhanden sind, wenn ja wird das Item hinzugefügt und die Ressourcen entfernt
+                                // Bei "03" ist es etwas detailierter beschrieben was da passiert mit Kommentaren
                                 Console.ForegroundColor = ConsoleColor.White;
                                 Console.Write("Eingabe:");
                                 Console.ResetColor();
@@ -215,8 +231,8 @@ namespace Cosmic_Explorer
                                                 break;
                                             }
                                             int x = Convert.ToInt32(message);
-                                            int y = x;
-                                            x *= 20;
+                                            int y = x; // Die Erze die Random erstellt werden
+                                            x *= 20; // Die Menge an Asteroiden Stücke die benötigt wird
                                             if (itemIndex[2] >= x)
                                             {
                                                 if (itemIndex[8] >= y)
@@ -269,17 +285,17 @@ namespace Cosmic_Explorer
                                                 break;
                                             }
                                             int x = Convert.ToInt32(message);
-                                            int y = x; // Die Kohle Menge
+                                            int y = x; // Die Kohle Menge die benötigt wird
                                             x *= 5; // Die Menge an Eisenerz die benötigt wird
-                                            if (itemIndex[3] >= x)
+                                            if (itemIndex[3] >= x) // Schaut ob genügend Eisen Erz vorhanden ist
                                             {
-                                                if (itemIndex[8] >= y)
+                                                if (itemIndex[8] >= y) // Schaut ob genügend Kohle vorhanden ist
                                                 {
-                                                    RemoveItem(3, x, false);
-                                                    RemoveItem(8, y, false);
+                                                    RemoveItem(3, x, false); // Entfernt die Menge an Eisen Erz
+                                                    RemoveItem(8, y, false); // Entfernt die Menge an Kohle
                                                     Console.WriteLine("Du hast " + y + " " + ItemIndex.ItemName(6) + " hergestellt!");
                                                     Console.WriteLine("Du hast Verbraucht:\n" + ItemIndex.ItemName(3) + " " + x + "\n" + ItemIndex.ItemName(8) + " " + y);
-                                                    AddItem(6, y, false);
+                                                    AddItem(6, y, false); // Fügt die Menge an Eisenbarren hinzu
                                                     isFinishedIron = true;
                                                 }
                                                 else
@@ -299,7 +315,7 @@ namespace Cosmic_Explorer
                                         }
                                     }
                                     break;
-                                }
+                                } // Hier kannst du nachschauen wie es genau verläuft, so ähnlich ist es auch bei den anderen.
                                 else if(message == "04")
                                 {
                                     bool isFinishedCopper = false;
@@ -317,8 +333,8 @@ namespace Cosmic_Explorer
                                                 break;
                                             }
                                             int x = Convert.ToInt32(message);
-                                            int y = x;
-                                            x *= 5;
+                                            int y = x; // Die Kohle Menge die benötigt wird
+                                            x *= 5; // Die Menge an Kupfererz die benötigt wird
                                             if (itemIndex[4] >= x)
                                             {
                                                 if (itemIndex[8] >= y)
@@ -366,8 +382,8 @@ namespace Cosmic_Explorer
                                                 break;
                                             }
                                             int x = Convert.ToInt32(message);
-                                            int y = x;
-                                            x *= 5;
+                                            int y = x; // Die Kohle Menge die benötigt wird
+                                            x *= 5; // Die Menge an Gold Erz die benötigt wird
                                             if (itemIndex[9] >= x)
                                             {
                                                 if (itemIndex[8] >= y)
@@ -472,8 +488,9 @@ namespace Cosmic_Explorer
                 }
             }
         }
+
         public int[] itemIndex = new int[100]; //array to save the Items
-        //Need a rework in the future!!!
+        //Need a rework in the future!!! Ist dafür da um anzuzeigen (wenn aktiv) wie viele Items man erhalten hat
         public int petrol = 0;
         public int asteroid_pieces = 0;
         public int asteroid_dust = 0;
@@ -484,9 +501,9 @@ namespace Cosmic_Explorer
         public int coal = 0;
         public int gold_ore = 0;
         public int gold_ingot = 0;
-        public void PlayerInventory()
+        public void PlayerInventory() // Zeigt das Inventar des Spielers an
         {
-            for (int i = 1; i <= 10; i++)
+            for (int i = 1; i <= 20; i++)
             {
                 if(ItemIndex.IsValid(i))
                 {
@@ -502,7 +519,7 @@ namespace Cosmic_Explorer
                 }
             }
         }
-        public void AddItem(int ItemID, int amount, bool count)
+        public void AddItem(int ItemID, int amount, bool count) // Fügt Items in das Inventar hinzu
         {
             if(ItemIndex.IsValid(ItemID))
             {
@@ -583,7 +600,7 @@ namespace Cosmic_Explorer
                 }
             }
         }
-        public void RemoveItem(int ItemID, int amount, bool count)
+        public void RemoveItem(int ItemID, int amount, bool count) // Entfernt Items aus dem Inventar
         {
             if (ItemIndex.IsValid(ItemID))
             {

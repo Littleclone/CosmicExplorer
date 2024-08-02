@@ -1,6 +1,20 @@
 ﻿using CosmicExplorer;
 using System;
 
+//Copyright 2024 Littleclone
+
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+
+//       http://www.apache.org/licenses/LICENSE-2.0
+
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
+
 namespace Cosmic_Explorer
 {
     class Program
@@ -8,16 +22,17 @@ namespace Cosmic_Explorer
         static void Main(string[] args)
         {
             Game game = new Game();
-            DataManager.Init(game);
-            while (true)
+            DataManager.Init(game); // Dies stellt sicher das die Debug Informationen in der Console angezeigt werden wenn Aktiviert (Beispiel bei Laden oder Löschen von Dateien)
+            while (true) //Stellt sicher das das Game nicht auf einmal beendet wird (Lässt sich dann nur mit dem Exit befehl im Hauptmenü oder Alt+F4 beenden)
             {
-                game.Start();
+                game.Start(); // Startet das Spiel
                 Console.WriteLine("Debug-Error[Main Function]"); //Wird ausgelöst wenn aus irgeindein grund das program wieder zur Main Function kommt (Sollte im normalfall nicht passieren)
             }
         }
     }
     public class Game
     {
+        // Objekte die das Spiel braucht und auch die anderen Objekte, wird hier gemacht damit die Objekte nicht immer wieder neu erstellt werden und überall weiter gegeben werden können.
         World world = new World();
         SpaceShuttle shuttle = new SpaceShuttle();
         Space space = new Space();
@@ -30,26 +45,26 @@ namespace Cosmic_Explorer
         Player player = new Player();
         Science science = new Science();
         Trade trade = new Trade();
-        NPC hanna = new NPC("Hanna", -1, "0", "0");
-        NPC gfi = new NPC("GFI", 1, "0", "0");
-        NPC lea = new NPC("Lea", 2, "01020304050607080910", "020304050607080910");
-        NPC supplier = new NPC("The Supplier", 3, "0", "0");
+        NPC hanna = new NPC("Hanna", -1, "0", "0"); //Ein Debug NPC (Wenn ich sachen Testen will im Dev Mode)
+        NPC gfi = new NPC("GFI", 1, "0", "0"); // Das Galaktische Forschungsinstitut
+        NPC lea = new NPC("Lea", 2, "01020304050607080910", "020304050607080910"); // Ein Händler NPC, die letzten zwei werte geben an was der NPC verkauft und kauft (Siehe wenn du es mehr verstehen willst die NPC und dazugehörig Trade File an)
+        NPC supplier = new NPC("The Supplier", 3, "0", "0"); // Ein Lieferant NPC, derzeit nur für die Quests benötigt
         ulong CurrentDay = 0; //Start Tag
-        public ulong DayCounter = 0; //Zählt die Tage bis 30
+        public ulong DayCounter = 0; //Zählt die Tage bis 30, wird genutzt für das Gehalt
         public int[] _save = new int[300]; //Space um werte zu speichern (Für abfragen)
         string message = string.Empty;
         //Flags
         public bool debug = false; //Flag for Debug Mode, this show some information and processes happened in the background (for public)
-        public bool dev = true; //Flag for Dev Mode (not for Public)
-        public bool hardCore = false; //Flag if the mode is harcore
+        public bool dev = false; //Flag for Dev Mode (not for Public)
+        public bool hardCore = false; //Flag if the game is in Hardcore Mode
         //Kontroll Variablen
-        bool init_Objects = false;
-        bool isWorld = false;
-        bool needSave = false;
-        public bool newGame = true;
-        public bool currentSession = false;
-        const int BREAKER = 1;
-        //Error Variablen
+        bool init_Objects = false; // Schaut ob die Objekte schon initialisiert wurden
+        bool isWorld = false; // Schaut ob die Welt schon generiert wurde
+        bool needSave = false; // Schaut ob das Spiel gespeichert werden muss, wird erst aktiviert wenn der Tag 2 startet (Heißt erst wenn der Tag 1 vorbei ist)
+        public bool newGame = true; // Schaut ob ein neues Spiel gestartet wird, wird beim Laden einer File auf false gesetzt womit das Laden aller restlichen Daten startet
+        public bool currentSession = false; // Schaut ob das Spiel läuft bzw. ob man schon ein Spiel in dieser Session gestartet hat
+        const int BREAKER = 1; //Breaker für die Save File
+        //Error Variablen, lösen ein Sicherheitsmenü aus wenn einer der Werte auf true gesetzt wird (außer bei den Objekten, da wird geschaut obs False ist)
         public bool fileManipulation = false;
         bool failedToSave = false;
         public bool failedToSaveWorld = false;
@@ -68,6 +83,7 @@ namespace Cosmic_Explorer
         public bool worldInit = false;
         public bool npcHanna = false;
         public bool npcLea = false;
+
         public void Start()
         {
             while (true)
@@ -82,7 +98,10 @@ namespace Cosmic_Explorer
                 Console.WriteLine("Cosmic Explorer");
                 Console.WriteLine("Guten Tag, das ist Cosmic Explorer, ein Text Basiertes Weltraum Spiel\nDieses Text Game befindet sich in der Testphase und wird noch Entwickelt von mir um mehr C# zu lernen.");
                 Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("Game Version: 0.2.2 Dev Phase, Deutsch / German");
+                Console.WriteLine("Game Version: 0.2.3 Dev Phase, Deutsch / German");
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.WriteLine("Github Repo: https://github.com/Littleclone/CosmicExplorer (STR + Click auf den Link zum Öffnen)");
+                Console.WriteLine("Copyright 2024 Littleclone, für mehr Infos gib: lizenz ein");
                 Console.ResetColor();
                 Console.WriteLine("Willst du starten? [start = Starte das spiel, exit = Verlasse das Spiel, new game = löscht deine Save File]");
                 Console.ForegroundColor = ConsoleColor.White;
@@ -150,6 +169,22 @@ namespace Cosmic_Explorer
                     case "exit debug":
                         debug = false;
                         continue;
+                    case "lizenz":
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Copyright 2024 Littleclone" +
+                            "\nLicensed under the Apache License, Version 2.0 (the \"License\");" +
+                            "\nyou may not use this file except in compliance with the License." +
+                            "\nYou may obtain a copy of the License at" +
+                            "\nhttp://www.apache.org/licenses/LICENSE-2.0" +
+                            "\nUnless required by applicable law or agreed to in writing, software" +
+                            "\ndistributed under the License is distributed on an \"AS IS\" BASIS," +
+                            "\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied." +
+                            "\nSee the License for the specific language governing permissions and" +
+                            "\nlimitations under the License.");
+                        Console.ForegroundColor = ConsoleColor.DarkCyan;
+                        Console.WriteLine("\nMeine Github Repo: https://github.com/Littleclone/CosmicExplorer (STR + Click auf den Link zum Öffnen)\n");
+                        Console.ResetColor();
+                        continue;
                     default:
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Entscheide dich für eines der drei möglichkeiten!\n");
@@ -159,7 +194,7 @@ namespace Cosmic_Explorer
         }
         public void LoadSaveFile()
         {
-            if (!currentSession)
+            if (!currentSession) // Nicht verändern, außer du weißt was du tust, dies ist da um zu verhindern das versucht wird eine File zu laden wenn es noch keine SaveFiles gibt
             {
                 try
                 {
@@ -191,7 +226,7 @@ namespace Cosmic_Explorer
                     failedToLoad = true;
                 }
             }
-            if (!newGame && !currentSession)
+            if (!newGame && !currentSession) // Lädt alle anderen werte wenn es kein neues Spiel ist
             {
                 try
                 {
@@ -328,7 +363,7 @@ namespace Cosmic_Explorer
         }
         private void initObjekts()
         {
-            //Erstmalige generierung der Welt und zuweisung von Objekten
+            //Erstmalige zuweisung von Objekten
             if (init_Objects == false)
             {
                 init_Objects = true;
@@ -353,6 +388,7 @@ namespace Cosmic_Explorer
         }
         private void introduction()
         {
+            // Hier ist eine art Tutorial mit den Spiel Mechaniken und der Story
             if (_save[0] == 0)
             {
                 _save[0] = 1;
@@ -434,9 +470,9 @@ namespace Cosmic_Explorer
                 //automatische Speicherung wenn der Nächste Tag Startet (erst wenn das Spiel Tag 2 Startet)
                 if (_save[1] == BREAKER && needSave)
                 {
-                    DataManager.BackupSaveFiles();
-                    SaveData();
-                    ErrorHandling();
+                    DataManager.BackupSaveFiles(); // Macht aus den alten Save Files ein Backup
+                    SaveData(); //Speichert die Daten
+                    ErrorHandling(); //Schaut ob es Fehler gab und gibt ein Sicherheitsmenü aus wenn es welche gab
                 }
                 //Sollte bereits ein spielstand existieren muss die Welt nicht nochmal generiert werden.
                 if (isWorld != WorldBREAKER)
@@ -454,10 +490,9 @@ namespace Cosmic_Explorer
                     DayCounter = 0;
                     player.AddGold(1500);
                     Console.ForegroundColor = ConsoleColor.Cyan;
-                    Console.WriteLine("Du hast ein Gehalt von 1500 Gold bekommen.");
+                    Console.WriteLine("Du hast ein Gehalt von 1500 Gold bekommen von der GFI.");
                     Console.ResetColor();
                 }
-                gfi.state = 2;
                 shuttle.Bedroom(6);
             }
             else
@@ -467,13 +502,13 @@ namespace Cosmic_Explorer
         }
         private void ResetVar()
         {
-            //Setz alle Variablen hier auf ihre standartwert wie oben initialisiert
+            //Setz alle Variablen hier auf ihre standartwert wie oben initialisiert (Wird genutzt wenn du ein neues Spiel startest, aber schon vorher mit einem alten Spielstand gespielt hast)
             CurrentDay = 0;
             DayCounter = 0;
             Array.Fill(_save, 0);
             //Flags
             debug = false;
-            dev = true;
+            dev = false;
             hardCore = false;
             //Kontroll Variablen
             //init_Objects = false;
@@ -488,7 +523,7 @@ namespace Cosmic_Explorer
             failedToLoad = false;
             failedToLoadWorld = false;
         }
-        public void ErrorHandling()
+        public void ErrorHandling() //Sicherheitsmenü für Fehler
         {
             if (failedToSave)
             {

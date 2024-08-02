@@ -5,9 +5,23 @@ using System.Text;
 using System.Threading.Tasks;
 using Cosmic_Explorer;
 
+//Copyright 2024 Littleclone
+
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+
+//       http://www.apache.org/licenses/LICENSE-2.0
+
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
 
 namespace Cosmic_Explorer
 {
+    // Derzeit nicht genutzt, wird aber später eine Funktion kriegen.
     public class Activities
     {
         private World world;
@@ -61,7 +75,7 @@ namespace Cosmic_Explorer
                 Console.ResetColor();
             }
         }
-        //Wird aufgerufen wenn eine Aktion gemacht wird um die Passiv System auszuführen
+        //Wird aufgerufen wenn eine Aktion gemacht wird um die Passiven Systeme auszuführen
         public void ActionMaked()
         {
             if(game.debug)
@@ -88,7 +102,9 @@ namespace Cosmic_Explorer
             {
                 if(shuttle.Energy !< 5)
                 {
-                    Console.WriteLine("Test");
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.WriteLine("Es gibt zu wenig energie um das Sonar auszuführen!");
+                    Console.ResetColor();
                     return;
                 }
                 Console.WriteLine("Passiv System 'Sonar' is triggered");

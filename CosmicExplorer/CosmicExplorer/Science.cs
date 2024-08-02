@@ -4,6 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//Copyright 2024 Littleclone
+
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+
+//       http://www.apache.org/licenses/LICENSE-2.0
+
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
+
 namespace Cosmic_Explorer
 {
     public class Science
@@ -102,7 +116,7 @@ namespace Cosmic_Explorer
                 game.NewDayStart(shuttle.currentTime);
                 Console.WriteLine("Du bist bei deinem Equipment, was willst du nutzen? [Uhrzeit: " + shuttle.currentTime + ":00]");
                 Console.WriteLine("Nutz dein Mikroskop.[1]");
-                Console.WriteLine("Geh zurück[4]");
+                Console.WriteLine("Geh zurück[2]");
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("Eingabe:");
                 Console.ResetColor();
