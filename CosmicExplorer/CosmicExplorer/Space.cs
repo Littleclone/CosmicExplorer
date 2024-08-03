@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 //Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
-//   You may obtain a copy of the License at
+//You may obtain a copy of the License at
 
 //       http://www.apache.org/licenses/LICENSE-2.0
 
@@ -54,7 +54,9 @@ namespace Cosmic_Explorer
         public float spaceSuitOxygen = 100f;
         //Shuttle Module
         public int SolarPanelHealth = 100;
-        public int SolarPanelEfficiency = 20;//Percantage. Maybe moved later to a different thing
+        public float SolarPanelEfficiency = 1.2f;//Multiplier for the Solar Panel Energy Add
+        public float SolarPanelEnergyAdd = 10;
+        int lastTime = 6; //Last Time the Solar Panels were used
         public int AntennenHealth = 100;
         public void ResetVar()
         {
@@ -81,7 +83,7 @@ namespace Cosmic_Explorer
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("Eingabe:");
                 Console.ResetColor();
-                message = Console.ReadLine();
+                message = Console.ReadLine().Trim();
                 switch (message)
                 {
                     case "1":
@@ -98,6 +100,7 @@ namespace Cosmic_Explorer
                             shuttle.Health += 5;
                             spaceSuitEnergy -= 10;
                             Console.WriteLine("Shuttle um 5 Lebenspunkte Repariert");
+                            passiv.ActionMaked();
                         }
                         else
                         {
@@ -126,7 +129,7 @@ namespace Cosmic_Explorer
         public void Solar()
         {
             game.NewDayStart(currentTime);
-            Console.WriteLine("Du bist bei den Solar Panelle, was willst du machen? [Uhrzeit: " + currentTime + ":00] | [Restliche Energie im Weltraum Anzug: " + spaceSuitEnergy + "]");
+            Console.WriteLine("Du bist bei den Solar Panellen, was willst du machen? [Uhrzeit: " + currentTime + ":00] | [Restliche Energie im Weltraum Anzug: " + spaceSuitEnergy + "]");
             Console.WriteLine("Die Integrität der Solar Panelle ist bei: " + SolarPanelHealth + "%");
             Console.WriteLine("Zurück zur Tür[1]");
             Console.WriteLine("Zu den Antennen[2]");
@@ -136,7 +139,7 @@ namespace Cosmic_Explorer
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("Eingabe:");
                 Console.ResetColor();
-                message = Console.ReadLine();
+                message = Console.ReadLine().Trim();
                 switch (message)
                 {
                     case "1":
@@ -166,7 +169,7 @@ namespace Cosmic_Explorer
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("Eingabe:");
                 Console.ResetColor();
-                message = Console.ReadLine();
+                message = Console.ReadLine().Trim();
                 switch (message)
                 {
                     case "1":
@@ -182,6 +185,23 @@ namespace Cosmic_Explorer
                         continue;
                 }
             }
+        }
+
+        // Specific Functions
+        public void SolarPanel()
+        {
+            int tempTime = currentTime - lastTime;
+            if (tempTime < 0)
+            {
+                Math.Abs(tempTime);
+            }
+            for (int i = 0; i <= tempTime; i++)
+            {
+                float tempEnergy = SolarPanelEnergyAdd;
+                tempEnergy *= SolarPanelEfficiency;
+                shuttle.Energy += Convert.ToInt32(tempEnergy);
+            }
+            lastTime = currentTime;
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 //Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
-//   You may obtain a copy of the License at
+//You may obtain a copy of the License at
 
 //       http://www.apache.org/licenses/LICENSE-2.0
 
@@ -25,6 +25,8 @@ namespace Cosmic_Explorer
         //canSell ist welche Items der NPC verkaufen kann und canBuy welche Items der NPC kaufen kann (also welche Items der Spieler an den NPC verkaufen kann)
         public void TradeInterfaceSell(string canSell, float discount)
         {
+            // Folgender Abschnitt nimmt sich den canSell und teilt ihn in einzelne 2-stellige Strings auf, die dann in einer Liste gespeichert werden
+            // Dieser String gibt man bei der erstellung des NPC's an, sehe Lea in Program.cs als beispiel an
             int j = 1;
             string x = canSell;
             List<string> canSellList = new List<string>();
@@ -32,8 +34,8 @@ namespace Cosmic_Explorer
             {
                 canSellList.Add(x.Substring(i, Math.Min(2, x.Length - i)));
             }
-            j = Convert.ToInt32(canSellList[0]);
-            foreach (string i in canSellList)
+            j = Convert.ToInt32(canSellList[0]); // Soweit ich mich noch daran erinnere dient das dazu um ein Bug zu beheben, der sonst auftreten würde
+            foreach (string i in canSellList) // Dies und das folgende zeigen dann in der Console die Items an, die der NPC verkaufen kann
             {
                 if (discount > 0)
                 {
@@ -41,7 +43,7 @@ namespace Cosmic_Explorer
                     d *= 100;
                     float z = d - 100;
                     Console.ForegroundColor = ConsoleColor.White;
-                    Console.Write(ItemIndex.ItemName(j) + ": " + Convert.ToInt32(PriceList.BuyPrice(i, discount)) + " Gold," + " ID: " + i);
+                    Console.Write(ItemIndex.ItemName(j) + ": " + Convert.ToInt32(PriceList.BuyPrice(i, discount)) + " Gold," + " ID: " + i + "  ");
                     Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.WriteLine("  " + Math.Abs(z) + "% Rabat");
                     Console.ResetColor();
@@ -62,6 +64,8 @@ namespace Cosmic_Explorer
         }
         public void TradeInterfaceBuy(string canBuy, float extraCharge)
         {
+            // Folgender Abschnitt nimmt sich den canBuy und teilt ihn in einzelne 2-stellige Strings auf, die dann in einer Liste gespeichert werden
+            // Dieser String gibt man bei der erstellung des NPC's an, sehe Lea in Program.cs als beispiel an
             int j = 1;
             string y = canBuy;
             List<string> canBuyList = new List<string>();
@@ -69,8 +73,8 @@ namespace Cosmic_Explorer
             {
                 canBuyList.Add(y.Substring(i, Math.Min(2, y.Length - i)));
             }
-            j = Convert.ToInt32(canBuyList[0]);
-            foreach (string i in canBuyList)
+            j = Convert.ToInt32(canBuyList[0]); // Soweit ich mich noch daran erinnere dient das dazu um ein Bug zu beheben, der sonst auftreten würde
+            foreach (string i in canBuyList) // Dies und das folgende zeigen dann in der Console die Items an, die der NPC kaufen kann
             {
                 if (extraCharge > 0)
                 {

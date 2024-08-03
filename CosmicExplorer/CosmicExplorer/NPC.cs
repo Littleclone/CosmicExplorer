@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Cosmic_Explorer.World;
 
 //Copyright 2024 Littleclone
 
 //Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
-//   You may obtain a copy of the License at
+//You may obtain a copy of the License at
 
 //       http://www.apache.org/licenses/LICENSE-2.0
 
@@ -20,7 +21,7 @@ using System.Threading.Tasks;
 
 namespace Cosmic_Explorer
 {
-    public class NPC
+    public class NPC // Das ganze NPC System ist hier zu finden und wird hier auch bearbeitet
     {
         private QuestSystem qSystem;
         private Game game;
@@ -29,7 +30,8 @@ namespace Cosmic_Explorer
         private Quest quest;
         private Inventory inventory;
         private Player player;
-        public void initObj(QuestSystem qSystem, Game game, Trade trade, Science science, Quest quest, Inventory inv, Player player)
+        private World world;
+        public void initObj(QuestSystem qSystem, Game game, Trade trade, Science science, Quest quest, Inventory inv, Player player, World world)
         {
             this.qSystem = qSystem;
             this.game = game;
@@ -38,6 +40,7 @@ namespace Cosmic_Explorer
             this.quest = quest;
             this.inventory = inv;
             this.player = player;
+            this.world = world;
             if(name == "Hanna")
             {
                 game.npcHanna = true;
@@ -54,7 +57,7 @@ namespace Cosmic_Explorer
         string canBuy;
         string messages;
         string _x;
-        public NPC(string npcName, int NPCID, string npcCanSell, string npcCanBuy) 
+        public NPC(string npcName, int NPCID, string npcCanSell, string npcCanBuy) // Der NPC Konstrucktur
         {
             name = npcName;
             npcID = NPCID;
@@ -66,7 +69,7 @@ namespace Cosmic_Explorer
             state = 0;
         }
         //For the NPC Hanna
-        public void NPCStartHanna()
+        public void NPCStartHanna() // Debug NPC, nur mit Dev Flag true im Spiel
         {
             if(state == 0)
             {
@@ -282,6 +285,32 @@ namespace Cosmic_Explorer
                                     break;
                                 }
                                 continue;
+                            case "location":
+                                while (true)
+                                {
+                                    Console.WriteLine("Welchen NPC willst du finden?");
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    Console.Write("Eingabe:");
+                                    Console.ResetColor();
+                                    messages = Console.ReadLine().Trim().ToLower();
+                                    switch (messages)
+                                    {
+                                        case "lea":
+                                            while (true)
+                                            {
+                                                world.FindCellsByType(CellType.LeaNPC, false);
+                                                break;
+                                            }
+                                            break;
+                                        case "exit":
+                                            break;
+                                        default:
+                                            Console.WriteLine("Nutz einer der Validen NPC Namen");
+                                            continue;
+                                    }
+                                    break;
+                                }
+                                continue;
                             case "exit":
                                 break;
                             default: 
@@ -301,7 +330,7 @@ namespace Cosmic_Explorer
             }
         }
         //For the NPC GFI
-        public void NPCStartGFI()
+        public void NPCStartGFI() // Dein Arbeitgeber
         {
             if (state == 0)
             {
@@ -393,6 +422,20 @@ namespace Cosmic_Explorer
                 qSystem.QState[3] = 5;
                 return;
             }
+            if (state == 5 && qSystem.QState[3] == 6)
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                for (int i = 27; i <= 28; i++)
+                {
+                    Console.WriteLine(StringHandler.NPCMessages(name, npcID, i));
+                    Console.ReadKey();
+                    Console.WriteLine("");
+                }
+                Console.ResetColor();
+                state = 6;
+                qSystem.QState[3] = 7;
+                return;
+            }
             if (state > 0)
             {
                 ulong x = 30;
@@ -417,7 +460,7 @@ namespace Cosmic_Explorer
             }
         } 
         //For the NPC Lea
-        public void NPCStartLea()
+        public void NPCStartLea() // Deine beste Freundin und Händlerin
         {
             if (state == 0)
             {
@@ -629,7 +672,7 @@ namespace Cosmic_Explorer
             }
         }
         //For the NPC Supplier
-        public void NPCStartSupplier()
+        public void NPCStartSupplier() // Ein Lieferant des GFI
         {
             if (state == 0)
             {
@@ -661,7 +704,7 @@ namespace Cosmic_Explorer
         //For the NPC...
 
 
-        // Für die Strings die dann Angezeigt werden
+        // Für die Strings die dann Angezeigt werden, für beispiel schau dir den Code von Lea an
         public void TradeString(int x, bool isBuy, bool notEnough)
         {
             if (notEnough)

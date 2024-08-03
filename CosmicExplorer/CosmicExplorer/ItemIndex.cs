@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 //Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
-//   You may obtain a copy of the License at
+//You may obtain a copy of the License at
 
 //       http://www.apache.org/licenses/LICENSE-2.0
 
@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace Cosmic_Explorer
 {
-    public static class ItemIndex
+    public static class ItemIndex // Selbsterklärend, aber in Kurzform: Gibt den Namen des Items zurück und ob es dieses Item gibt oder nicht
     {
         private static string? itemName;
         public static bool IsValid(int ID) // Gibt zurück ob die ID gültig ist

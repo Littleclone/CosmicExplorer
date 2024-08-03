@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 //Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
-//   You may obtain a copy of the License at
+//You may obtain a copy of the License at
 
 //       http://www.apache.org/licenses/LICENSE-2.0
 
@@ -61,7 +61,7 @@ namespace Cosmic_Explorer
                 Console.WriteLine("Zur Luftschleuse gehen.[4]");
                 Console.WriteLine("In die Küche gehen.[5] X");
                 Console.WriteLine("Zum Lagerraum gehen.[6]");
-                Console.WriteLine("Zum Generator gehen.[7] X");
+                Console.WriteLine("Zum Generator gehen.[7]");
                 Console.WriteLine("In die Werkstatt gehen.[8]");
                 while (true)
                 {
@@ -72,12 +72,11 @@ namespace Cosmic_Explorer
                     switch (message)
                     {
                         case "1":
-                            shuttle.currentTime++;
                             LaborEquipment();
                             break;
                         case "2":
                             shuttle.currentTime++;
-                            shuttle.Bedroom(shuttle.currentTime);
+                            shuttle.Bedroom();
                             break;
                         case "3":
                             shuttle.currentTime++;
@@ -95,8 +94,9 @@ namespace Cosmic_Explorer
                             inventory.StorageRoom();
                             break;
                         case "7":
-                            Console.WriteLine("Noch nicht Implementiert!");
-                            continue;
+                            shuttle.currentTime++;
+                            shuttle.Generator();
+                            break;
                         case "8":
                             shuttle.currentTime++;
                             inventory.WorkshopRoom();
@@ -137,6 +137,10 @@ namespace Cosmic_Explorer
                                 Console.WriteLine(ItemIndex.ItemName(11) + ", ID: 11");
                                 Console.WriteLine(ItemIndex.ItemName(12) + ", ID: 12");
                             }
+                            if(qSystem.QState[3] == 5)
+                            {
+                                Console.WriteLine(ItemIndex.ItemName(13) + ", ID: 13");
+                            }
                             Console.ForegroundColor = ConsoleColor.White;
                             Console.Write("Eingabe:");
                             Console.ResetColor();
@@ -150,7 +154,7 @@ namespace Cosmic_Explorer
                                         Console.WriteLine(ScienceProgress.ScienceProg(1, progress[1]));
                                         inventory.RemoveItem(1, 1, false);
                                         progress[1]++;
-                                        shuttle.currentTime += 3;
+                                        shuttle.currentTime += 2;
                                         Console.ResetColor();
                                         passiv.ActionMaked();
                                         continue;
@@ -178,7 +182,7 @@ namespace Cosmic_Explorer
                                         Console.WriteLine(ScienceProgress.ScienceProg(2, progress[2]));
                                         inventory.RemoveItem(2, 1, false);
                                         progress[2]++;
-                                        shuttle.currentTime += 3;
+                                        shuttle.currentTime += 2;
                                         Console.ResetColor();
                                         passiv.ActionMaked();
                                         break;
@@ -206,7 +210,7 @@ namespace Cosmic_Explorer
                                         Console.WriteLine(ScienceProgress.ScienceProg(3, progress[3]));
                                         inventory.RemoveItem(11, 1, false);
                                         progress[3]++;
-                                        shuttle.currentTime += 3;
+                                        shuttle.currentTime += 2;
                                         Console.ResetColor();
                                         passiv.ActionMaked();
                                         continue;
@@ -227,7 +231,28 @@ namespace Cosmic_Explorer
                                         Console.WriteLine(ScienceProgress.ScienceProg(4, progress[4]));
                                         inventory.RemoveItem(12, 1, false);
                                         progress[4]++;
-                                        shuttle.currentTime += 3;
+                                        shuttle.currentTime += 2;
+                                        Console.ResetColor();
+                                        passiv.ActionMaked();
+                                        continue;
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Du hast es bereits fertig erforscht. Wähle eine andere ID (oder 'exit')");
+                                    continue;
+                                }
+                            }
+                            else if (message == "13" && qSystem.QState[3] == 5)
+                            {
+                                if (progress[5] != 4)
+                                {
+                                    if (inventory.itemIndex[13] >= 1)
+                                    {
+                                        Console.WriteLine(ScienceProgress.ScienceProg(5, progress[5]));
+                                        inventory.RemoveItem(13, 1, false);
+                                        progress[5]++;
+                                        shuttle.currentTime += 2;
                                         Console.ResetColor();
                                         passiv.ActionMaked();
                                         continue;
@@ -251,9 +276,6 @@ namespace Cosmic_Explorer
                         }
                         break;
                     case "2":
-                        Console.WriteLine("Noch nicht Implementiert!");
-                        continue;
-                    case "4":
                         return;
                     default:
                         Console.WriteLine("Wähle einer der Nummern aus!");

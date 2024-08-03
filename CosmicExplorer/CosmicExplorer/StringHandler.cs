@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 //Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
-//   You may obtain a copy of the License at
+//You may obtain a copy of the License at
 
 //       http://www.apache.org/licenses/LICENSE-2.0
 
@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace Cosmic_Explorer
 {
-    public static class StringHandler
+    public static class StringHandler // Selbsterklärend, aber in kurzfassung: Hier werden alle Texte gespeichert und können dann einfach abgerufen werden.
     {
         private static string? message;
         public static string NPCMessages(string npcName, int npcID, int messageID)
@@ -44,7 +44,7 @@ namespace Cosmic_Explorer
                 //Galaktische Forschungsinstitut [GFI]
                 if(npcID == 1)
                 {
-                    if (messageID == 1)
+                    if (messageID == 1) // Erste Quest startet [1]
                     {
                         return message = npcName + ": \nHallo Charlotte, gut das wohl auf bist. Bist du bereit für deine erste aufgabe?";
                     }
@@ -80,7 +80,7 @@ namespace Cosmic_Explorer
                     {
                         return message = npcName + ": \nSuper. Bis dann und viel spaß im Weltraum.";
                     }
-                    if (messageID == 10)
+                    if (messageID == 10) //Quest abgeschlossen [1]
                     {
                         return message = npcName + ": \nWas gibts Charlotte?";
                     }
@@ -102,7 +102,7 @@ namespace Cosmic_Explorer
                             "\n(mithilfe der Sonar funktion), diese werden dann hervorgehoben und im Logbuch gespeichert." +
                             "\nAnsonsten kannst du natürlich auch machen was du willst. Ruf die einfach wieder an für eine neue quest.";
                     }
-                    if (messageID == 15)
+                    if (messageID == 15) //Zweite Quest startet [3]
                     {
                         return message = npcName + ": \nHallo Charlotte, was gibts?";
                     }
@@ -121,7 +121,7 @@ namespace Cosmic_Explorer
                     {
                         return message = "Charlotte: \nOkay, ich werde mich darum kümmern.";
                     }
-                    if (messageID == 19)
+                    if (messageID == 19) //Quest-Abschnitt abgeschlossen [3]
                     {
                         return message = "Charlotte: \nHallo, ich habe nun die 3000 Gold, was als nächstes?";
                     }
@@ -146,15 +146,24 @@ namespace Cosmic_Explorer
                     {
                         return message = "Charlotte: \nOkay, danke, ich melde mich dann wieder.";
                     }
-                    if (messageID == 24)
+                    if (messageID == 24) //Quest-Abschnitt abgeschlossen [3]
                     {
                         return message = "Charlotte: \nHallo, ich habe die 5 Experimentelle Legierungen gemacht, was soll ich nun tun?";
                     }
                     if (messageID == 25)
                     {
-                        return message = "Das war das ende der Story Misson fürs erste, mehr wird noch kommen!";
+                        return message = npcName + ": \nForsche etwas an den Legierungen und finde mehr über die Heraus, auch was für" +
+                            "\nein Nutzen sie haben könnten.";
                     }
                     if (messageID == 26)
+                    {
+                        return message = "Charlotte: \nKlar, mach ich.";
+                    }
+                    if (messageID == 27)
+                    {
+                        return message = "Das war das ende der Story Misson fürs erste, mehr wird noch kommen!";
+                    }
+                    if (messageID == 28)
                     {
                         return message = "Danke fürs Spielen, sollte es dir gefallen habe dann komm auf mein Discord und berichte mir davon." +
                             "\nWie gesagt selbst wenn dies auf kleines interesse stößt werde ich immer wieder mal daran arbeiten, das nächste update" +

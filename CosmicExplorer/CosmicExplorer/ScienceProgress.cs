@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 //Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
-//   You may obtain a copy of the License at
+//You may obtain a copy of the License at
 
 //       http://www.apache.org/licenses/LICENSE-2.0
 
@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace Cosmic_Explorer
 {
-    public static class ScienceProgress
+    public static class ScienceProgress // Hier werden die Texte für die Wissenschaftlichen Fortschritte gespeichert und ausgegeben.
     {
         private static string? message;
         public static string ScienceProg(int ID, sbyte progress)
@@ -91,6 +91,39 @@ namespace Cosmic_Explorer
                         return message = "\nDu hast herausgefunden das sich in der Erde Tatsächlich Organische Stoffe befinden.\n";
                     }
                 }
+                if (ID == 5)
+                {
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    if (progress == 0)
+                    {
+                        return message = "\nDu hast die Legierung untersucht und erste erkenntnisse gewonnen.\n";
+                    }
+                    if (progress == 1)
+                    {
+                        return message = "\nDu hast herausgefunden das die Legierung ziemlich Hitze Resistenz ist.\n";
+                    }
+                    if (progress == 2)
+                    {
+                        return message = "\nWeitere Tests bestätigen die Hitze Resistenz, aber da ist noch was.\n";
+                    }
+                    if (progress == 3)
+                    {
+                        return message = "\nDu hast herausgefunden das die Legierung auch noch Wärme Isolierend ist." +
+                            "\nDies könnte gut für den Generator in deinem Raumschiff sein.\n";
+                    }
+                }
+                //if (ID == 5) Interresannte idee von CoPilot
+                //{
+                //    Console.ForegroundColor = ConsoleColor.Cyan;
+                //    if (progress == 0)
+                //    {
+                //        return message = "\nDu hast die Sonne genauer untersucht und vielleicht etwas interessantes gefunden.\n";
+                //    }
+                //    if (progress == 1)
+                //    {
+                //        return message = "\nDu hast herausgefunden das die Sonne mehr als nur ein Stern ist.\n";
+                //    }
+                //}
             }
             return message = "error (Code)";
         }

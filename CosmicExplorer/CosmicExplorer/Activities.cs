@@ -9,7 +9,7 @@ using Cosmic_Explorer;
 
 //Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
-//   You may obtain a copy of the License at
+//You may obtain a copy of the License at
 
 //       http://www.apache.org/licenses/LICENSE-2.0
 
@@ -52,7 +52,7 @@ namespace Cosmic_Explorer
         private World world;
         private Game game;
         private SpaceShuttle shuttle;
-        private Space Space;
+        private Space space;
         private Activities actions;
         private Inventory inventory;
         private OwnMath math;
@@ -61,7 +61,7 @@ namespace Cosmic_Explorer
         {
             this.game = games;
             this.shuttle = shuttle;
-            this.Space = space;
+            this.space = space;
             this.actions = action;
             this.world = world;
             this.inventory = inv;
@@ -75,8 +75,7 @@ namespace Cosmic_Explorer
                 Console.ResetColor();
             }
         }
-        //Wird aufgerufen wenn eine Aktion gemacht wird um die Passiven Systeme auszuführen
-        public void ActionMaked()
+        public void ActionMaked() // Wird aufgerufen wenn eine Aktion gemacht wird um die Passiven Systeme auszuführen
         {
             if(game.debug)
             {
@@ -95,6 +94,8 @@ namespace Cosmic_Explorer
                 return;
             }
             SonarSystem();
+            shuttle.PassivGenerator();
+            space.SolarPanel();
         }
         public void SonarSystem()
         {

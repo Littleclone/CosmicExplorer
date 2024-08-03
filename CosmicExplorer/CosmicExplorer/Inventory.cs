@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 //Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
-//   You may obtain a copy of the License at
+//You may obtain a copy of the License at
 
 //       http://www.apache.org/licenses/LICENSE-2.0
 
@@ -61,7 +61,7 @@ namespace Cosmic_Explorer
                 Console.WriteLine("In die Kommando Zentrale gehen.[3]");
                 Console.WriteLine("Zur Luftschleuse gehen.[4]");
                 Console.WriteLine("In die Küche gehen.[5] X");
-                Console.WriteLine("Zum Generator gehen.[6] X");
+                Console.WriteLine("Zum Generator gehen.[6]");
                 Console.WriteLine("Ins Labor gehen.[7]");
                 Console.WriteLine("In die Werkstatt gehen.[8]");
                 while (true)
@@ -82,7 +82,7 @@ namespace Cosmic_Explorer
                             break;
                         case "2":
                             shuttle.currentTime++;
-                            shuttle.Bedroom(shuttle.currentTime);
+                            shuttle.Bedroom();
                             break;
                         case "3":
                             shuttle.currentTime++;
@@ -96,8 +96,9 @@ namespace Cosmic_Explorer
                             Console.WriteLine("Noch nicht Implementiert!");
                             continue;
                         case "6":
-                            Console.WriteLine("Noch nicht Implementiert!");
-                            continue;
+                            shuttle.currentTime++;
+                            shuttle.Generator();
+                            break;
                         case "7":
                             science.Laboratory();
                             break;
@@ -127,7 +128,7 @@ namespace Cosmic_Explorer
                 Console.WriteLine("Zum Lagerraum gehen.[4]");
                 Console.WriteLine("Zur Luftschleuse gehen.[5]");
                 Console.WriteLine("In die Küche gehen.[6] X");
-                Console.WriteLine("Zum Generator gehen.[7] X");
+                Console.WriteLine("Zum Generator gehen.[7]");
                 Console.WriteLine("Ins Labor gehen.[8]");
                 while (true)
                 {
@@ -142,7 +143,7 @@ namespace Cosmic_Explorer
                             break;
                         case "2":
                             shuttle.currentTime++;
-                            shuttle.Bedroom(shuttle.currentTime);
+                            shuttle.Bedroom();
                             break;
                         case "3":
                             shuttle.currentTime++;
@@ -161,8 +162,9 @@ namespace Cosmic_Explorer
                             shuttle.Airlock();
                             break;
                         case "7":
-                            Console.WriteLine("Noch nicht Implementiert!");
-                            continue;
+                            shuttle.currentTime++;
+                            shuttle.Generator();
+                            break;
                         case "8":
                             shuttle.currentTime++;
                             science.Laboratory();
@@ -238,6 +240,8 @@ namespace Cosmic_Explorer
                                                 if (itemIndex[8] >= y)
                                                 {
                                                     Random random = new Random();
+                                                    shuttle.currentTime += 3;
+                                                    passiv.ActionMaked();
                                                     AddItem(3, random.Next(0, 3), true);
                                                     AddItem(4, random.Next(0, 5), true);
                                                     AddItem(9, random.Next(0, 2), true);
@@ -291,6 +295,8 @@ namespace Cosmic_Explorer
                                             {
                                                 if (itemIndex[8] >= y) // Schaut ob genügend Kohle vorhanden ist
                                                 {
+                                                    shuttle.currentTime += 3;
+                                                    passiv.ActionMaked();
                                                     RemoveItem(3, x, false); // Entfernt die Menge an Eisen Erz
                                                     RemoveItem(8, y, false); // Entfernt die Menge an Kohle
                                                     Console.WriteLine("Du hast " + y + " " + ItemIndex.ItemName(6) + " hergestellt!");
@@ -339,6 +345,8 @@ namespace Cosmic_Explorer
                                             {
                                                 if (itemIndex[8] >= y)
                                                 {
+                                                    shuttle.currentTime += 3;
+                                                    passiv.ActionMaked();
                                                     RemoveItem(4, x, false);
                                                     RemoveItem(8, y, false);
                                                     Console.WriteLine("Du hast " + y + " " + ItemIndex.ItemName(7) + " hergestellt!");
@@ -388,6 +396,8 @@ namespace Cosmic_Explorer
                                             {
                                                 if (itemIndex[8] >= y)
                                                 {
+                                                    shuttle.currentTime += 3;
+                                                    passiv.ActionMaked();
                                                     RemoveItem(9, x, false);
                                                     RemoveItem(8, y, false);
                                                     Console.WriteLine("Du hast " + y + " " + ItemIndex.ItemName(10) + " hergestellt!");
@@ -439,12 +449,14 @@ namespace Cosmic_Explorer
                                                 {
                                                     if (itemIndex[8] >= y)
                                                     {
+                                                        shuttle.currentTime += 3;
                                                         RemoveItem(7, x, false);
                                                         RemoveItem(6, z, false);
                                                         RemoveItem(8, y, false);
                                                         Console.WriteLine("Du hast " + y + " " + ItemIndex.ItemName(13) + " hergestellt!");
                                                         Console.WriteLine("Du hast Verbraucht:\n" + ItemIndex.ItemName(7) + " " + x + "\n" + ItemIndex.ItemName(6) + " " + z + "\n" + ItemIndex.ItemName(8) + " " + y);
                                                         AddItem(13, y, false);
+                                                        passiv.ActionMaked();
                                                         isFinishedLegierung = true;
                                                     }
                                                     else

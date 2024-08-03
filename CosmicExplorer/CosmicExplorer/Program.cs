@@ -5,7 +5,7 @@ using System;
 
 //Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
-//   You may obtain a copy of the License at
+//You may obtain a copy of the License at
 
 //       http://www.apache.org/licenses/LICENSE-2.0
 
@@ -88,11 +88,13 @@ namespace Cosmic_Explorer
         {
             while (true)
             {
+                // Dieser Code ist da um zu verhindern das ein Tag mehr hinzu addiert wird wenn du das Spiel gestartet hast und dann wieder ins Hauptmenü gehst
+                // und dann wieder ins Spiel gehst, dies verhindert das ein Tag mehr hinzu addiert wird (weil nochmal der Start Tag ausgeführt wird)
                 if (needSave)
                 {
                     CurrentDay--;
                 }
-                DataManager.InitializeSaveFileFirst();
+                DataManager.InitializeSaveFileFirst(); // Eine Vorkehrung verbunden mit dem Load Save File, damit es nicht zu einem Fehler kommt wenn es keine Save Files gibt (es würde sonst versuchen auch bei einem neuem Spiel eine Save File zu laden)
                 needSave = false;
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Cosmic Explorer");
@@ -187,7 +189,7 @@ namespace Cosmic_Explorer
                         continue;
                     default:
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Entscheide dich für eines der drei möglichkeiten!\n");
+                        Console.WriteLine("Entscheide dich für eines der vier möglichkeiten!\n");
                         continue;
                 }
             }
@@ -226,7 +228,7 @@ namespace Cosmic_Explorer
                     failedToLoad = true;
                 }
             }
-            if (!newGame && !currentSession) // Lädt alle anderen werte wenn es kein neues Spiel ist
+            if (!newGame && !currentSession) // Lädt alle werte die gespeichert wurden
             {
                 try
                 {
@@ -236,9 +238,13 @@ namespace Cosmic_Explorer
                     isWorld = DataManager.LoadData<bool>("saveFile", "isWorld");
                     hardCore = DataManager.LoadData<bool>("saveFile", "hardcoreFlag");
                     //shuttle
-                    //shuttle.Energy = DataManager.LoadData<int>("shuttle", "energy");
+                    shuttle.Energy = DataManager.LoadData<int>("shuttle", "energy");
                     shuttle.Health = DataManager.LoadData<int>("shuttle", "health");
                     shuttle.sonarActive = DataManager.LoadData<bool>("shuttle", "sonar");
+                    shuttle.generatorActive = DataManager.LoadData<bool>("shuttle", "generator");
+                    shuttle.isLowActive = DataManager.LoadData<bool>("shuttle", "lowGenerator");
+                    shuttle.isMidActive = DataManager.LoadData<bool>("shuttle", "midGenerator");
+                    shuttle.isHighActive = DataManager.LoadData<bool>("shuttle", "highGenerator");
                     //space
                     //space.spaceSuitEnergy = DataManager.LoadData<int>("space", "energy");
                     space.spaceSuitHealth = DataManager.LoadData<int>("space", "health");
@@ -260,13 +266,12 @@ namespace Cosmic_Explorer
                     //World
                     world.logbuch = DataManager.LoadData<string[]>("world", "logbuch");
                     //arrays
-                    int[] loadedSave = DataManager.LoadData<int[]>("saveFile", "save");
-                    _save = loadedSave;
+                    _save = DataManager.LoadData<int[]>("saveFile", "save");
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Spielstand geladen!");
                     Console.ResetColor();
-                    failedToLoad = false;
-                    world.LoadWorld();
+                    failedToLoad = false; // Zeigt an das es keine Fehler beim Laden gibt, was sonst zu einem Sicherheitsmenü führen würde
+                    world.LoadWorld(); // Lädt die welt aus der SaveFile
                 }
                 catch (FileNotFoundException ex)
                 {
@@ -305,9 +310,13 @@ namespace Cosmic_Explorer
                 DataManager.SaveData("saveFile", "isWorld", isWorld);
                 DataManager.SaveData("saveFile", "hardcoreFlag", hardCore);
                 //shuttle
-                //DataManager.SaveData("shuttle", "energy", shuttle.Energy);
+                DataManager.SaveData("shuttle", "energy", shuttle.Energy);
                 DataManager.SaveData("shuttle", "health", shuttle.Health);
                 DataManager.SaveData("shuttle", "sonar", shuttle.sonarActive);
+                DataManager.SaveData("shuttle", "generator", shuttle.generatorActive);
+                DataManager.SaveData("shuttle", "lowGenerator", shuttle.isLowActive);
+                DataManager.SaveData("shuttle", "midGenerator", shuttle.isMidActive);
+                DataManager.SaveData("shuttle", "highGenerator", shuttle.isHighActive);
                 //space
                 //DataManager.SaveData("space", "energy", space.spaceSuitEnergy);
                 DataManager.SaveData("space", "health", space.spaceSuitHealth);
@@ -333,8 +342,8 @@ namespace Cosmic_Explorer
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Spiel hat gespeichert.");
                 Console.ResetColor();
-                failedToSave = false;
-                world.SaveWorld();
+                failedToSave = false; // Zeigt das es keine Probleme beim Speichern kam, was sonst zu einem Sicherheitsmenü führen würde
+                world.SaveWorld(); // Speichert die Welt in der SaveFile
             }
             catch (FileNotFoundException ex)
             {
@@ -363,7 +372,7 @@ namespace Cosmic_Explorer
         }
         private void initObjekts()
         {
-            //Erstmalige zuweisung von Objekten
+            //Erstmalige zuweisung von Objekten an alle anderen Objekten
             if (init_Objects == false)
             {
                 init_Objects = true;
@@ -380,15 +389,15 @@ namespace Cosmic_Explorer
                 //NPC init
                 world.InitNPCData(hanna, lea, supplier);
                 //NPC
-                hanna.initObj(questSystem, this, trade, science, quest, inventory, player);
-                gfi.initObj(questSystem, this, trade, science, quest, inventory, player);
-                lea.initObj(questSystem, this, trade, science, quest, inventory, player);
-                supplier.initObj(questSystem, this, trade, science, quest, inventory, player);
+                hanna.initObj(questSystem, this, trade, science, quest, inventory, player, world);
+                gfi.initObj(questSystem, this, trade, science, quest, inventory, player, world);
+                lea.initObj(questSystem, this, trade, science, quest, inventory, player, world);
+                supplier.initObj(questSystem, this, trade, science, quest, inventory, player, world);
             }
         }
         private void introduction()
         {
-            // Hier ist eine art Tutorial mit den Spiel Mechaniken und der Story
+            // Hier ist eine art Tutorial mit den Spiel Mechaniken und der Story, ist noch nicht fertig und wird noch erweitert
             if (_save[0] == 0)
             {
                 _save[0] = 1;
@@ -423,20 +432,21 @@ namespace Cosmic_Explorer
                 Console.ReadKey();
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Wichtige Info!!!:" +
-                    "\nDie Welt in der du dich befindest ist ein 2D Array oder kurz gesagt sind Spalten und Zeilen, daher werden\n" +
-                    "dir deine Position und die andere Objekte in X:1, Y:200 (Oder fürs Array [1,200])angezeigt aber keine sorge,\n" +
-                    "du kannst einfach normale Koordiaten wie X:3500 und Y:6855 eingeben, diese werden automatisch übersetzt, aber\n" +
-                    "hier die genauen infos: Die welt ist 1619x1619 Zellen groß, das heißt X:3500 und Y:6855 sind im array:\n" +
-                    "X:3 und Y:379. Im übrigen, 1619x1619 sind insgesamt 2.621.440 Zellen." +
+                    "\nDie Welt in der du dich befindest ist ein 2D Array oder kurz gesagt sind Spalten und Zeilen, daher werden" +
+                    "\ndir deine Position und die andere Objekte in X:1, Y:200 (Oder fürs Array [1,200])angezeigt aber keine sorge," +
+                    "\ndu kannst einfach normale Koordiaten wie X:3500 und Y:6855 eingeben, diese werden automatisch übersetzt, aber" +
+                    "\nhier die genauen infos: Die welt ist 1619x1619 Zellen groß, das heißt X:3500 und Y:6855 sind im array:" +
+                    "\nX:3 und Y:379. Im übrigen, 1619x1619 sind insgesamt 2.621.440 Zellen." +
                     "\nDIESES SYSTEM KANN SICH ÄNDERN!!!\n");
                 Console.ResetColor();
                 Console.ReadKey();
-                Console.WriteLine("Beachte: Dies ist ein Prototyp und die Story ist nicht so lang, für mich scheint alles\n" +
-                    "selbst erklärend, solltest du aber probleme damit haben schreib mich auf Discord an:\n" +
-                    "littleclone (Nenn dein grund direkt wenn du mir schreibst, ich gehe nicht auf Random nachrichten ein.)\n");
+                Console.WriteLine("Beachte: Dies ist ein Prototyp und die Story ist nicht so lang, für mich scheint alles" +
+                    "\nselbst erklärend, solltest du aber probleme damit haben schreib mich auf Discord an:" +
+                    "\nlittleclone (Nenn dein grund direkt wenn du mir schreibst, ich gehe nicht auf Random nachrichten ein.)\n");
                 Console.ReadKey();
-                Console.WriteLine("Das erste was du gleich machen solltest wäre ins Kommando Zentrum gehen und die\n" +
-                    "GFI zu kontaktieren. Du kannst dir aber auch natürlich alles vorher anschauen\n");
+                Console.WriteLine("Das erste was du gleich machen solltest wäre ins Kommando Zentrum gehen und die" +
+                    "\nGFI zu kontaktieren. Du kannst dir aber auch natürlich alles vorher anschauen was ich auch" +
+                    "\nempfehlen würde.");
             //Weiteres kommt bei größerem Entwicklungs Fortschritt des Games
             verstanden:
                 Console.WriteLine("Hast du soweit alles verstanden?(ja, nein)");
@@ -467,25 +477,27 @@ namespace Cosmic_Explorer
                 Console.WriteLine("Es ist Spät und du gingst ins Bett");
                 Console.WriteLine("Tag " + CurrentDay + " Startet");
                 Console.ResetColor();
+                shuttle.currentTime = 6;
                 //automatische Speicherung wenn der Nächste Tag Startet (erst wenn das Spiel Tag 2 Startet)
                 if (_save[1] == BREAKER && needSave)
                 {
-                    DataManager.BackupSaveFiles(); // Macht aus den alten Save Files ein Backup
+                    space.SolarPanel(); // Bringt Energie von den Solar Panels
+                    shuttle.PassivGenerator(); // Bringt Energie von dem Generator
+                    DataManager.BackupSaveFiles(); // Macht aus den alten Save Files ein Backup (Löscht vorhandene Backups)
                     SaveData(); //Speichert die Daten
                     ErrorHandling(); //Schaut ob es Fehler gab und gibt ein Sicherheitsmenü aus wenn es welche gab
                 }
                 //Sollte bereits ein spielstand existieren muss die Welt nicht nochmal generiert werden.
                 if (isWorld != WorldBREAKER)
                 {
-                    world.WorldGenerator();
+                    world.WorldGenerator(); // Generiert die Welt
                     isWorld = WorldBREAKER;
-                    _save[1] = BREAKER;
-                    inventory.AddItem(1, 1000, false);
-                    inventory.AddItem(8, 20, false);
+                    _save[1] = BREAKER; // Auch ein Indikator das das Spiel gespeichert werden muss ab dem nächsten Tag
+                    inventory.AddItem(1, 1000, false); // Gibt dir 1000 Liter Treibstoff
+                    inventory.AddItem(8, 40, false); // Gibt dir 40 Stück Kohle (derzeit sonst nur kaufbar)
                 }
                 needSave = true;
-                shuttle.Energy = 1000;
-                if(DayCounter == 30)
+                if(DayCounter == 30) // Wenn dies true ist kriegst du ein Gehalt von 1500 Gold
                 {
                     DayCounter = 0;
                     player.AddGold(1500);
@@ -493,7 +505,7 @@ namespace Cosmic_Explorer
                     Console.WriteLine("Du hast ein Gehalt von 1500 Gold bekommen von der GFI.");
                     Console.ResetColor();
                 }
-                shuttle.Bedroom(6);
+                shuttle.Bedroom();
             }
             else
             {
@@ -511,7 +523,6 @@ namespace Cosmic_Explorer
             dev = false;
             hardCore = false;
             //Kontroll Variablen
-            //init_Objects = false;
             isWorld = false;
             needSave = false;
             newGame = true;

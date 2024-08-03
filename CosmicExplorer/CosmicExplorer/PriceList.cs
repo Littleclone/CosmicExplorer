@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 //Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
-//   You may obtain a copy of the License at
+//You may obtain a copy of the License at
 
 //       http://www.apache.org/licenses/LICENSE-2.0
 
@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace Cosmic_Explorer
 {
-    public static class PriceList
+    public static class PriceList // Diese Klasse beeinhaltet alle Items mit deren Preis sowie die Möglichkeit ein Discount oder Extra Charge zu berechnen
     {
         //a string so i know what item is this ID
         private static string item;

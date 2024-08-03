@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 //Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
-//   You may obtain a copy of the License at
+//You may obtain a copy of the License at
 
 //       http://www.apache.org/licenses/LICENSE-2.0
 
@@ -101,6 +101,8 @@ namespace CosmicExplorer
             // Pfad zu den Dateien
             string saveDataFilePath = Path.Combine(saveDirectory, "save_data.txt");
             string worldDataFilePath = Path.Combine(saveDirectory, "world_data.txt");
+            string saveDataBackupFilePath = Path.Combine(saveDirectory, "save_dataBACKUP.txt");
+            string worldDataBackupFilePath = Path.Combine(saveDirectory, "world_dataBACKUP.txt");
 
             try
             {
@@ -121,6 +123,21 @@ namespace CosmicExplorer
                         Console.WriteLine("save_data.txt existiert nicht.");
                     }
                 }
+                if (File.Exists(saveDataBackupFilePath))
+                {
+                    File.Delete(saveDataBackupFilePath);
+                    if (game.debug)
+                    {
+                        Console.WriteLine("save_dataBACKUP.txt wurde gelöscht.");
+                    }
+                }
+                else
+                {
+                    if (game.debug)
+                    {
+                        Console.WriteLine("save_dataBACKUP.txt existiert nicht.");
+                    }
+                }
 
                 // Löschen der world_data.txt
                 if (File.Exists(worldDataFilePath))
@@ -136,6 +153,21 @@ namespace CosmicExplorer
                     if (game.debug)
                     {
                         Console.WriteLine("world_data.txt existiert nicht.");
+                    }
+                }
+                if (File.Exists(worldDataBackupFilePath))
+                {
+                    File.Delete(worldDataBackupFilePath);
+                    if (game.debug)
+                    {
+                        Console.WriteLine("world_dataBACKUP.txt wurde gelöscht.");
+                    }
+                }
+                else
+                {
+                    if (game.debug)
+                    {
+                        Console.WriteLine("world_dataBACKUP.txt existiert nicht.");
                     }
                 }
                 Console.ResetColor();

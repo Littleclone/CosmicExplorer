@@ -9,7 +9,7 @@ using static Cosmic_Explorer.World;
 
 //Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
-//   You may obtain a copy of the License at
+//You may obtain a copy of the License at
 
 //       http://www.apache.org/licenses/LICENSE-2.0
 
@@ -75,12 +75,16 @@ namespace Cosmic_Explorer
             Energy = 100;
             antiCrashSystem = true;
             sonarActive = false;
+            generatorActive = true;
+            isLowActive = true;
+            isMidActive = false;
+            isHighActive = false;
+            lastTime = 6;
         }
-        public void Bedroom(int currentTime1)
+        public void Bedroom()
         {
             game.newGame = false;
             //Setzt die Zeit und tag auf den aktuellen wert. (Und weil es im ersten Raum startet wird current Room auf 1 gesetzt)
-            currentTime = currentTime1;
             currentRoom = 1;
             //Überprüft ob es bereits 23 Uhr ist
             game.NewDayStart(currentTime);
@@ -90,7 +94,7 @@ namespace Cosmic_Explorer
             Console.WriteLine("Zur Luftschleuse gehen.[2]");
             Console.WriteLine("In die Küche gehen.[3] X");
             Console.WriteLine("Zum Lagerraum gehen.[4]");
-            Console.WriteLine("Zum Generator gehen.[5] X");
+            Console.WriteLine("Zum Generator gehen.[5]");
             Console.WriteLine("Ins Labor gehen.[6]");
             Console.WriteLine("In die Werkstatt gehen.[7]");
             Console.WriteLine("Dich ausruhen (Regeniert bissen leben).[8] X");
@@ -121,9 +125,11 @@ namespace Cosmic_Explorer
                         inventory.StorageRoom();
                         continue;
                     case "5":
-                        Console.WriteLine("Noch nicht Implementiert!");
-                        continue;
+                        currentTime++;
+                        Generator();
+                        break;
                     case "6":
+                        currentTime++;
                         science.Laboratory();
                         break;
                     case "7":
@@ -163,7 +169,7 @@ namespace Cosmic_Explorer
             Console.WriteLine("Zur Luftschleuse gehen.[3]");
             Console.WriteLine("In die Küche gehen.[4] X");
             Console.WriteLine("Zum Lagerraum gehen.[5]");
-            Console.WriteLine("Zum Generator gehen.[6] X");
+            Console.WriteLine("Zum Generator gehen.[6]");
             Console.WriteLine("Ins Labor gehen.[7]");
             Console.WriteLine("In die Werkstatt gehen.[8]");
             Console.WriteLine("Nehme Kontakt zu GFI auf.[9]");
@@ -190,7 +196,7 @@ namespace Cosmic_Explorer
                         break;
                     case "2":
                         currentTime++;
-                        Bedroom(currentTime);
+                        Bedroom();
                         break;
                     case "3":
                         currentTime++;
@@ -204,8 +210,9 @@ namespace Cosmic_Explorer
                         inventory.StorageRoom();
                         break;
                     case "6":
-                        Console.WriteLine("Noch nicht Implementiert!");
-                        continue;
+                        currentTime++;
+                        Generator();
+                        break;
                     case "7":
                         science.Laboratory();
                         break;
@@ -235,7 +242,7 @@ namespace Cosmic_Explorer
             Console.WriteLine("In die Kommando Zentrale gehen.[3]");
             Console.WriteLine("In die Küche gehen.[4] X");
             Console.WriteLine("Zum Lagerraum gehen.[5]");
-            Console.WriteLine("Zum Generator gehen.[6] X");
+            Console.WriteLine("Zum Generator gehen.[6]");
             Console.WriteLine("Ins Labor gehen.[7]");
             Console.WriteLine("In die Werkstatt gehen.[8]");
             while (true)
@@ -262,7 +269,7 @@ namespace Cosmic_Explorer
                         continue;
                     case "2":
                         currentTime++;
-                        Bedroom(currentTime);
+                        Bedroom();
                         break;
                     case "3":
                         currentTime++;
@@ -276,8 +283,66 @@ namespace Cosmic_Explorer
                         inventory.StorageRoom();
                         break;
                     case "6":
+                        currentTime++;
+                        Generator();
+                        break;
+                    case "7":
+                        science.Laboratory();
+                        break;
+                    case "8":
+                        currentTime++;
+                        inventory.WorkshopRoom();
+                        break;
+                    default:
+                        Console.WriteLine("Wähle einer der Nummern aus!");
+                        continue;
+                }
+            }
+        }
+        public void Generator()
+        {
+            currentRoom = 6;
+            //Überprüft ob es bereits 23 Uhr ist
+            game.NewDayStart(currentTime);
+            Console.WriteLine("Du bist beim Generator, was willst du machen? [Uhrzeit: " + currentTime + ":00] | [Restliche Energie: " + Energy + "]");
+            Console.WriteLine("Dir den Generator anschauen.[1]");
+            Console.WriteLine("Ins Schlafzimmer gehen[2]");
+            Console.WriteLine("In die Kommando Zentrale gehen.[3]");
+            Console.WriteLine("Zur Luftschleuse gehen.[4]");
+            Console.WriteLine("In die Küche gehen.[5] X");
+            Console.WriteLine("Zum Lagerraum gehen.[6]");
+            Console.WriteLine("Ins Labor gehen.[7]");
+            Console.WriteLine("In die Werkstatt gehen.[8]");
+            while (true)
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("Eingabe:");
+                Console.ResetColor();
+                message = Console.ReadLine().Trim();
+                switch (message)
+                {
+                    case "1":
+                        InGenerator();
+                        continue;
+                    case "2":
+                        currentTime++;
+                        Bedroom();
+                        break;
+                    case "3":
+                        currentTime++;
+                        Commandcenter();
+                        break;
+                    case "4":
+                        currentTime++;
+                        Airlock();
+                        break;
+                    case "5":
                         Console.WriteLine("Noch nicht Implementiert!");
                         continue;
+                    case "6":
+                        currentTime++;
+                        inventory.StorageRoom();
+                        break;
                     case "7":
                         science.Laboratory();
                         break;
@@ -338,7 +403,7 @@ namespace Cosmic_Explorer
                         case "info":
                             Console.WriteLine("Welches System willst du dir ansehen?");
                             Console.Write("Eingabe:");
-                            message = Console.ReadLine();
+                            message = Console.ReadLine().Trim().ToLower();
                             switch (message)
                             {
                                 case "sonar":
@@ -370,31 +435,37 @@ namespace Cosmic_Explorer
                             }
                             int x;
                             int y;
-                        x:
-                            Console.WriteLine("Bitte den Kurs für koordinate X ein");
-                            message = Console.ReadLine().Trim();
-                            try
+                            while (true)
                             {
-                                x = Convert.ToInt32(message);
+                                Console.WriteLine("Bitte den Kurs für koordinate X ein");
+                                message = Console.ReadLine().Trim();
+                                try
+                                {
+                                    x = Convert.ToInt32(message);
+                                    break;
+                                }
+                                catch (Exception e)
+                                {
+                                    Console.WriteLine(e.Message);
+                                    Console.WriteLine("Die X Koordinate hat das Falsche Format, versuche es nochmal.");
+                                    continue;
+                                }
                             }
-                            catch (Exception e)
+                            while (true)
                             {
-                                Console.WriteLine(e.Message);
-                                Console.WriteLine("Die X Koordinate hat das Falsche Format, versuche es nochmal.");
-                                goto x;
-                            }
-                        y:
-                            Console.WriteLine("Bitte den Kurs für koordinate Y ein");
-                            message = Console.ReadLine().Trim();
-                            try
-                            {
-                                y = Convert.ToInt32(message);
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e.Message);
-                                Console.WriteLine("Die Y Koordinate hat das Falsche Format, versuche es nochmal.");
-                                goto y;
+                                Console.WriteLine("Bitte den Kurs für koordinate Y ein");
+                                message = Console.ReadLine().Trim();
+                                try
+                                {
+                                    y = Convert.ToInt32(message);
+                                    break;
+                                }
+                                catch (Exception e)
+                                {
+                                    Console.WriteLine(e.Message);
+                                    Console.WriteLine("Die Y Koordinate hat das Falsche Format, versuche es nochmal.");
+                                    continue;
+                                }
                             }
                             Energy -= 10;
                             world.Course(x, y, antiCrashSystem);
@@ -409,6 +480,7 @@ namespace Cosmic_Explorer
                             }
                             Energy -= 5;
                             world.ShowPosition();
+                            passiv.ActionMaked();
                             goto Start;
                         case "sonar":
                             Console.Write("Bitte wähle aus ob du das Sonar Aktivieren oder Deaktiveren willst [Es ist gerade: ");
@@ -459,38 +531,46 @@ namespace Cosmic_Explorer
                                 case "nah":
                                     Energy -= 10;
                                     world.ScannerNah();
+                                    passiv.ActionMaked();
                                     goto Start;
                                 case "fern":
                                     int xCord;
                                     int yCord;
-                                XScan:
-                                    Console.WriteLine("Bitte die koordinate für X eingeben");
-                                    message = Console.ReadLine().Trim();
-                                    try
+                                    while (true)
                                     {
-                                        xCord = Convert.ToInt32(message);
+                                        Console.WriteLine("Bitte die koordinate für X eingeben");
+                                        message = Console.ReadLine().Trim();
+                                        try
+                                        {
+                                            xCord = Convert.ToInt32(message);
+                                            break;
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            Console.WriteLine(e.Message);
+                                            Console.WriteLine("Die X Koordinate hat das Falsche Format, versuche es nochmal.");
+                                            continue;
+                                        }
                                     }
-                                    catch (Exception e)
+                                    while (true)
                                     {
-                                        Console.WriteLine(e.Message);
-                                        Console.WriteLine("Die X Koordinate hat das Falsche Format, versuche es nochmal.");
-                                        goto XScan;
-                                    }
-                                YScan:
-                                    Console.WriteLine("Bitte die koordinate für Y eingeben");
-                                    message = Console.ReadLine().Trim();
-                                    try
-                                    {
-                                        yCord = Convert.ToInt32(message);
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        Console.WriteLine(e.Message);
-                                        Console.WriteLine("Die Y Koordinate hat das Falsche Format, versuche es nochmal.");
-                                        goto YScan;
+                                        Console.WriteLine("Bitte die koordinate für Y eingeben");
+                                        message = Console.ReadLine().Trim();
+                                        try
+                                        {
+                                            yCord = Convert.ToInt32(message);
+                                            break;
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            Console.WriteLine(e.Message);
+                                            Console.WriteLine("Die Y Koordinate hat das Falsche Format, versuche es nochmal.");
+                                            continue;
+                                        }
                                     }
                                     Energy -= 10;
                                     world.ScannerFern(xCord, yCord);
+                                    passiv.ActionMaked();
                                     goto Start;
                                 default:
                                     Console.WriteLine("Bitte nutze einer der beiden eingaben! ");
@@ -566,5 +646,238 @@ namespace Cosmic_Explorer
                 }
             }
         }
+        public void InGenerator()
+        {
+            while (true)
+            {
+                string message = "error";
+                game.NewDayStart(currentTime);
+                currentRoom = 6;
+                Console.WriteLine("Du bist direkt beim Generator, was willst du machen? [Uhrzeit: " + currentTime + ":00]");
+                Console.WriteLine("Einstellungen ansehen.[1]");
+                Console.WriteLine("Geh zurück.[2]");
+                while (true)
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("Eingabe:");
+                    Console.ResetColor();
+                    message = Console.ReadLine().Trim();
+                    switch (message)
+                    {
+                        case "1":
+                            Console.Write("Der Generator ist gerade [");
+                            if (generatorActive)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.Write("Aktiviert");
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.Write("Deaktivert");
+                            }
+                            Console.ResetColor();
+                            Console.WriteLine("]");
+                            Console.Write("und bringt gerade [");
+                            if(!generatorActive)
+                            {
+                                Console.ForegroundColor = ConsoleColor.DarkRed;
+                                Console.Write("Kein");
+                            }
+                            else if (isLowActive)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.Write("Wenig");
+                            }
+                            else if (isMidActive)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                Console.Write("Moderat");
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.Write("Viel");
+                            }
+                            Console.ResetColor();
+                            Console.WriteLine("] Strom.");
+                            Console.Write("Das Risiko der Überhitung beträgt: ");
+                            if(!generatorActive)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine("0%");
+                            }
+                            else if(isLowActive)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine("0%");
+                            }
+                            else if(isMidActive)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                Console.WriteLine("15%");
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("30%");
+                            }
+                            Console.ResetColor();
+                            while (true)
+                            {
+                                Console.WriteLine("Was willst du ändern? [Übriger Strom: " + Energy + " ]");
+                                Console.WriteLine("Den Generator.[1]");
+                                Console.WriteLine("Die Generator Strom ausgabe.[2]");
+                                Console.WriteLine("Wieder zurück Gehen.[3]");
+                                Console.ForegroundColor = ConsoleColor.White;
+                                Console.Write("Eingabe:");
+                                Console.ResetColor();
+                                message = Console.ReadLine().Trim();
+                                switch (message)
+                                {
+                                    case "1":
+                                        while (true)
+                                        {
+                                            Console.WriteLine("Was willst du machen? [Übriger Strom: " + Energy + " ]");
+                                            Console.WriteLine("Den Generator Aktivieren.[1]");
+                                            Console.WriteLine("Den Generator Deaktivieren.[2]");
+                                            Console.WriteLine("Zurück gehen.[3]");
+                                            Console.ForegroundColor = ConsoleColor.White;
+                                            Console.Write("Eingabe:");
+                                            Console.ResetColor();
+                                            message = Console.ReadLine().Trim();
+                                            switch (message)
+                                            {
+                                                case "1":
+                                                    generatorActive = true;
+                                                    currentTime++;
+                                                    continue;
+                                                case "2":
+                                                    generatorActive = false;
+                                                    currentTime++;
+                                                    continue;
+                                                case "3":
+                                                    break;
+                                                default:
+                                                    Console.WriteLine("Bitte nutze einer der beiden Möglichkeiten");
+                                                    continue;
+                                            }
+                                            break;
+                                        }
+                                        break;
+                                    case "2":
+                                        while (true)
+                                        {
+                                            Console.WriteLine("Was willst du machen? [Übriger Strom: " + Energy + " ]");
+                                            Console.WriteLine("Den Generator auf Wenig Stellen.[1]");
+                                            Console.WriteLine("Den Generator auf Moderat Stellen[2]");
+                                            Console.WriteLine("Den Generator auf Hoch Stellen[3]");
+                                            Console.WriteLine("Zurück gehen.[4]");
+                                            Console.ForegroundColor = ConsoleColor.White;
+                                            Console.Write("Eingabe:");
+                                            Console.ResetColor();
+                                            message = Console.ReadLine().Trim();
+                                            switch (message)
+                                            {
+                                                case "1":
+                                                    isLowActive = true;
+                                                    isMidActive = false;
+                                                    isHighActive = false;
+                                                    currentTime++;
+                                                    continue;
+                                                case "2":
+                                                    isLowActive = false;
+                                                    isMidActive = true;
+                                                    isHighActive = false;
+                                                    currentTime++;
+                                                    continue;
+                                                case "3":
+                                                    isLowActive = false;
+                                                    isMidActive = false;
+                                                    isHighActive = true;
+                                                    continue;
+                                                case "4":
+                                                    break;
+                                                default:
+                                                    Console.WriteLine("Bitte nutze einer der beiden Möglichkeiten");
+                                                    continue;
+                                            }
+                                            break;
+                                        }
+                                        break;
+                                    case "3":
+                                        break;
+                                    default:
+                                        Console.WriteLine("Bitte nutze einer der beiden Möglichkeiten");
+                                        continue;
+                                }
+                                break;
+                            }
+                            break;
+                        case "2":
+                            Generator();
+                            break;
+                        default:
+                            Console.WriteLine("Wähle einer der Nummern aus!");
+                            continue;
+                    }
+                    break;
+                }
+            }
+        }
+        //Special things
+        public bool generatorActive = true;
+        public bool isLowActive = true;
+        public bool isMidActive = false;
+        public bool isHighActive = false;
+        int lastTime = 6;
+        float generatedEnergy = 15;
+        float energyEfficiency;
+
+        public void PassivGenerator()
+        {
+            if (generatorActive)
+            {
+                if(isLowActive && inventory.itemIndex[1] >= 5)
+                {
+                    energyEfficiency = 1.2f;
+                    inventory.RemoveItem(1, 5, false);
+                }
+                else if(isMidActive && inventory.itemIndex[1] >= 15)
+                {
+                    energyEfficiency = 1.5f;
+                    inventory.RemoveItem(1, 15, false);
+                }
+                else if(isHighActive && inventory.itemIndex[1] >= 40)
+                {
+                    energyEfficiency = 1.85f;
+                    inventory.RemoveItem(1, 40, false);
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Kein Treibstoff!");
+                    Console.ResetColor();
+                    return;
+                }
+                int tempTime = currentTime - lastTime;
+                if(currentTime == 6 && lastTime == 6)
+                {
+                    tempTime = 24;
+                }
+                if (tempTime < 0)
+                {
+                    Math.Abs(tempTime);
+                }
+                for (int i = 0; i <= tempTime; i++)
+                {
+                    float tempEnergy = generatedEnergy;
+                    tempEnergy *= energyEfficiency;
+                    Energy += Convert.ToInt32(tempEnergy);
+                }
+                lastTime = currentTime;
+            }
+        }
     }
+    
 }
