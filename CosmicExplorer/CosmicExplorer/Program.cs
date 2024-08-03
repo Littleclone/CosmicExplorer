@@ -100,7 +100,7 @@ namespace Cosmic_Explorer
                 Console.WriteLine("Cosmic Explorer");
                 Console.WriteLine("Guten Tag, das ist Cosmic Explorer, ein Text Basiertes Weltraum Spiel\nDieses Text Game befindet sich in der Testphase und wird noch Entwickelt von mir um mehr C# zu lernen.");
                 Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("Game Version: 0.2.3 Dev Phase, Deutsch / German");
+                Console.WriteLine("Game Version: 0.2.4 Dev Phase, Deutsch / German");
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.WriteLine("Github Repo: https://github.com/Littleclone/CosmicExplorer (STR + Click auf den Link zum Öffnen)");
                 Console.WriteLine("Copyright 2024 Littleclone, für mehr Infos gib: lizenz ein");
